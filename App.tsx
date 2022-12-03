@@ -1,11 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import { Alert, StyleSheet, Text, View } from "react-native";
-import Button from "./src/components/Button/Button";
-import { NavigationContainer } from "@react-navigation/native";
+import { Alert, StyleSheet, View } from "react-native";
 import useDualis from "./src/hooks/useDualis";
 import { ISemesterTypes } from "./src/api/html_scraper/dualis/types/ISemesterTypes";
 import { IErrorTypes } from "./src/api/types/IErrorTypes";
 import { ISemesterOptionsTypes } from "./src/api/html_scraper/dualis/types/ISemesterOptionsTypes";
+import Navigation from "./src/infrastructure/navigation/Navigation";
 
 export default function App() {
   const { login, logout, getAllGrades, getSemesterInformation, args, cookies } =
@@ -42,40 +40,14 @@ export default function App() {
       );
   };
 
-  return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-        <Button
-          variant="outlined"
-          onClick={() =>
-            handleLogin("s190628@student.dhbw-mannheim.de", "Fja9z5p4")
-          }
-        >
-          Login Dualis
-        </Button>
-        <Button variant="outlined" onClick={logout}>
-          Logout Dualis
-        </Button>
-        <Button variant="outlined" onClick={showGrades}>
-          Get Units
-        </Button>
-        <Button variant="outlined" onClick={showSemesters}>
-          Show semesters
-        </Button>
-        <Text>Arguments: {args} </Text>
-        <Text>Cookies: {cookies} </Text>
-      </View>
-    </NavigationContainer>
-  );
+  return <Navigation />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    position: "absolute",
+    backgroundColor: "lightblue",
   },
+  navigation: {},
 });
