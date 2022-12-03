@@ -2,17 +2,18 @@ import {
   CardStyleInterpolators,
   StackNavigationOptions,
 } from "@react-navigation/stack";
+import typography from "../../../constants/typography";
 
 export const headerConfig: StackNavigationOptions = {
   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
   headerMode: "screen",
   headerStyle: {
-    backgroundColor: "green",
+    backgroundColor: "red",
     shadowColor: "transparent",
   },
-  headerTintColor: "green",
+  headerTintColor: "white",
   headerTitleStyle: {
-    //   fontFamily: Typography.Bold,
+    fontFamily: typography.Bold,
     alignSelf: "center",
   },
   headerBackTitle: "Zurück",

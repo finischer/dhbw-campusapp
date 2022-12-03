@@ -1,53 +1,54 @@
-import { Alert, StyleSheet, View } from "react-native";
-import useDualis from "./src/hooks/useDualis";
-import { ISemesterTypes } from "./src/api/html_scraper/dualis/types/ISemesterTypes";
-import { IErrorTypes } from "./src/api/types/IErrorTypes";
-import { ISemesterOptionsTypes } from "./src/api/html_scraper/dualis/types/ISemesterOptionsTypes";
+import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./src/infrastructure/navigation/Navigation";
+import { useFonts } from "@expo-google-fonts/source-sans-pro";
 
 export default function App() {
-  const { login, logout, getAllGrades, getSemesterInformation, args, cookies } =
-    useDualis();
+  const [fontsLoaded] = useFonts({
+    SourceSansProRegular: require("./src/assets/fonts/SourceSansPro-Regular.ttf"),
+    SourceSansProBold: require("./src/assets/fonts/SourceSansPro-Bold.ttf"),
+  });
 
-  const handleLogin = async (username: string, password: string) => {
-    const authenticated: boolean = await login(username, password);
-
-    if (!authenticated) return Alert.alert("Login fehlgeschlagen!");
-
-    Alert.alert("Login war erfolgreich!");
-  };
-
-  const showGrades = async () => {
-    const grades: ISemesterTypes[] | IErrorTypes | undefined =
-      await getAllGrades();
-
-    if (!grades) {
-      Alert.alert(
-        "Es ist ein Fehler aufgetreten",
-        "Noten konnte nicht abgerufen werden!"
-      );
-    }
-  };
-
-  const showSemesters = async () => {
-    const semesters: ISemesterOptionsTypes | undefined =
-      await getSemesterInformation();
-
-    if (!semesters)
-      Alert.alert(
-        "Es ist ein Fehler aufgetreten!",
-        "Semesterinformationen konnten nicht abgerufen werden"
-      );
-  };
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Schriften werden geladen ...</Text>
+      </View>
+    );
+  }
 
   return <Navigation />;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "absolute",
-    backgroundColor: "lightblue",
-  },
-  navigation: {},
-});
+// const { login, logout, getAllGrades, getSemesterInformation, args, cookies } =
+//     useDualis();
+
+//   const handleLogin = async (username: string, password: string) => {
+//     const authenticated: boolean = await login(username, password);
+
+//     if (!authenticated) return Alert.alert("Login fehlgeschlagen!");
+
+//     Alert.alert("Login war erfolgreich!");
+//   };
+
+//   const showGrades = async () => {
+//     const grades: ISemesterTypes[] | IErrorTypes | undefined =
+//       await getAllGrades();
+
+//     if (!grades) {
+//       Alert.alert(
+//         "Es ist ein Fehler aufgetreten",
+//         "Noten konnte nicht abgerufen werden!"
+//       );
+//     }
+//   };
+
+//   const showSemesters = async () => {
+//     const semesters: ISemesterOptionsTypes | undefined =
+//       await getSemesterInformation();
+
+//     if (!semesters)
+//       Alert.alert(
+//         "Es ist ein Fehler aufgetreten!",
+//         "Semesterinformationen konnten nicht abgerufen werden"
+//       );
+//   };
