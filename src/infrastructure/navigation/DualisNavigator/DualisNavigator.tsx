@@ -15,7 +15,7 @@ const DualisNavigator = () => {
         // options={{ headerTitle: "Anmelden" }}
       />
       <Stack.Screen
-        name="DualisScreen"
+        name="DualisHomeScreen"
         component={DualisScreen}
         // options={{ headerTitle: "Dualis" }}
       />
