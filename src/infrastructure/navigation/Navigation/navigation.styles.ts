@@ -1,7 +1,7 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { StackNavigationOptions } from "@react-navigation/stack";
 import useMetadata from "../../../hooks/useMetadata";
-import { IColors } from "../../../styles/colors.types";
+import { IColors } from "../../../constants/colors/colors.types";
 
 export const tabBarStyle = (colors: IColors) => {
   return {

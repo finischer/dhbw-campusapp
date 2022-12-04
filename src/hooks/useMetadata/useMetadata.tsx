@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { darkModeColors, lightModeColors } from "../../styles/colors";
-import { IColors } from "../../styles/colors.types";
+import { darkModeColors, lightModeColors } from "../../constants/colors/colors";
+import { IColors } from "../../constants/colors/colors.types";
 import { IThemeTypes } from "./types/IThemeTypes";
 
 const useMetadata = () => {

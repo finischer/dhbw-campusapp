@@ -7,7 +7,7 @@ import {
   textVariantStyle,
 } from "./button.styles";
 import useMetadata from "../../hooks/useMetadata";
-import { IColors } from "../../styles/colors.types";
+import { IColors } from "../../constants/colors/colors.types";
 
 const getButtonStyle = (variant: string, colors: IColors) => {
   if (variant === "text")
