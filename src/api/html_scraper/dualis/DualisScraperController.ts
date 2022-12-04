@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  getConfig,
   _generateCourseResultsUrl,
   _generateSemesterUrl,
   _getExamUrlOfSubject,
@@ -11,7 +10,7 @@ import { ISubjectTypes, subjectKeys } from "./types/ISubjectTypes";
 import { ISemesterTypes } from "./types/ISemesterTypes";
 import { BASE_URL } from "../../dualis/dualisConstants";
 import { examKeys, IExamTypes } from "./types/IExamTypes";
-import { IAxiosConfig } from "../../../services/axios/types/IAxiosTypes";
+import { IAxiosConfig } from "../../../services/axios/axios.types";
 
 export class DualisScraperController {
   args: string;
