@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { darkModeColors, lightModeColors } from "../../constants/colors/colors";
+import { darkModeColors, lightModeColors } from "../../constants/colors";
 import { IColors } from "../../constants/colors/colors.types";
 import { IThemeTypes } from "./types/IThemeTypes";
 
