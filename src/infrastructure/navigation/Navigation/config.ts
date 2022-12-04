@@ -3,6 +3,7 @@ import {
   StackNavigationOptions,
 } from "@react-navigation/stack";
 import typography from "../../../constants/typography";
+import { NavigationIcons } from "./navigation.types";
 
 export const headerConfig: StackNavigationOptions = {
   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -18,4 +19,12 @@ export const headerConfig: StackNavigationOptions = {
   },
   headerBackTitle: "Zurück",
   headerTitleAlign: "center",
+};
+
+// Until now only FeatherIcons allowed
+export const TAB_BAR_ICON_NAMES: NavigationIcons = {
+  dualis: "home",
+  cafeteria: "coffee",
+  calendar: "calendar",
+  more: "more-horizontal",
 };

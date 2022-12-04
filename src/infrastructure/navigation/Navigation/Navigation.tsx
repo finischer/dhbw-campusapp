@@ -8,44 +8,54 @@ import MoreNavigator from "../MoreNavigator";
 import { tabBarStyle } from "./navigation.styles";
 import { Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import { TAB_BAR_ICON_NAMES } from "./config";
+import { NavigationIcons } from "./navigation.types";
+import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const Navigation = () => {
   const { t } = useTranslation("navigation");
 
+  const getTabBarLabel = (name: string) => {
+    if (!name) return undefined;
+
+    return t(name);
+  };
+
   return (
     <NavigationContainer>
-      <Tab.Navigator barStyle={tabBarStyle}>
+      <Tab.Navigator
+        barStyle={tabBarStyle}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color }) => {
+            const iconColor: string = focused ? "red" : "black";
+            const iconName: FeatherIconName =
+              TAB_BAR_ICON_NAMES[route.name as keyof NavigationIcons];
+
+            return <Feather name={iconName} size={24} color={iconColor} />;
+          },
+        })}
+      >
         <Tab.Screen
-          name={t("dualis")}
+          name="dualis"
           component={DualisNavigator}
-          options={{
-            tabBarIcon: () => <Feather name="home" size={24} color="red" />,
-          }}
+          options={{ tabBarLabel: getTabBarLabel("dualis") }}
         />
         <Tab.Screen
-          name={t("cafeteria")}
+          name="cafeteria"
           component={RestaurantNavigator}
-          options={{
-            tabBarIcon: () => <Feather name="coffee" size={24} color="red" />,
-          }}
+          options={{ tabBarLabel: getTabBarLabel("cafeteria") }}
         />
         <Tab.Screen
-          name={t("lectures")}
+          name="calendar"
           component={CalendarNavigator}
-          options={{
-            tabBarIcon: () => <Feather name="calendar" size={24} color="red" />,
-          }}
+          options={{ tabBarLabel: getTabBarLabel("lectures") }}
         />
         <Tab.Screen
-          name={t("more")}
+          name="more"
           component={MoreNavigator}
-          options={{
-            tabBarIcon: () => (
-              <Feather name="more-horizontal" size={24} color="red" />
-            ),
-          }}
+          options={{ tabBarLabel: getTabBarLabel("more") }}
         />
       </Tab.Navigator>
     </NavigationContainer>
