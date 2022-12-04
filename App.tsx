@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./src/infrastructure/navigation/Navigation";
 import { useFonts } from "@expo-google-fonts/source-sans-pro";
+import "./src/services/i18next/i18next.config";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
