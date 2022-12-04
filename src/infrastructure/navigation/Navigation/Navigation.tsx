@@ -30,6 +30,7 @@ const Navigation = () => {
     <NavigationContainer>
       <Tab.Navigator
         barStyle={tabBarStyle(colors)}
+        activeColor={colors.accent}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
             const iconColor: string = focused
@@ -45,7 +46,9 @@ const Navigation = () => {
         <Tab.Screen
           name="dualis"
           component={DualisNavigator}
-          options={{ tabBarLabel: getTabBarLabel("dualis") }}
+          options={{
+            tabBarLabel: getTabBarLabel("dualis"),
+          }}
         />
         <Tab.Screen
           name="cafeteria"
