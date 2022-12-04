@@ -1,23 +1,40 @@
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import {
   generalButtonStyle,
   containedVariantStyle,
   outlinedVariantStyle,
   textVariantStyle,
-} from "./buttonStyles";
+} from "./button.styles";
+import useMetadata from "../../hooks/useMetadata";
+import { IColors } from "../../styles/colors.types";
 
-const getButtonStyle = (variant: string) => {
-  if (variant === "text") return textVariantStyle;
-  if (variant === "contained") return containedVariantStyle;
-  if (variant === "outlined") return outlinedVariantStyle;
+const getButtonStyle = (variant: string, colors: IColors) => {
+  if (variant === "text")
+    return {
+      ...textVariantStyle,
+      text: {
+        color: colors.accent,
+      },
+    };
+  if (variant === "contained")
+    return {
+      ...containedVariantStyle,
+      container: {
+        ...containedVariantStyle.container,
+        backgroundColor: colors.accent,
+      },
+      text: { color: colors.lightText },
+    };
+  if (variant === "outlined")
+    return {
+      ...outlinedVariantStyle,
+      container: {
+        ...outlinedVariantStyle.container,
+        borderColor: colors.accent,
+      },
+      text: { color: colors.accent },
+    };
 
   return null;
 };
@@ -29,10 +46,11 @@ const Button: React.FC<IButtonTypes> = ({
   onClick = () => null,
   children,
 }) => {
-  const variantButtonStyle = getButtonStyle(variant);
+  const { colors } = useMetadata();
+  const variantButtonStyle = getButtonStyle(variant, colors);
 
   return (
-    <TouchableOpacity onPress={onClick}>
+    <TouchableOpacity onPress={onClick} activeOpacity={0.3}>
       <View
         style={[variantButtonStyle?.container, generalButtonStyle.container]}
       >
