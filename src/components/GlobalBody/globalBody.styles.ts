@@ -1,5 +1,11 @@
+import { Dimensions } from "react-native";
+import {
+  HEADER_HEIGHT,
+  TAB_BAR_HEIGHT,
+} from "../../infrastructure/navigation/Navigation/config";
+
 export const globalBodyStyles = {
   paddingVertical: 10,
   paddingHorizontal: 20,
-  flex: 1,
+  height: Dimensions.get("window").height - HEADER_HEIGHT - TAB_BAR_HEIGHT,
 };

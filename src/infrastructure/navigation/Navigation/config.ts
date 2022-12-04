@@ -6,6 +6,9 @@ import typography from "../../../constants/typography";
 import useMetadata from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 
+export const TAB_BAR_HEIGHT = 97;
+export const HEADER_HEIGHT = 93;
+
 export const headerConfig = (): StackNavigationOptions => {
   const { colors } = useMetadata();
 
@@ -13,6 +16,7 @@ export const headerConfig = (): StackNavigationOptions => {
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     headerMode: "screen",
     headerStyle: {
+      height: HEADER_HEIGHT,
       backgroundColor: colors.accent,
       shadowColor: "transparent",
     },

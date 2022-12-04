@@ -1,7 +1,9 @@
+import { TAB_BAR_HEIGHT } from "./config";
+
 export const tabBarStyle = (colors: IColors) => {
   return {
     backgroundColor: colors.primary,
-
+    height: TAB_BAR_HEIGHT,
     padding: 5,
     shadowColor: "#000",
     shadowOffset: {
