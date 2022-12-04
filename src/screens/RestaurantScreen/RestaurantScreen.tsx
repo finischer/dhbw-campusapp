@@ -1,11 +1,12 @@
-import { View, Text } from "react-native";
 import React from "react";
+import GlobalBody from "../../components/GlobalBody";
+import RegularText from "../../components/RegularText";
 
 const RestaurantScreen = () => {
   return (
-    <View>
-      <Text>RestaurantScreen</Text>
-    </View>
+    <GlobalBody>
+      <RegularText>RestaurantScreen</RegularText>
+    </GlobalBody>
   );
 };
 

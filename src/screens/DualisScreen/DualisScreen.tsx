@@ -1,11 +1,12 @@
-import { View, Text } from "react-native";
 import React from "react";
+import GlobalBody from "../../components/GlobalBody";
+import RegularText from "../../components/RegularText";
 
 const DualisScreen = () => {
   return (
-    <View>
-      <Text>DualisScreen</Text>
-    </View>
+    <GlobalBody>
+      <RegularText>DualisScreen</RegularText>
+    </GlobalBody>
   );
 };
 
