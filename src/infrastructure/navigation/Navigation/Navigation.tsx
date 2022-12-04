@@ -9,9 +9,9 @@ import { tabBarStyle } from "./navigation.styles";
 import { Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { TAB_BAR_ICON_NAMES } from "./config";
-import { NavigationIcons } from "./navigation.types";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import useMetadata from "../../../hooks/useMetadata";
+import { INavigationIcons } from "./navigation.types";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -36,7 +36,7 @@ const Navigation = () => {
               ? colors.accent
               : colors.secondary;
             const iconName: FeatherIconName =
-              TAB_BAR_ICON_NAMES[route.name as keyof NavigationIcons];
+              TAB_BAR_ICON_NAMES[route.name as keyof INavigationIcons];
 
             return <Feather name={iconName} size={24} color={iconColor} />;
           },

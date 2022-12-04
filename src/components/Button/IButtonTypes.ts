@@ -1,5 +1,7 @@
+type IButtonVariants = "text" | "contained" | "outlined";
+
 type IButtonTypes = {
-  variant: "text" | "contained" | "outlined";
+  variant: IButtonVariants;
   leftIcon?: any;
   rightIcon?: any;
   onClick?: () => void;

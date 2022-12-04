@@ -1,4 +1,4 @@
-export type IColors = {
+type IColors = {
   primary: string;
   secondary: string;
   accent: string;

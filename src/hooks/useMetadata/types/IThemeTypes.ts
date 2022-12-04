@@ -1,1 +1,1 @@
-export type IThemeTypes = "light" | "dark" | "system";
+type IThemeTypes = "light" | "dark" | "system";

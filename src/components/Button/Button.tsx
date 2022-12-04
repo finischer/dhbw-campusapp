@@ -7,36 +7,38 @@ import {
   textVariantStyle,
 } from "./button.styles";
 import useMetadata from "../../hooks/useMetadata";
-import { IColors } from "../../constants/colors/colors.types";
 
-const getButtonStyle = (variant: string, colors: IColors) => {
-  if (variant === "text")
-    return {
-      ...textVariantStyle,
-      text: {
-        color: colors.accent,
-      },
-    };
-  if (variant === "contained")
-    return {
-      ...containedVariantStyle,
-      container: {
-        ...containedVariantStyle.container,
-        backgroundColor: colors.accent,
-      },
-      text: { color: colors.lightText },
-    };
-  if (variant === "outlined")
-    return {
-      ...outlinedVariantStyle,
-      container: {
-        ...outlinedVariantStyle.container,
-        borderColor: colors.accent,
-      },
-      text: { color: colors.accent },
-    };
+const getButtonStyle = (variant: IButtonVariants, colors: IColors) => {
+  switch (variant) {
+    case "text":
+      return {
+        ...textVariantStyle,
+        text: {
+          color: colors.accent,
+        },
+      };
+    case "contained":
+      return {
+        ...containedVariantStyle,
+        container: {
+          ...containedVariantStyle.container,
+          backgroundColor: colors.accent,
+        },
+        text: { color: colors.lightText },
+      };
 
-  return null;
+    case "outlined":
+      return {
+        ...outlinedVariantStyle,
+        container: {
+          ...outlinedVariantStyle.container,
+          borderColor: colors.accent,
+        },
+        text: { color: colors.accent },
+      };
+    default:
+      return null;
+  }
 };
 
 const Button: React.FC<IButtonTypes> = ({

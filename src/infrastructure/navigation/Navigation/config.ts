@@ -4,7 +4,7 @@ import {
 } from "@react-navigation/stack";
 import typography from "../../../constants/typography";
 import useMetadata from "../../../hooks/useMetadata";
-import { NavigationIcons } from "./navigation.types";
+import { INavigationIcons } from "./navigation.types";
 
 export const headerConfig = (): StackNavigationOptions => {
   const { colors } = useMetadata();
@@ -27,7 +27,7 @@ export const headerConfig = (): StackNavigationOptions => {
 };
 
 // Until now only FeatherIcons allowed
-export const TAB_BAR_ICON_NAMES: NavigationIcons = {
+export const TAB_BAR_ICON_NAMES: INavigationIcons = {
   dualis: "home",
   cafeteria: "coffee",
   calendar: "calendar",

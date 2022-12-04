@@ -1,5 +1,5 @@
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 
-export type NavigationIcons = {
+export type INavigationIcons = {
   [key: string]: FeatherIconName;
 };

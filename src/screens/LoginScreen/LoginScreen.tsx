@@ -1,9 +1,12 @@
 import { View, Text } from "react-native";
+import Button from "../../components/Button/Button";
 
 const LoginScreen = () => {
   return (
     <View>
-      <Text>LoginScreen</Text>
+      <Button variant="text">LoginScreen</Button>
+      <Button variant="outlined">LoginScreen</Button>
+      <Button variant="contained">LoginScreen</Button>
     </View>
   );
 };
