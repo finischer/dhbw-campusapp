@@ -11,10 +11,13 @@ import { useTranslation } from "react-i18next";
 import { TAB_BAR_ICON_NAMES } from "./config";
 import { NavigationIcons } from "./navigation.types";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
+import useMetadata from "../../../hooks/useMetadata";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const Navigation = () => {
+  const { colors } = useMetadata();
+
   const { t } = useTranslation("navigation");
 
   const getTabBarLabel = (name: string) => {
@@ -26,10 +29,12 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        barStyle={tabBarStyle}
+        barStyle={tabBarStyle(colors)}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
-            const iconColor: string = focused ? "red" : "black";
+            const iconColor: string = focused
+              ? colors.accent
+              : colors.secondary;
             const iconName: FeatherIconName =
               TAB_BAR_ICON_NAMES[route.name as keyof NavigationIcons];
 
