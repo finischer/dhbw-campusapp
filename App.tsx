@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./src/infrastructure/navigation/Navigation";
 import { useFonts } from "@expo-google-fonts/source-sans-pro";
+import { StatusBar } from "expo-status-bar";
+
 import "./src/services/i18next/i18next.config";
 
 export default function App() {
@@ -17,7 +19,12 @@ export default function App() {
     );
   }
 
-  return <Navigation />;
+  return (
+    <>
+      <StatusBar style="light" />
+      <Navigation />
+    </>
+  );
 }
 
 // const { login, logout, getAllGrades, getSemesterInformation, args, cookies } =
