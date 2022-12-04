@@ -1,3 +1,5 @@
+import { IColors } from "./colors.types";
+
 const Colors = {
   red600: "#D1001A",
   red500: "#E2001A",
@@ -10,20 +12,26 @@ const Colors = {
   white: "#eff1f2",
 };
 
-const darkModeColors = {
+const darkModeColors: IColors = {
   primary: Colors.gray700,
   secondary: Colors.gray400,
   accent: Colors.red600,
   container: Colors.gray600,
   success: Colors.green600,
+  lightText: Colors.white,
+  darkText: Colors.gray700,
+  error: Colors.red600,
 };
 
-const lightModeColors = {
+const lightModeColors: IColors = {
   primary: Colors.white,
   secondary: Colors.gray600,
   accent: Colors.red500,
   container: Colors.gray400,
   success: Colors.green500,
+  lightText: Colors.white,
+  darkText: Colors.gray700,
+  error: Colors.red600,
 };
 
 export { darkModeColors, lightModeColors };
