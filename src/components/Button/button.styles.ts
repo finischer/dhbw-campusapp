@@ -1,20 +1,26 @@
-export const generalButtonStyle = {
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native";
+
+export const generalButtonStyle = StyleSheet.create({
   container: {
-    paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 8,
-    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
-};
+  text: {
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
 
-export const textVariantStyle = {
+export const textVariantStyle = StyleSheet.create({
   container: {},
   text: {
     color: "green",
   },
-};
+});
 
-export const containedVariantStyle = {
+export const containedVariantStyle = StyleSheet.create({
   container: {
     padding: 1,
     backgroundColor: "green",
@@ -22,9 +28,9 @@ export const containedVariantStyle = {
   text: {
     color: "white",
   },
-};
+});
 
-export const outlinedVariantStyle = {
+export const outlinedVariantStyle = StyleSheet.create({
   container: {
     borderColor: "green",
     borderWidth: 1,
@@ -32,4 +38,4 @@ export const outlinedVariantStyle = {
   text: {
     color: "green",
   },
-};
+});
