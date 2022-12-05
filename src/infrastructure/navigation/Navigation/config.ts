@@ -2,12 +2,14 @@ import {
   CardStyleInterpolators,
   StackNavigationOptions,
 } from "@react-navigation/stack";
+import { Dimensions } from "react-native";
+import { WINDOW_HEIGHT } from "../../../constants/device/device";
 import typography from "../../../constants/typography";
 import useMetadata from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 
-export const TAB_BAR_HEIGHT = 97;
-export const HEADER_HEIGHT = 93;
+export const TAB_BAR_HEIGHT = WINDOW_HEIGHT * 0.1;
+export const HEADER_HEIGHT = WINDOW_HEIGHT * 0.1;
 
 export const headerConfig = (): StackNavigationOptions => {
   const { colors } = useMetadata();
