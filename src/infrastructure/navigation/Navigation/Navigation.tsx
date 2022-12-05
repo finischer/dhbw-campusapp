@@ -42,6 +42,7 @@ const Navigation = () => {
             return <Feather name={iconName} size={24} color={iconColor} />;
           },
         })}
+        keyboardHidesNavigationBar={false} // important!
       >
         <Tab.Screen
           name="dualis"
