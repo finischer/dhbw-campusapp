@@ -67,7 +67,14 @@ const useDualis = () => {
     return semesterInformation;
   };
 
-  return { login, logout, getAllGrades, getSemesterInformation, args, cookies };
+  return {
+    login,
+    logout,
+    getAllGrades,
+    getSemesterInformation,
+    args,
+    cookies,
+  };
 };
 
 export default useDualis;
