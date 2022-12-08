@@ -1,7 +1,7 @@
-import { View, SafeAreaView } from "react-native";
+import { ViewStyle, TextStyle, ImageStyle } from "react-native";
 
 export type GlobalBodyTypes = {
   children: React.ReactNode;
   safeAreaView?: Boolean;
-  style?: View | SafeAreaView | {};
+  style?: ViewStyle | TextStyle | ImageStyle | {};
 };

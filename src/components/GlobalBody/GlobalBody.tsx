@@ -15,14 +15,16 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
 
   if (safeAreaView) {
     return (
-      <SafeAreaView style={[globalBodyStyles, localGlobalBodyStyles, style]}>
+      <SafeAreaView
+        style={[globalBodyStyles.container, localGlobalBodyStyles, style]}
+      >
         {children}
       </SafeAreaView>
     );
   }
 
   return (
-    <View style={[globalBodyStyles, localGlobalBodyStyles, style]}>
+    <View style={[globalBodyStyles.container, localGlobalBodyStyles, style]}>
       {children}
     </View>
   );
