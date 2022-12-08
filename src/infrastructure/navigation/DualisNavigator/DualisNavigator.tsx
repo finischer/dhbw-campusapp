@@ -16,22 +16,36 @@ const DualisNavigator = () => {
   };
 
   if (!accessGranted)
-    return <LoginScreen setAccessGranted={setAccessGranted} />;
+    return (
+      <DualisStack.Navigator screenOptions={navigationHeaderConfig}>
+        <DualisStack.Screen
+          name="LoginScreen"
+          options={{
+            headerTitle: "Dualis",
+            animationTypeForReplace: "pop",
+          }}
+        >
+          {() => <LoginScreen setAccessGranted={setAccessGranted} />}
+        </DualisStack.Screen>
+      </DualisStack.Navigator>
+    );
 
   return (
     <DualisStack.Navigator screenOptions={navigationHeaderConfig}>
-      <DualisStack.Screen
-        name="DualisHomeScreen"
-        options={{
-          headerTitle: "Dualis",
-          headerBackTitleVisible: false,
-          gestureEnabled: false,
-          headerLeft: () => null,
-          headerRight: () => <LogoutButton onClick={handleLogout} />,
-        }}
-      >
-        {() => <DualisScreen setAccessGranted={setAccessGranted} />}
-      </DualisStack.Screen>
+      <DualisStack.Group>
+        <DualisStack.Screen
+          name="DualisHomeScreen"
+          options={{
+            headerTitle: "Dualis",
+            headerBackTitleVisible: false,
+            gestureEnabled: false,
+            headerLeft: () => null,
+            headerRight: () => <LogoutButton onClick={handleLogout} />,
+          }}
+        >
+          {() => <DualisScreen setAccessGranted={setAccessGranted} />}
+        </DualisStack.Screen>
+      </DualisStack.Group>
     </DualisStack.Navigator>
   );
 };
