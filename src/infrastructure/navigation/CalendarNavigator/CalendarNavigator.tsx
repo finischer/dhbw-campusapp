@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const CalendarNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={headerConfig}>
+    <Stack.Navigator screenOptions={headerConfig()}>
       <Stack.Screen
         name="CalendarScreen"
         component={CalendarScreen}

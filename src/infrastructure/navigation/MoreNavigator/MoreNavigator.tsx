@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const MoreNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={headerConfig}>
+    <Stack.Navigator screenOptions={headerConfig()}>
       <Stack.Screen
         name="MoreScreen"
         component={MoreScreen}

@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 const RestaurantNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={headerConfig}>
+    <Stack.Navigator screenOptions={headerConfig()}>
       <Stack.Screen
         name="RestaurantScreen"
         component={RestaurantScreen}
