@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import {
   generalButtonStyle,
@@ -7,6 +7,8 @@ import {
   textVariantStyle,
 } from "./button.styles";
 import useMetadata from "../../hooks/useMetadata";
+import { IButtonTypes, IButtonVariants } from "./IButtonTypes";
+import TouchableOpacity from "../TouchableOpacity";
 
 const getButtonStyle = (variant: IButtonVariants, colors: IColors) => {
   switch (variant) {
@@ -44,7 +46,6 @@ const getButtonStyle = (variant: IButtonVariants, colors: IColors) => {
 const SMALL_SIZE = 42;
 const MEDIUM_SIZE = 48;
 const LARGE_SIZE = 60;
-const ACTIVE_OPACITY = 0.7;
 
 const Button: React.FC<IButtonTypes> = ({
   variant,
@@ -71,7 +72,7 @@ const Button: React.FC<IButtonTypes> = ({
   };
 
   return (
-    <TouchableOpacity onPress={onClick} activeOpacity={ACTIVE_OPACITY}>
+    <TouchableOpacity onPress={onClick}>
       <View
         style={[
           variantButtonStyle?.container,
