@@ -1,9 +1,4 @@
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  TextInput,
-} from "react-native";
+import { View, KeyboardAvoidingView } from "react-native";
 import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
 import Input from "../../components/Input";
@@ -13,10 +8,12 @@ import useDualis from "../../hooks/useDualis";
 import { HEADER_HEIGHT } from "../../infrastructure/navigation/Navigation/config";
 import { loginScreenStyles } from "./loginScreen.styles";
 import { ILoginScreenProps } from "./loginScreen.types";
-import { StackActions } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const { login } = useDualis();
+  const { t } = useTranslation("loginscreen");
 
   const handleLogin = async (username: string = "", password: string = "") => {
     setAccessGranted(true);
@@ -49,13 +46,17 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
         </View>
 
         <View style={loginScreenStyles.inputFields}>
-          <Input label="Email" keyboardType="email-address" />
-          <Input label="Passwort" secureTextEntry={true} />
+          <Input
+            label={t("email")}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          <Input label={t("password")} secureTextEntry={true} />
         </View>
 
         <View style={loginScreenStyles.loginButton}>
           <Button variant="contained" onClick={handleLogin}>
-            Anmelden
+            {t("login")}
           </Button>
         </View>
       </KeyboardAvoidingView>
