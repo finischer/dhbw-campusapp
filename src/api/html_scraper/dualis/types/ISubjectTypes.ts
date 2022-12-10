@@ -1,5 +1,6 @@
 import { IExamTypes } from "./IExamTypes";
 
+// TODO: Add subjectId
 export type ISubjectTypes = {
   subjectNr: string;
   subjectName: string;
