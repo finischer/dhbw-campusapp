@@ -1,1 +1,1 @@
-export { default } from "./useDualis";
+export { DualisProvider, useDualis } from "./useDualis";
