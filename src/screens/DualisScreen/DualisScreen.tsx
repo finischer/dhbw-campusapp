@@ -3,7 +3,6 @@ import { FlatList, View } from "react-native";
 import { useQuery } from "react-query";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
 import { ISubjectTypes } from "../../api/html_scraper/dualis/types/ISubjectTypes";
-import { IResponseTypes } from "../../api/types/IResponseTypes";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
