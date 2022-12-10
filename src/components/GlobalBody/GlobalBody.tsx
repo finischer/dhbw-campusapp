@@ -3,6 +3,7 @@ import React from "react";
 import { GlobalBodyTypes } from "./globalBody.types";
 import { globalBodyStyles } from "./globalBody.styles";
 import useMetadata from "../../hooks/useMetadata";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 const GlobalBody: React.FC<GlobalBodyTypes> = ({
   children,
@@ -25,7 +26,9 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
 
   return (
     <View style={[globalBodyStyles.container, localGlobalBodyStyles, style]}>
-      {children}
+      <Animated.View entering={FadeIn} exiting={FadeOut}>
+        {children}
+      </Animated.View>
     </View>
   );
 };
