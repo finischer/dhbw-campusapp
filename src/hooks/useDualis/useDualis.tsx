@@ -3,7 +3,7 @@ import { _auth, _logout } from "../../api/dualis/dualisConnector";
 import { DualisScraperController } from "../../api/html_scraper/dualis/DualisScraperController";
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
-import { IErrorTypes } from "../../api/types/IErrorTypes";
+import { IResponseTypes } from "../../api/types/IResponseTypes";
 import { IDualisContext, IDualisUser } from "./useDualis.types";
 
 const DualisContext = React.createContext<IDualisContext | undefined>(
@@ -60,9 +60,17 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAllGrades = async () => {
-    if (!dualisScraperController) return;
-    const res: ISemesterTypes[] | IErrorTypes =
-      await dualisScraperController.getAllGrades();
+    if (!dualisScraperController) {
+      const res: IResponseTypes = {
+        msg: "Scrap grades failed. DualisScraperController is undefined",
+        status: 401,
+        data: undefined,
+      };
+
+      return res;
+    }
+
+    const res: IResponseTypes = await dualisScraperController.getAllGrades();
 
     return res;
   };

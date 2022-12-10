@@ -1,6 +1,6 @@
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
-import { IErrorTypes } from "../../api/types/IErrorTypes";
+import { IResponseTypes } from "../../api/types/IResponseTypes";
 
 export type IDualisUser = {
   username: string;
@@ -10,7 +10,7 @@ export type IDualisUser = {
 export type IDualisContext = {
   login(username: string, password: string): Promise<boolean>;
   logout(): void;
-  getAllGrades(): Promise<ISemesterTypes[] | IErrorTypes | undefined>;
+  getAllGrades(): Promise<IResponseTypes>;
   getSemesterInformation(): Promise<ISemesterOptionsTypes | undefined>;
   args: string | null | undefined;
   cookies: string | null | undefined;

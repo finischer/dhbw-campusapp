@@ -3,17 +3,18 @@ import { FlatList, View } from "react-native";
 import { useQuery } from "react-query";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
 import { ISubjectTypes } from "../../api/html_scraper/dualis/types/ISubjectTypes";
+import { IResponseTypes } from "../../api/types/IResponseTypes";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
-import useDualis from "../../hooks/useDualis";
-import { IDualisScreenProps } from "./dualisScreen.types";
+import { useDualis } from "../../hooks/useDualis";
 
-const DualisScreen = ({ setAccessGranted }: IDualisScreenProps) => {
+const DualisScreen = () => {
   const { getAllGrades } = useDualis();
 
   const fetchGrades = async () => {
-    return await getAllGrades();
+    const { data: grades } = await getAllGrades();
+    return grades;
   };
 
   const { isLoading, isFetching, isError, data } = useQuery(
@@ -45,11 +46,15 @@ const DualisScreen = ({ setAccessGranted }: IDualisScreenProps) => {
   return (
     <GlobalBody>
       <RegularText>DualisScreen</RegularText>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Subject subject={item} />}
-        keyExtractor={(item) => item.semester}
-      />
+      {!data ? (
+        <RegularText>Noten konnte nicht abgerufen werden</RegularText>
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <Subject subject={item} />}
+          keyExtractor={(item) => item.semester}
+        />
+      )}
     </GlobalBody>
   );
 };

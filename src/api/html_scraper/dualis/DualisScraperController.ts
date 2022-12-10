@@ -1,3 +1,4 @@
+import { IResponseTypes } from "./../../types/IResponseTypes";
 import axios from "axios";
 import {
   _generateCourseResultsUrl,
@@ -38,7 +39,11 @@ export class DualisScraperController {
     const res = await axios.get(url, this.axiosConfig);
 
     if (res.status !== 200) {
-      return { msg: "Error: scrap grades failed", status: res.status };
+      return {
+        msg: "Error: scrap grades failed",
+        status: res.status,
+        data: undefined,
+      };
     }
 
     // get all semesters
@@ -81,7 +86,13 @@ export class DualisScraperController {
       semesterList.push(newSemester);
     }
 
-    return semesterList;
+    const response: IResponseTypes = {
+      msg: "Successful",
+      status: 200,
+      data: semesterList,
+    };
+
+    return response;
   }
 
   async getSemesterInformation() {

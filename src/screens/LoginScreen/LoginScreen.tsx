@@ -5,7 +5,7 @@ import GlobalBody from "../../components/GlobalBody";
 import Input from "../../components/Input";
 import RegularText from "../../components/RegularText";
 import typography from "../../constants/typography";
-import useDualis from "../../hooks/useDualis";
+import { useDualis } from "../../hooks/useDualis";
 import { HEADER_HEIGHT } from "../../infrastructure/navigation/Navigation/config";
 import { loginScreenStyles } from "./loginScreen.styles";
 import { ILoginFormStateTypes, ILoginScreenProps } from "./loginScreen.types";
