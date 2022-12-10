@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import Navigation from "./src/infrastructure/navigation/Navigation";
 import { useFonts } from "@expo-google-fonts/source-sans-pro";
 import { StatusBar } from "expo-status-bar";
