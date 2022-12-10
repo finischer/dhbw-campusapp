@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { resolveModuleName } from "typescript";
 import { _auth, _logout } from "../../api/dualis/dualisConnector";
 import { DualisScraperController } from "../../api/html_scraper/dualis/DualisScraperController";
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
@@ -11,7 +10,7 @@ const DualisContext = React.createContext<IDualisContext | undefined>(
   undefined
 );
 
-export const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
+const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [args, setArgs] = useState<string | null | undefined>(null);
@@ -104,4 +103,4 @@ const useDualis = () => {
   return context;
 };
 
-export default useDualis;
+export { useDualis, DualisProvider };
