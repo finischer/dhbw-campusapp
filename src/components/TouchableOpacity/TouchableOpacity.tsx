@@ -6,7 +6,7 @@ const ACTIVE_OPACITY = 0.7;
 
 const TouchableOpacity = ({ children, ...props }: ITouchableOpacityProps) => {
   return (
-    <TsOpacity {...props} activeOpacity={ACTIVE_OPACITY}>
+    <TsOpacity activeOpacity={ACTIVE_OPACITY} {...props}>
       {children}
     </TsOpacity>
   );

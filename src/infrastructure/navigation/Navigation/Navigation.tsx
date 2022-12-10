@@ -12,6 +12,7 @@ import { headerConfig, TAB_BAR_ICON_NAMES } from "./config";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import useMetadata from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
+import FeatherIcon from "../../../components/FeatherIcon/FeatherIcon";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -39,7 +40,7 @@ const Navigation = () => {
             const iconName: FeatherIconName =
               TAB_BAR_ICON_NAMES[route.name as keyof INavigationIcons];
 
-            return <Feather name={iconName} size={24} color={iconColor} />;
+            return <FeatherIcon name={iconName} size={24} color={iconColor} />;
           },
         })}
         keyboardHidesNavigationBar={false} // important!

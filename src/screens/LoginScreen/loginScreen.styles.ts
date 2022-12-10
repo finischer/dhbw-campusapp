@@ -14,11 +14,19 @@ export const loginScreenStyles = StyleSheet.create({
     height: 150,
     justifyContent: "space-around",
   },
+  passwordContainer: {
+    flexDirection: "row",
+  },
   loginButton: {
     marginTop: 50,
-    flex: 1,
+    minHeight: 50,
+  },
+  loaderContainer: {
     justifyContent: "center",
-    flexDirection: "row",
     alignItems: "center",
+    flex: 1,
+  },
+  errorContainer: {
+    minHeight: 20,
   },
 });

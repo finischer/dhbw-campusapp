@@ -3,6 +3,7 @@ import React from "react";
 import { IRegularTextTypes, IRegularTextVariants } from "./regularText.types";
 import useMetadata from "../../hooks/useMetadata";
 import typography from "../../constants/typography";
+import { IColors } from "../../constants/colors/colors.types";
 
 const _getTextColor = (variant: IRegularTextVariants, colors: IColors) => {
   if (variant === "light") return colors.lightText;

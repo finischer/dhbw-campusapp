@@ -1,4 +1,4 @@
-import { GestureResponderEvent } from "react-native";
+import { ViewStyle } from "react-native";
 
 export type IButtonVariants = "text" | "contained" | "outlined";
 type IButtonSizes = "small" | "medium" | "large";
@@ -10,4 +10,5 @@ export type IButtonTypes = {
   onClick?: any;
   children: React.ReactNode;
   size?: IButtonSizes;
+  style?: ViewStyle;
 };

@@ -7,6 +7,6 @@ export type IRegularTextTypes = {
   accentColor?: Boolean;
   weight?: TextStyle["fontWeight"];
   size?: TextStyle["fontSize"];
-  style?: TextStyle;
+  style?: TextStyle | TextStyle[] | {};
   children: React.ReactNode;
 };

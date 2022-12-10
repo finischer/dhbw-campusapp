@@ -9,6 +9,7 @@ import {
 import useMetadata from "../../hooks/useMetadata";
 import { IButtonTypes, IButtonVariants } from "./IButtonTypes";
 import TouchableOpacity from "../TouchableOpacity";
+import { IColors } from "../../constants/colors/colors.types";
 
 const getButtonStyle = (variant: IButtonVariants, colors: IColors) => {
   switch (variant) {
@@ -54,6 +55,7 @@ const Button: React.FC<IButtonTypes> = ({
   onClick = () => null,
   children,
   size = "medium",
+  style = {},
 }) => {
   const { colors } = useMetadata();
   const variantButtonStyle = getButtonStyle(variant, colors);
@@ -78,6 +80,7 @@ const Button: React.FC<IButtonTypes> = ({
           variantButtonStyle?.container,
           generalButtonStyle.container,
           { height: getButtonSize() },
+          style,
         ]}
       >
         {leftIcon}
