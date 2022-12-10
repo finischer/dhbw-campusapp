@@ -6,13 +6,12 @@ import RestaurantNavigator from "../RestaurantNavigator";
 import CalendarNavigator from "../CalendarNavigator";
 import MoreNavigator from "../MoreNavigator";
 import { tabBarStyle } from "./navigation.styles";
-import { Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { headerConfig, TAB_BAR_ICON_NAMES } from "./config";
+import { TAB_BAR_ICON_NAMES } from "./config";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import useMetadata from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
-import FeatherIcon from "../../../components/FeatherIcon/FeatherIcon";
+import FeatherIcon from "../../../components/FeatherIcon";
 
 const Tab = createMaterialBottomTabNavigator();
 

@@ -9,12 +9,10 @@ import useDualis from "../../hooks/useDualis";
 import { HEADER_HEIGHT } from "../../infrastructure/navigation/Navigation/config";
 import { loginScreenStyles } from "./loginScreen.styles";
 import { ILoginFormStateTypes, ILoginScreenProps } from "./loginScreen.types";
-import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader/Loader";
-import { Feather } from "@expo/vector-icons";
-import FeatherIcon from "../../components/FeatherIcon/FeatherIcon";
+import FeatherIcon from "../../components/FeatherIcon";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const [formState, setFormState] = useState<ILoginFormStateTypes>({
