@@ -32,11 +32,11 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
 
   const loginToDualis = async (email: string, password: string) => {
     setIsError(false);
-    const successful: boolean = await login(email, password);
-    // const successful: boolean = await login(
-    //   "s190628@student.dhbw-mannheim.de",
-    //   "2Fja9z5p4"
-    // );
+    // const successful: boolean = await login(email, password);
+    const successful: boolean = await login(
+      "s190628@student.dhbw-mannheim.de",
+      "2Fja9z5p4"
+    );
 
     if (successful) {
       setIsError(false);
@@ -65,9 +65,9 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   return (
     <GlobalBody style={loginScreenStyles.wrapperView}>
       <KeyboardAvoidingView
-        behavior="padding"
+        behavior="position"
         style={loginScreenStyles.contentView}
-        keyboardVerticalOffset={HEADER_HEIGHT + 200}
+        keyboardVerticalOffset={HEADER_HEIGHT + 250}
       >
         {/* LoginScreen Title */}
         <View style={loginScreenStyles.title}>
