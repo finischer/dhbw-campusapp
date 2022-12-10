@@ -72,6 +72,7 @@ export class DualisScraperController {
       );
 
       const newSemester: ISemesterTypes = {
+        semesterId,
         credits: "",
         gpa: "",
         semester: semesterName,
