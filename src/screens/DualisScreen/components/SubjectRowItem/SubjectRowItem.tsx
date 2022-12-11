@@ -3,7 +3,7 @@ import React from "react";
 import { ISubjectTypes } from "../../../../api/html_scraper/dualis/types/ISubjectTypes";
 import RegularText from "../../../../components/RegularText";
 import TouchableOpacity from "../../../../components/TouchableOpacity";
-import useMetadata from "../../../../hooks/useMetadata";
+import { useMetadata } from "../../../../hooks/useMetadata";
 import { subjectRowStyles } from "./subjectRowItem.styles";
 
 const SubjectRowItem = ({ subject }: { subject: ISubjectTypes }) => {

@@ -2,7 +2,7 @@ import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { IFeatherIconProps } from "./featherIcon.types";
 import TouchableOpacity from "../TouchableOpacity";
-import useMetadata from "../../hooks/useMetadata";
+import { useMetadata } from "../../hooks/useMetadata";
 
 const FeatherIcon = ({
   name,

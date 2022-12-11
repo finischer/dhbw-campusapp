@@ -105,7 +105,7 @@ const useDualis = () => {
   const context = useContext(DualisContext);
 
   if (context === undefined) {
-    throw Error("useCount must be used within DualisProvider");
+    throw Error("useDualis must be used within DualisProvider");
   }
 
   return context;

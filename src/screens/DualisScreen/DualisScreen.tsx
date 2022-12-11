@@ -5,7 +5,6 @@ import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
 import { useDualis } from "../../hooks/useDualis";
-import useMetadata from "../../hooks/useMetadata";
 import SubjectList from "./components/SubjectList/SubjectList";
 
 const DualisScreen = () => {

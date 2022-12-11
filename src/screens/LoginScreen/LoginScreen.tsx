@@ -13,8 +13,10 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader/Loader";
 import FeatherIcon from "../../components/FeatherIcon";
+import { useMetadata } from "../../hooks/useMetadata";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
+  const { isIOS, changeTheme } = useMetadata();
   const [formState, setFormState] = useState<ILoginFormStateTypes>({
     email: "",
     password: "",
@@ -24,7 +26,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const { t } = useTranslation("loginscreen");
 
   const [isError, setIsError] = useState(false);
-  const { isFetching, refetch } = useQuery(
+  const { isFetching, refetch: handleLogin } = useQuery(
     ["dualis-login"],
     () => loginToDualis(formState.email, formState.password),
     { enabled: false }
@@ -32,11 +34,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
 
   const loginToDualis = async (email: string, password: string) => {
     setIsError(false);
-    // const successful: boolean = await login(email, password);
-    const successful: boolean = await login(
-      "s190628@student.dhbw-mannheim.de",
-      "2Fja9z5p4"
-    );
+    const successful: boolean = await login(email, password);
 
     if (successful) {
       setIsError(false);
@@ -67,7 +65,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
       <KeyboardAvoidingView
         behavior="position"
         style={loginScreenStyles.contentView}
-        keyboardVerticalOffset={HEADER_HEIGHT + 250}
+        keyboardVerticalOffset={isIOS ? HEADER_HEIGHT + 250 : 0}
       >
         {/* LoginScreen Title */}
         <View style={loginScreenStyles.title}>
@@ -117,9 +115,11 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
               <Loader text="Du wirst angemeldet ..." />
             </View>
           ) : (
-            <Button variant="contained" onClick={refetch}>
-              {t("login")}
-            </Button>
+            <>
+              <Button variant="contained" onClick={handleLogin}>
+                {t("login")}
+              </Button>
+            </>
           )}
         </View>
       </KeyboardAvoidingView>

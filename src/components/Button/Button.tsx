@@ -6,7 +6,7 @@ import {
   outlinedVariantStyle,
   textVariantStyle,
 } from "./button.styles";
-import useMetadata from "../../hooks/useMetadata";
+import { useMetadata } from "../../hooks/useMetadata";
 import { IButtonTypes, IButtonVariants } from "./IButtonTypes";
 import TouchableOpacity from "../TouchableOpacity";
 import { IColors } from "../../constants/colors/colors.types";

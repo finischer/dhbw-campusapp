@@ -3,11 +3,9 @@ import React, { useState } from "react";
 import { IInputProps } from "./input.types";
 import { inputStyles } from "./input.styles";
 import RegularText from "../RegularText";
-import useMetadata from "../../hooks/useMetadata";
-import typography from "../../constants/typography";
+import { useMetadata } from "../../hooks/useMetadata";
 import Animated, {
   interpolate,
-  interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
   withTiming,

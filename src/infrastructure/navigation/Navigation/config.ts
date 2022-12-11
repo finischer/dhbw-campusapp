@@ -5,7 +5,7 @@ import {
 import { Dimensions } from "react-native";
 import { WINDOW_HEIGHT } from "../../../constants/device/device";
 import typography from "../../../constants/typography";
-import useMetadata from "../../../hooks/useMetadata";
+import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 
 export const TAB_BAR_HEIGHT = WINDOW_HEIGHT * 0.1;

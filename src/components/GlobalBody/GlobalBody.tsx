@@ -2,7 +2,7 @@ import { View, SafeAreaView } from "react-native";
 import React from "react";
 import { GlobalBodyTypes } from "./globalBody.types";
 import { globalBodyStyles } from "./globalBody.styles";
-import useMetadata from "../../hooks/useMetadata";
+import { useMetadata } from "../../hooks/useMetadata";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 const GlobalBody: React.FC<GlobalBodyTypes> = ({

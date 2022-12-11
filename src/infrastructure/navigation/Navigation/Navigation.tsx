@@ -9,14 +9,14 @@ import { tabBarStyle } from "./navigation.styles";
 import { useTranslation } from "react-i18next";
 import { TAB_BAR_ICON_NAMES } from "./config";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
-import useMetadata from "../../../hooks/useMetadata";
+import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 import FeatherIcon from "../../../components/FeatherIcon";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const Navigation = () => {
-  const { colors } = useMetadata();
+  const { colors, isAndroid } = useMetadata();
 
   const { t } = useTranslation("navigation");
 
@@ -42,7 +42,7 @@ const Navigation = () => {
             return <FeatherIcon name={iconName} size={24} color={iconColor} />;
           },
         })}
-        keyboardHidesNavigationBar={false} // important!
+        keyboardHidesNavigationBar={isAndroid ? true : false} // important!
       >
         <Tab.Screen
           name="dualis"

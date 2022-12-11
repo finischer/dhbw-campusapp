@@ -1,1 +1,1 @@
-export { default } from "./useMetadata";
+export { useMetadata, MetaDataProvider } from "./useMetadata";

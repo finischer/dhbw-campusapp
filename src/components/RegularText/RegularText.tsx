@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { IRegularTextTypes, IRegularTextVariants } from "./regularText.types";
-import useMetadata from "../../hooks/useMetadata";
+import { useMetadata } from "../../hooks/useMetadata";
 import typography from "../../constants/typography";
 import { IColors } from "../../constants/colors/colors.types";
 
