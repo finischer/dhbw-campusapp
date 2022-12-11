@@ -9,6 +9,7 @@ export type IButtonTypes = {
   rightIcon?: any;
   onClick?: any;
   children: React.ReactNode;
+  disabled?: boolean;
   size?: IButtonSizes;
   style?: ViewStyle;
 };
