@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
+import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
@@ -15,13 +16,18 @@ const DualisScreen = () => {
     return grades;
   };
 
-  const { isLoading, data } = useQuery("dualis-grades", fetchGrades);
+  const {
+    isLoading,
+    data,
+    isFetching,
+    refetch: handleFetchGrades,
+  } = useQuery("dualis-grades", fetchGrades);
 
   const subjects = data?.flatMap(
     (semester: ISemesterTypes) => semester.subjects
   );
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <GlobalBody style={{ alignItems: "center", justifyContent: "center" }}>
         <Loader text="Noten werden geladen ..." />
@@ -31,7 +37,9 @@ const DualisScreen = () => {
 
   return (
     <GlobalBody>
-      <RegularText>DualisScreen</RegularText>
+      <Button variant="outlined" onClick={handleFetchGrades}>
+        Aktualisieren
+      </Button>
       {!subjects ? (
         <RegularText>Noten konnte nicht abgerufen werden</RegularText>
       ) : (
