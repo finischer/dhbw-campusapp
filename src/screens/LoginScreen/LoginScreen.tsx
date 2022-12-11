@@ -16,7 +16,7 @@ import FeatherIcon from "../../components/FeatherIcon";
 import { useMetadata } from "../../hooks/useMetadata";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
-  const { isIOS, changeTheme } = useMetadata();
+  const { isIOS } = useMetadata();
   const [formState, setFormState] = useState<ILoginFormStateTypes>({
     email: "",
     password: "",
@@ -68,7 +68,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
         keyboardVerticalOffset={isIOS ? HEADER_HEIGHT + 250 : 0}
       >
         {/* LoginScreen Title */}
-        <View style={loginScreenStyles.title}>
+        <View style={loginScreenStyles.title} testID="loginScreen-title">
           <RegularText weight="bold" size={typography.h1}>
             Dualis
           </RegularText>
@@ -115,11 +115,13 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
               <Loader text="Du wirst angemeldet ..." />
             </View>
           ) : (
-            <>
-              <Button variant="contained" onClick={handleLogin}>
-                {t("login")}
-              </Button>
-            </>
+            <Button
+              variant="contained"
+              onClick={handleLogin}
+              disabled={!formState.email || !formState.password}
+            >
+              {t("login")}
+            </Button>
           )}
         </View>
       </KeyboardAvoidingView>
