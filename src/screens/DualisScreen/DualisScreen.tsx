@@ -1,12 +1,12 @@
 import React from "react";
-import { FlatList, View } from "react-native";
 import { useQuery } from "react-query";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
-import { ISubjectTypes } from "../../api/html_scraper/dualis/types/ISubjectTypes";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
 import { useDualis } from "../../hooks/useDualis";
+import useMetadata from "../../hooks/useMetadata";
+import SubjectList from "./components/SubjectList/SubjectList";
 
 const DualisScreen = () => {
   const { getAllGrades } = useDualis();
@@ -16,22 +16,10 @@ const DualisScreen = () => {
     return grades;
   };
 
-  const { isLoading, isFetching, isError, data } = useQuery(
-    "dualis-grades",
-    fetchGrades
-  );
+  const { isLoading, data } = useQuery("dualis-grades", fetchGrades);
 
-  const Subject = ({ subject }: { subject: ISemesterTypes }) => (
-    // TODO: change key to unique ID
-    <>
-      {subject.subjects.map((subject: ISubjectTypes) => (
-        <View key={subject.subjectNr + subject.subjectName}>
-          <RegularText>
-            {subject.subjectName} - {subject.subjectGrade}
-          </RegularText>
-        </View>
-      ))}
-    </>
+  const subjects = data?.flatMap(
+    (semester: ISemesterTypes) => semester.subjects
   );
 
   if (isLoading) {
@@ -45,14 +33,10 @@ const DualisScreen = () => {
   return (
     <GlobalBody>
       <RegularText>DualisScreen</RegularText>
-      {!data ? (
+      {!subjects ? (
         <RegularText>Noten konnte nicht abgerufen werden</RegularText>
       ) : (
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <Subject subject={item} />}
-          keyExtractor={(item) => item.semester}
-        />
+        <SubjectList subjects={subjects} />
       )}
     </GlobalBody>
   );
