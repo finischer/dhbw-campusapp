@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import "./src/services/i18next/i18next.config";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { DualisProvider } from "./src/hooks/useDualis/useDualis";
+import { MetaDataProvider } from "./src/hooks/useMetadata";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +27,10 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <DualisProvider>
-        <StatusBar style="light" />
-        <Navigation />
+        <MetaDataProvider>
+          <StatusBar style="light" />
+          <Navigation />
+        </MetaDataProvider>
       </DualisProvider>
     </QueryClientProvider>
   );
