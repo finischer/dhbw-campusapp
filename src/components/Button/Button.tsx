@@ -10,6 +10,12 @@ import { useMetadata } from "../../hooks/useMetadata";
 import { IButtonTypes, IButtonVariants } from "./IButtonTypes";
 import TouchableOpacity from "../TouchableOpacity";
 import { IColors } from "../../constants/colors/colors.types";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const getButtonStyle = (variant: IButtonVariants, colors: IColors) => {
   switch (variant) {
@@ -55,6 +61,7 @@ const Button: React.FC<IButtonTypes> = ({
   onClick = () => null,
   children,
   size = "medium",
+  disabled = false,
   style = {},
 }) => {
   const { colors } = useMetadata();
@@ -73,14 +80,28 @@ const Button: React.FC<IButtonTypes> = ({
     }
   };
 
+  const progress = useDerivedValue(() => {
+    return withTiming(disabled ? 0 : 1);
+  });
+
+  const animatedButtonStyle = useAnimatedStyle(() => {
+    1;
+    const opacity = interpolate(progress.value, [1, 0], [1, 0.3]);
+
+    return {
+      opacity,
+    };
+  });
+
   return (
-    <TouchableOpacity onPress={onClick}>
-      <View
+    <TouchableOpacity onPress={onClick} disabled={disabled}>
+      <Animated.View
         style={[
           variantButtonStyle?.container,
           generalButtonStyle.container,
           { height: getButtonSize() },
           style,
+          animatedButtonStyle,
         ]}
       >
         {leftIcon}
@@ -88,7 +109,7 @@ const Button: React.FC<IButtonTypes> = ({
           {children}
         </Text>
         {rightIcon}
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 };
