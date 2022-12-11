@@ -29,10 +29,6 @@ export class DualisScraperController {
     };
   }
 
-  #sessionValid() {
-    return this.args && this.cookies;
-  }
-
   async getAllGrades() {
     // url to semester overview
     const url = _generateCourseResultsUrl(this.args);
