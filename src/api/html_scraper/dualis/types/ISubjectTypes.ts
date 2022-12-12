@@ -7,6 +7,7 @@ export type ISubjectTypes = {
   subjectGrade: string;
   subjectCredits: string;
   subjectStatus: string;
+  semester: string;
   examsPath: string;
   exams: IExamTypes[];
 };

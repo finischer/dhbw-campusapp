@@ -1,5 +1,6 @@
 export type IColors = {
   primary: string;
+  primaryDarker: string;
   secondary: string;
   accent: string;
   success: string;
@@ -7,4 +8,5 @@ export type IColors = {
   lightText: string;
   darkText: string;
   error: string;
+  accentDark: string;
 };

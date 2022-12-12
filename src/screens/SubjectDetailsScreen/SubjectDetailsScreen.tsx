@@ -1,0 +1,62 @@
+import { View, SafeAreaView } from "react-native";
+import React from "react";
+import { useRoute } from "@react-navigation/native";
+import RegularText from "../../components/RegularText";
+import GlobalBody from "../../components/GlobalBody";
+import { subjectDetailsScreenStyle } from "./subjectDetailsScreen.styles";
+import ExamList from "./ExamList";
+import CloseButton from "../../components/CloseButton";
+import { IExamTypes } from "../../api/html_scraper/dualis/types/IExamTypes";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+
+const SubjectDetailsScreen = () => {
+  const { t } = useTranslation("dualisScreen");
+  const { params: subject }: any = useRoute();
+
+  const examList: IExamTypes[] = subject.exams.filter(
+    (exam: IExamTypes) => exam.examName && exam
+  ); // Exams without names are filtered out
+
+  if (!subject) return <RegularText>{t("noDetailsRetrieved")}</RegularText>;
+
+  return (
+    <>
+      <GlobalBody style={subjectDetailsScreenStyle.wrapperContainer}>
+        {/* Header View */}
+        <SafeAreaView style={subjectDetailsScreenStyle.headerContainer}>
+          <RegularText style={subjectDetailsScreenStyle.subjectNameText}>
+            {subject.subjectName}
+          </RegularText>
+          <RegularText style={subjectDetailsScreenStyle.semesterNameText}>
+            {subject.semester}
+          </RegularText>
+        </SafeAreaView>
+
+        {/* Exams View */}
+        <View style={subjectDetailsScreenStyle.examsContainer}>
+          <RegularText style={subjectDetailsScreenStyle.examsTitleText}>
+            {t("finalModuleRequirements")}
+          </RegularText>
+
+          <View style={subjectDetailsScreenStyle.examsList}>
+            {examList.length === 0 ? (
+              <RegularText style={subjectDetailsScreenStyle.emptyExamsListText}>
+                Es wurden noch keine Prüfungsleistungen eintragen
+              </RegularText>
+            ) : (
+              <ExamList exams={examList} />
+            )}
+          </View>
+        </View>
+
+        {/* Close Button */}
+        <View style={subjectDetailsScreenStyle.closeButtonContainer}>
+          <CloseButton />
+        </View>
+      </GlobalBody>
+    </>
+  );
+};
+
+export default SubjectDetailsScreen;

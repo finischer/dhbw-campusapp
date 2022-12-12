@@ -1,8 +1,8 @@
-import { TextStyle } from "react-native";
+import { TextInputProps, TextStyle } from "react-native";
 
 export type IRegularTextVariants = "light" | "dark";
 
-export type IRegularTextTypes = {
+export type IRegularTextTypes = Partial<TextInputProps> & {
   variant?: IRegularTextVariants | null | undefined;
   accentColor?: Boolean;
   weight?: TextStyle["fontWeight"];

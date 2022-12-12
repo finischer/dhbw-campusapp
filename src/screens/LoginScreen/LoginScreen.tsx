@@ -23,7 +23,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { login } = useDualis();
-  const { t } = useTranslation("loginscreen");
+  const { t } = useTranslation("loginScreen");
 
   const [isError, setIsError] = useState(false);
   const { isFetching, refetch: handleLogin } = useQuery(
@@ -65,7 +65,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
       <KeyboardAvoidingView
         behavior="position"
         style={loginScreenStyles.contentView}
-        keyboardVerticalOffset={isIOS ? HEADER_HEIGHT + 250 : 0}
+        keyboardVerticalOffset={isIOS ? HEADER_HEIGHT + 50 : 0}
       >
         {/* LoginScreen Title */}
         <View style={loginScreenStyles.title} testID="loginScreen-title">

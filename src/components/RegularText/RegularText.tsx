@@ -18,6 +18,7 @@ const RegularText: React.FC<IRegularTextTypes> = ({
   size = typography.body,
   children,
   style,
+  ...props
 }) => {
   const { colors } = useMetadata();
   const textColor = variant ? _getTextColor(variant, colors) : colors.secondary;
@@ -32,6 +33,7 @@ const RegularText: React.FC<IRegularTextTypes> = ({
         },
         style,
       ]}
+      {...props}
     >
       {children}
     </Text>

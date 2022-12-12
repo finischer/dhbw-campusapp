@@ -1,6 +1,6 @@
 import { ISubjectTypes } from "../../../../api/html_scraper/dualis/types/ISubjectTypes";
 
-export type IRenderItemProps = {
+export type ISubjectListRenderItemProps = {
   item: ISubjectTypes;
   index: number;
 };

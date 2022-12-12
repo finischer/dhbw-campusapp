@@ -1,8 +1,10 @@
 import { IColors } from "./colors.types";
 
 const Colors = {
+  red700: "#700310",
   red600: "#D1001A",
   red500: "#E2001A",
+  gray800: "#11191f",
   gray700: "#1A262E",
   gray600: "#293743",
   gray500: "#5D686E",
@@ -14,8 +16,10 @@ const Colors = {
 
 const darkModeColors: IColors = {
   primary: Colors.gray700,
+  primaryDarker: Colors.gray800,
   secondary: Colors.gray400,
   accent: Colors.red600,
+  accentDark: Colors.red700,
   container: Colors.gray600,
   success: Colors.green600,
   lightText: Colors.white,
@@ -25,8 +29,10 @@ const darkModeColors: IColors = {
 
 const lightModeColors: IColors = {
   primary: Colors.white,
+  primaryDarker: Colors.gray400,
   secondary: Colors.gray600,
   accent: Colors.red500,
+  accentDark: Colors.red600,
   container: Colors.gray400,
   success: Colors.green500,
   lightText: Colors.white,

@@ -54,7 +54,8 @@ export class DualisScraperController {
       //   this.axiosConfig
       // );
       const subjects: ISubjectTypes[] = await this.getAllSubjectsFromSemester(
-        semesterUrl
+        semesterUrl,
+        semesterName
       );
 
       const subjectsWithExams = await Promise.all(
@@ -115,7 +116,7 @@ export class DualisScraperController {
     return semesterOptions;
   }
 
-  async getAllSubjectsFromSemester(semesterUrl: string) {
+  async getAllSubjectsFromSemester(semesterUrl: string, semesterName: string) {
     const semesterHtml = await axios.get(semesterUrl, this.axiosConfig);
     const $ = cheerio.load(semesterHtml.data);
     const $subjects = $(".nb > tbody > tr");
@@ -135,6 +136,7 @@ export class DualisScraperController {
           subjectGrade: "",
           subjectCredits: "",
           subjectStatus: "",
+          semester: semesterName,
           examsPath: "",
           exams: [],
         };

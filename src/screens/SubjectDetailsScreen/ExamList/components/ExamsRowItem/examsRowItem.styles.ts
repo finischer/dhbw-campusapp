@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import typography from "../../../../constants/typography";
+import typography from "../../../../../constants/typography";
 
-export const subjectRowStyles = StyleSheet.create({
+export const examsRowStyles = StyleSheet.create({
   container: {
     paddingVertical: 10,
     paddingHorizontal: 10,
@@ -20,26 +20,22 @@ export const subjectRowStyles = StyleSheet.create({
   bottomContainer: {
     flexDirection: "row",
     alignItems: "stretch",
-    justifyContent: "space-between",
-    flex: 1,
-    width: "100%",
     marginTop: 10,
-    flexWrap: "wrap",
   },
   bottomText: {
     fontWeight: "400",
     paddingRight: 10,
     fontSize: typography.small * 1.1,
+    width: 150,
   },
   subjectStatusContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
   },
   statusIconContainer: {
-    left: -10,
+    position: "absolute",
+    right: -15,
   },
-  statusIcon: {},
   detailsButtonContainer: {
     justifyContent: "center",
   },

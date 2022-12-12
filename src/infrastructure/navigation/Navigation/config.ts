@@ -1,3 +1,4 @@
+import { tabBarStyle } from "./navigation.styles";
 import {
   CardStyleInterpolators,
   StackNavigationOptions,

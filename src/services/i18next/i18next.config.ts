@@ -11,7 +11,7 @@ const resources = {
 i18n.use(initReactI18next).init({
   compatibilityJSON: "v3",
   resources,
-  fallbackLng: "de",
+  fallbackLng: "en",
 });
 
 export default i18n;

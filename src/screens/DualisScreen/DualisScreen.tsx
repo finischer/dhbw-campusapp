@@ -37,9 +37,6 @@ const DualisScreen = () => {
 
   return (
     <GlobalBody>
-      <Button variant="outlined" onClick={handleFetchGrades}>
-        Aktualisieren
-      </Button>
       {!subjects ? (
         <RegularText>Noten konnte nicht abgerufen werden</RegularText>
       ) : (

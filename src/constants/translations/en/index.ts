@@ -1,5 +1,6 @@
 import common from "./common";
 import navigation from "./navigation";
-import loginscreen from "./loginscreen";
+import loginScreen from "./loginScreen";
+import dualisScreen from "./dualisScreen";
 
-export default { common, navigation, loginscreen };
+export default { common, navigation, loginScreen, dualisScreen };

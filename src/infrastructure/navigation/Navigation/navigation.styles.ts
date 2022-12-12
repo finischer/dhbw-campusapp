@@ -1,3 +1,4 @@
+import { IColors } from "../../../constants/colors/colors.types";
 import { TAB_BAR_HEIGHT } from "./config";
 
 export const tabBarStyle = (colors: IColors) => {
