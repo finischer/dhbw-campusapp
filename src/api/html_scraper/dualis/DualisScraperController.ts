@@ -84,7 +84,7 @@ export class DualisScraperController {
     }
 
     const response: IResponseTypes = {
-      msg: "Successful",
+      msg: "successful",
       status: 200,
       data: semesterList,
     };

@@ -14,6 +14,7 @@ export const subjectDetailsScreenStyle = StyleSheet.create({
   subjectNameText: {
     fontWeight: "bold",
     fontSize: typography.h3,
+    textAlign: "center",
   },
   semesterNameText: {
     opacity: 0.5,

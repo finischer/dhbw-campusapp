@@ -21,7 +21,7 @@ export const subjectListStyles = StyleSheet.create({
     marginLeft: 3,
   },
   subjectListContainer: {
-    // paddingBottom: 170,
+    paddingBottom: 15,
     marginTop: 10,
   },
 });

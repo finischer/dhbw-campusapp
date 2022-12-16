@@ -5,10 +5,8 @@ import SubjectRowItem from "../SubjectRowItem";
 import { ISubjectListRenderItemProps } from "./subjectList.types";
 import Chip from "../../../../components/Chip";
 import { subjectListStyles } from "./subjectList.styles";
-import { TAB_BAR_HEIGHT } from "../../../../infrastructure/navigation/Navigation/config";
 import RegularText from "../../../../components/RegularText";
 import { useTranslation } from "react-i18next";
-import { WINDOW_HEIGHT } from "../../../../constants/device/device";
 
 const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
   const { t } = useTranslation("dualisScreen");

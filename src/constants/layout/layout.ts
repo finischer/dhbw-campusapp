@@ -1,0 +1,1 @@
+export const GLOBAL_PADDING_HORIZONTAL = 20;
