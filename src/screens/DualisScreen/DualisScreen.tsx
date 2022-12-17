@@ -1,4 +1,6 @@
 import React from "react";
+import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
 import Button from "../../components/Button/Button";
@@ -10,6 +12,7 @@ import SubjectList from "./components/SubjectList/SubjectList";
 
 const DualisScreen = () => {
   const { getAllGrades } = useDualis();
+  const { t } = useTranslation("dualisScreen");
 
   const fetchGrades = async () => {
     const { data: grades } = await getAllGrades();
@@ -30,7 +33,7 @@ const DualisScreen = () => {
   if (isLoading || isFetching) {
     return (
       <GlobalBody style={{ alignItems: "center", justifyContent: "center" }}>
-        <Loader text="Noten werden geladen ..." />
+        <Loader text={t("loaderText")} />
       </GlobalBody>
     );
   }
@@ -38,7 +41,18 @@ const DualisScreen = () => {
   return (
     <GlobalBody>
       {!subjects ? (
-        <RegularText>Noten konnte nicht abgerufen werden</RegularText>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <RegularText>{t("noGradesError")}</RegularText>
+          <Button
+            variant="outlined"
+            style={{ marginTop: 20 }}
+            onClick={handleFetchGrades}
+          >
+            {t("refreshButtonText")}
+          </Button>
+        </View>
       ) : (
         <SubjectList subjects={subjects} />
       )}

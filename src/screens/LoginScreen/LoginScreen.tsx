@@ -112,7 +112,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
         <View style={loginScreenStyles.loginButton}>
           {isFetching ? (
             <View style={loginScreenStyles.loaderContainer}>
-              <Loader text="Du wirst angemeldet ..." />
+              <Loader text={t("loaderText")} />
             </View>
           ) : (
             <Button

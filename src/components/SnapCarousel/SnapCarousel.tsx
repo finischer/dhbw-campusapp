@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import { FlatListProps } from "react-native";
 import Animated from "react-native-reanimated";
 import { WINDOW_WIDTH } from "../../constants/device/device";
 
-const SnapCarousel = ({
-  data,
-  renderItem,
-  onMomentumScrollBegin = null,
-}: any) => {
+const SnapCarousel = ({ data, renderItem }: any) => {
   const [scrollX, setScrollX] = useState(0);
 
   return (
