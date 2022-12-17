@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
-import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
+import React, { useState } from "react";
+import { ScrollView } from "react-native";
 import { IDayOptions } from "../../api/html_scraper/restaurant/types/IDayOptions";
-import { IRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
-import { IResponseTypes } from "../../api/types/IResponseTypes";
 import GlobalBody from "../../components/GlobalBody";
 import RegularText from "../../components/RegularText";
 import SnapCarousel from "../../components/SnapCarousel";
-import { restaurantScreenStyles } from "./restaurantScreen.styles";
-import moment from "moment";
 import {
   IRenderMenuListProps,
   IRestaurantState,
@@ -17,9 +12,6 @@ import MenuList from "./components/MenuList";
 import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
 import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
 import { useQuery } from "react-query";
-import Button from "../../components/Button/Button";
-
-const PREVIEW_DAYS = 5;
 
 const RestaurantScreen = () => {
   const {
@@ -34,6 +26,7 @@ const RestaurantScreen = () => {
     restaurantName,
     offer: [],
   });
+  const [dayOptions, setDayOptions] = useState<IDayOptions[]>([]);
 
   const { isFetching } = useQuery(
     ["cafeteria-menus", restaurantName],
@@ -47,8 +40,6 @@ const RestaurantScreen = () => {
       },
     }
   );
-
-  const [dayOptions, setDayOptions] = useState<IDayOptions[]>([]);
 
   if (isFetching)
     return (

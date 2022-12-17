@@ -8,4 +8,7 @@ export default {
   noDetailsRetrieved: "Details could not be retrieved",
   subjects: "Subjects",
   semester: "Semester",
+  loaderText: "Grades are retrieved",
+  noGradesError: "Notes could not be retrieved",
+  refreshButtonText: "Try again",
 };

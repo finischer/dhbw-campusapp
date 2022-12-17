@@ -6,14 +6,12 @@ import { IMenuType } from "../../../../api/html_scraper/restaurant/types/IMenuTy
 import { menuListStyles } from "./menuListStyles.styles";
 import RegularText from "../../../../components/RegularText";
 import Animated, {
-  call,
   Extrapolate,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
 import { WINDOW_WIDTH } from "../../../../constants/device/device";
-import { GLOBAL_PADDING_HORIZONTAL } from "../../../../constants/layout";
 import moment from "moment";
 import { CARD_WIDTH } from "../MenuItem/menuItem.styles";
 

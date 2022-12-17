@@ -3,4 +3,5 @@ export default {
   password: "Passwort",
   login: "Anmelden",
   loginFailed: "Anmeldung fehlgeschlagen",
+  loaderText: "Du wirst angemeldet ...",
 };

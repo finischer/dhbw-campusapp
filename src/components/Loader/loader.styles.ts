@@ -1,5 +1,8 @@
 import { StyleSheet } from "react-native";
 
 export const loaderStyles = StyleSheet.create({
-  container: {},
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

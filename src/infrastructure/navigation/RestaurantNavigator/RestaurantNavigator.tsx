@@ -1,17 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { createStackNavigator, TransitionSpecs } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import RestaurantScreen from "../../../screens/RestaurantScreen";
 import { headerConfig } from "../Navigation/config";
 import { useRestaurant } from "../../../hooks/useRestaurant/useRestaurant";
-import RegularText from "../../../components/RegularText";
-import typography from "../../../constants/typography";
 import NavigationHeader from "../../../components/NavigationHeader";
 
 const Stack = createStackNavigator();
 
 const RestaurantNavigator = () => {
-  const { formattedRestaurantName, choosedDate } = useRestaurant();
+  const { formattedRestaurantName } = useRestaurant();
 
   return (
     <Stack.Navigator screenOptions={headerConfig()}>

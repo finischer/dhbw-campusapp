@@ -1,4 +1,4 @@
 export type ILoaderProps = {
-  size?: "small" | "medium" | "large";
+  size?: "small" | "large";
   text: string;
 };
