@@ -5,10 +5,12 @@ import RestaurantScreen from "../../../screens/RestaurantScreen";
 import { headerConfig } from "../Navigation/config";
 import { useRestaurant } from "../../../hooks/useRestaurant/useRestaurant";
 import NavigationHeader from "../../../components/NavigationHeader";
+import { useTranslation } from "react-i18next";
 
 const Stack = createStackNavigator();
 
 const RestaurantNavigator = () => {
+  const { t } = useTranslation("navigation");
   const [showSubTitle, setShowSubTitle] = useState(false);
   const { formattedRestaurantName } = useRestaurant();
 
@@ -32,7 +34,7 @@ const RestaurantNavigator = () => {
         options={{
           headerTitle: () => (
             <NavigationHeader
-              title="Mensa"
+              title={t("cafeteria")}
               subTitle={formattedRestaurantName}
               showSubTitle={showSubTitle}
             />

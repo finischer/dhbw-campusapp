@@ -14,6 +14,7 @@ import Animated, {
 import { WINDOW_WIDTH } from "../../../../constants/device/device";
 import moment from "moment";
 import { CARD_WIDTH } from "../MenuItem/menuItem.styles";
+import { useTranslation } from "react-i18next";
 
 const SPACING = WINDOW_WIDTH * 0.02;
 const SIDECARD_LENGTH = (WINDOW_WIDTH * 0.18) / 2;
@@ -26,6 +27,9 @@ const MenuList: React.FC<IMenuListProps> = ({
   lengthOfOffers,
 }) => {
   const size = useSharedValue(0.8);
+  const { t } = useTranslation();
+
+  const dayName = moment(date).format("dddd").toLowerCase();
 
   const inputRange = [
     (index - 1) * CARD_WIDTH,
@@ -63,8 +67,8 @@ const MenuList: React.FC<IMenuListProps> = ({
 
   const localMenuListStyles = StyleSheet.create({
     container: {
-      marginLeft: index == 0 ? SIDECARD_LENGTH : SPACING,
-      marginRight: index == lengthOfOffers - 1 ? SIDECARD_LENGTH : SPACING,
+      marginLeft: index === 0 ? SIDECARD_LENGTH : SPACING,
+      marginRight: index === lengthOfOffers - 1 ? SIDECARD_LENGTH : SPACING,
     },
   });
 
@@ -78,12 +82,12 @@ const MenuList: React.FC<IMenuListProps> = ({
     >
       <View style={menuListStyles.dateContainer}>
         <RegularText style={menuListStyles.dateText}>
-          {moment(date).day()}, {moment(date).format("DD.MM.YYYY")}
+          {t(`common:${dayName}`)}, {moment(date).format("DD.MM.YYYY")}
         </RegularText>
       </View>
       {menus.length === 0 ? (
         <View style={menuListStyles.noOfferTodayContainer}>
-          <RegularText>Für heute kein Angebot</RegularText>
+          <RegularText>{t("restaurantScreen:noOfferThisDay")}</RegularText>
         </View>
       ) : (
         menus.map((menu: IMenuType, index: number) => (

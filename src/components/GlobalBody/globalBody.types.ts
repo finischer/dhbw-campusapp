@@ -4,4 +4,5 @@ export type GlobalBodyTypes = {
   children: React.ReactNode;
   safeAreaView?: Boolean;
   style?: ViewStyle | TextStyle | ImageStyle | {};
+  centered?: boolean;
 };

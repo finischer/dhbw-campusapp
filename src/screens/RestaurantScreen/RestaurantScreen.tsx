@@ -60,7 +60,7 @@ const RestaurantScreen = () => {
 
   if (isFetching)
     return (
-      <GlobalBody>
+      <GlobalBody centered>
         <RegularText>Angebot wird geladen ...</RegularText>
       </GlobalBody>
     );

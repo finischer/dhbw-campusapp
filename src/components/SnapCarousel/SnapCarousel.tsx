@@ -12,6 +12,7 @@ const SnapCarousel = ({ data, renderItem }: any) => {
         showsHorizontalScrollIndicator={false}
         decelerationRate={0.8}
         snapToInterval={WINDOW_WIDTH * 0.8 + WINDOW_WIDTH * 0.02 * 1.5}
+        snapToAlignment="start"
         data={data}
         renderItem={({ item, index }: { item: any; index: number }) =>
           renderItem({ item, index, scrollX })

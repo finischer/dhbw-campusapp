@@ -1,4 +1,4 @@
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
 import { GlobalBodyTypes } from "./globalBody.types";
 import { globalBodyStyles } from "./globalBody.styles";
@@ -9,15 +9,26 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
   children,
   safeAreaView = false,
   style = {},
+  centered = false,
 }) => {
   const { colors } = useMetadata();
 
-  const localGlobalBodyStyles = { backgroundColor: colors.primary };
+  const localGlobalBodyStyles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.primary,
+      justifyContent: centered ? "center" : undefined,
+      alignItems: centered ? "center" : undefined,
+    },
+  });
 
   if (safeAreaView) {
     return (
       <SafeAreaView
-        style={[globalBodyStyles.container, localGlobalBodyStyles, style]}
+        style={[
+          globalBodyStyles.container,
+          localGlobalBodyStyles.container,
+          style,
+        ]}
       >
         {children}
       </SafeAreaView>
@@ -25,13 +36,19 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
   }
 
   return (
-    <View style={[globalBodyStyles.container, localGlobalBodyStyles, style]}>
+    <View
+      style={[
+        globalBodyStyles.container,
+        localGlobalBodyStyles.container,
+        style,
+      ]}
+    >
       <Animated.View
         entering={FadeIn}
         exiting={FadeOut}
         style={[
           globalBodyStyles.container,
-          localGlobalBodyStyles,
+          localGlobalBodyStyles.container,
           style,
           { paddingHorizontal: 0, paddingVertical: 0 },
         ]}
