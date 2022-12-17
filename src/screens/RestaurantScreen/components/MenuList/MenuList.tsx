@@ -6,6 +6,7 @@ import { IMenuType } from "../../../../api/html_scraper/restaurant/types/IMenuTy
 import { menuListStyles } from "./menuListStyles.styles";
 import RegularText from "../../../../components/RegularText";
 import Animated, {
+  call,
   Extrapolate,
   interpolate,
   useAnimatedStyle,

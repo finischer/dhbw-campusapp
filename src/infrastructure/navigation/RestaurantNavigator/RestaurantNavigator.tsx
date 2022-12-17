@@ -20,10 +20,7 @@ const RestaurantNavigator = () => {
         component={RestaurantScreen}
         options={{
           headerTitle: () => (
-            <NavigationHeader
-              title={formattedRestaurantName}
-              subTitle={choosedDate}
-            />
+            <NavigationHeader title={formattedRestaurantName} />
           ),
         }}
       />
