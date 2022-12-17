@@ -14,7 +14,10 @@ import SnapCarousel from "../../components/SnapCarousel";
 import MenuItem from "./components/MenuItem";
 import { restaurantScreenStyles } from "./restaurantScreen.styles";
 import moment from "moment";
-import { IRestaurantState } from "./restaurantScreen.types";
+import {
+  IRenderMenuListProps,
+  IRestaurantState,
+} from "./restaurantScreen.types";
 import MenuList from "./components/MenuList";
 
 const PREVIEW_DAYS = 3;
@@ -33,7 +36,7 @@ const RestaurantScreen = () => {
       for (let i = 0; i < PREVIEW_DAYS; i++) {
         const restaurantInfos = restaurantScraper.getMenuOfRestaurant(
           "mensa-am-schloss",
-          moment().subtract(1, "days").add(i, "days").format("YYYY-MM-DD")
+          moment().subtract(5, "days").add(i, "days").format("YYYY-MM-DD")
         );
 
         // if (restaurantInfos.status != 200) return;
@@ -81,8 +84,13 @@ const RestaurantScreen = () => {
         {/* MenuList View */}
         <SnapCarousel
           data={restaurant.offer}
-          renderItem={({ item }: { item: IMenuType[] }) => (
-            <MenuList menus={item} />
+          renderItem={({ item, index, scrollX }: IRenderMenuListProps) => (
+            <MenuList
+              menus={item}
+              index={index}
+              scrollX={scrollX}
+              lengthOfOffers={restaurant.offer.length}
+            />
           )}
         />
       </ScrollView>

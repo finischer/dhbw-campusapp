@@ -3,3 +3,9 @@ export type IRestaurantState = {
   restaurantName: string;
   offer: Array<IMenuType[]>;
 };
+
+export type IRenderMenuListProps = {
+  item: IMenuType[];
+  index: number;
+  scrollX: number;
+};

@@ -4,7 +4,8 @@ import typography from "../../constants/typography";
 export const restaurantScreenStyles = StyleSheet.create({
   restaurantNameContainer: {
     paddingVertical: 10,
-    paddingHorizontal: GLOBAL_PADDING_HORIZONTAL,
+    flex: 1,
+    alignItems: "center",
   },
   restaurantNameText: {
     fontWeight: "bold",
