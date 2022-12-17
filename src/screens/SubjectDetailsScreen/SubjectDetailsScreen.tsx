@@ -8,7 +8,6 @@ import ExamList from "./ExamList";
 import CloseButton from "../../components/CloseButton";
 import { IExamTypes } from "../../api/html_scraper/dualis/types/IExamTypes";
 import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
 
 const SubjectDetailsScreen = () => {
   const { t } = useTranslation("dualisScreen");
@@ -42,7 +41,7 @@ const SubjectDetailsScreen = () => {
           <View style={subjectDetailsScreenStyle.examsList}>
             {examList.length === 0 ? (
               <RegularText style={subjectDetailsScreenStyle.emptyExamsListText}>
-                Es wurden noch keine Prüfungsleistungen eintragen
+                {t("noExaminationServices")}
               </RegularText>
             ) : (
               <ExamList exams={examList} />

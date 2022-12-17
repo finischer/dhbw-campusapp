@@ -78,7 +78,7 @@ const MenuList: React.FC<IMenuListProps> = ({
     >
       <View style={menuListStyles.dateContainer}>
         <RegularText style={menuListStyles.dateText}>
-          {moment(date).format("DD.MM.YYYY")}
+          {moment(date).day()}, {moment(date).format("DD.MM.YYYY")}
         </RegularText>
       </View>
       {menus.length === 0 ? (

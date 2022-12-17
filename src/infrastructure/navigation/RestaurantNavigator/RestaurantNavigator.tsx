@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { DeviceEventEmitter } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RestaurantScreen from "../../../screens/RestaurantScreen";
 import { headerConfig } from "../Navigation/config";
@@ -8,7 +9,20 @@ import NavigationHeader from "../../../components/NavigationHeader";
 const Stack = createStackNavigator();
 
 const RestaurantNavigator = () => {
+  const [showSubTitle, setShowSubTitle] = useState(false);
   const { formattedRestaurantName } = useRestaurant();
+
+  useEffect(() => {
+    const handleShowSubTitle = (newState: boolean) => {
+      setShowSubTitle(newState);
+    };
+
+    DeviceEventEmitter.addListener("handleShowSubTitle", handleShowSubTitle);
+
+    return () => {
+      DeviceEventEmitter.removeAllListeners("handleShowSubTitle");
+    };
+  }, []);
 
   return (
     <Stack.Navigator screenOptions={headerConfig()}>
@@ -17,7 +31,11 @@ const RestaurantNavigator = () => {
         component={RestaurantScreen}
         options={{
           headerTitle: () => (
-            <NavigationHeader title={formattedRestaurantName} />
+            <NavigationHeader
+              title="Mensa"
+              subTitle={formattedRestaurantName}
+              showSubTitle={showSubTitle}
+            />
           ),
         }}
       />

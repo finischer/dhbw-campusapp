@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { ScrollView } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  DeviceEventEmitter,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  View,
+} from "react-native";
 import { IDayOptions } from "../../api/html_scraper/restaurant/types/IDayOptions";
 import GlobalBody from "../../components/GlobalBody";
 import RegularText from "../../components/RegularText";
@@ -12,6 +18,9 @@ import MenuList from "./components/MenuList";
 import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
 import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
 import { useQuery } from "react-query";
+import { restaurantScreenStyles } from "./restaurantScreen.styles";
+import { useRoute } from "@react-navigation/native";
+import Animated from "react-native-reanimated";
 
 const RestaurantScreen = () => {
   const {
@@ -27,6 +36,14 @@ const RestaurantScreen = () => {
     offer: [],
   });
   const [dayOptions, setDayOptions] = useState<IDayOptions[]>([]);
+
+  const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.contentOffset.y >= 30) {
+      DeviceEventEmitter.emit("handleShowSubTitle", true);
+    } else {
+      DeviceEventEmitter.emit("handleShowSubTitle", false);
+    }
+  };
 
   const { isFetching } = useQuery(
     ["cafeteria-menus", restaurantName],
@@ -51,7 +68,14 @@ const RestaurantScreen = () => {
   return (
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
       {/* TODO: Animate header on scroll (maybe implement it at as generic component for all screens) */}
-      <ScrollView>
+      <Animated.ScrollView onScroll={handleOnScroll} scrollEventThrottle={16}>
+        {/* Restaurant Title View */}
+        <View style={restaurantScreenStyles.restaurantNameContainer}>
+          <RegularText style={restaurantScreenStyles.restaurantNameText}>
+            {formattedRestaurantName}
+          </RegularText>
+        </View>
+
         {/* MenuList View */}
         <SnapCarousel
           data={restaurant.offer}
@@ -65,7 +89,7 @@ const RestaurantScreen = () => {
             />
           )}
         />
-      </ScrollView>
+      </Animated.ScrollView>
     </GlobalBody>
   );
 };
