@@ -9,8 +9,11 @@ import DualisScreen from "../../../screens/DualisScreen";
 import LogoutButton from "../../../components/LogoutButton";
 import SubjectDetailsScreen from "../../../screens/SubjectDetailsScreen";
 import { useMetadata } from "../../../hooks/useMetadata";
+import NavigationHeader from "../../../components/NavigationHeader";
 
 const DualisStack = createStackNavigator();
+
+const SCREEN_TITLE = "Dualis";
 
 const DualisNavigator = ({ route, navigation }: any) => {
   const [accessGranted, setAccessGranted] = useState<boolean>(false);
@@ -27,7 +30,7 @@ const DualisNavigator = ({ route, navigation }: any) => {
         <DualisStack.Screen
           name="LoginScreen"
           options={{
-            headerTitle: "Dualis",
+            headerTitle: () => <NavigationHeader title={SCREEN_TITLE} />,
             animationTypeForReplace: "pop",
           }}
         >
@@ -48,7 +51,7 @@ const DualisNavigator = ({ route, navigation }: any) => {
           name="DualisHomeScreen"
           component={DualisScreen}
           options={{
-            headerTitle: "Dualis",
+            headerTitle: () => <NavigationHeader title={SCREEN_TITLE} />,
             headerBackTitleVisible: false,
             gestureEnabled: false,
             headerLeft: () => null,

@@ -1,5 +1,5 @@
-import { IMenuType } from "./IMenuType";
+import { IOfferListTypes } from "./IOfferListTypes";
 export type IRestaurantTypes = {
   restaurantName: string;
-  offer: IMenuType[];
+  offer: IOfferListTypes;
 };

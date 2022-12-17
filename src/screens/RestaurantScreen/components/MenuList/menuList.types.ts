@@ -4,4 +4,5 @@ export type IMenuListProps = {
   index: number;
   scrollX?: number;
   lengthOfOffers: number;
+  date: string;
 };

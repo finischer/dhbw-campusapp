@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
 import { IDayOptions } from "../../api/html_scraper/restaurant/types/IDayOptions";
-import { IMenuType } from "../../api/html_scraper/restaurant/types/IMenuType";
 import { IRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
-import {
-  IObjectResponse,
-  IResponseTypes,
-} from "../../api/types/IResponseTypes";
+import { IResponseTypes } from "../../api/types/IResponseTypes";
 import GlobalBody from "../../components/GlobalBody";
 import RegularText from "../../components/RegularText";
 import SnapCarousel from "../../components/SnapCarousel";
-import MenuItem from "./components/MenuItem";
 import { restaurantScreenStyles } from "./restaurantScreen.styles";
 import moment from "moment";
 import {
@@ -19,74 +14,60 @@ import {
   IRestaurantState,
 } from "./restaurantScreen.types";
 import MenuList from "./components/MenuList";
+import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
+import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
+import { useQuery } from "react-query";
+import Button from "../../components/Button/Button";
 
-const PREVIEW_DAYS = 3;
+const PREVIEW_DAYS = 5;
 
 const RestaurantScreen = () => {
-  const restaurantScraper = new RestaurantScraper();
-  const [dayOptions, setDayOptions] = useState<IDayOptions[]>([]);
+  const {
+    restaurantName,
+    formattedRestaurantName,
+    fetchMenus,
+    changeRestaurant,
+    changeDate,
+  } = useRestaurant();
+
   const [restaurant, setRestaurant] = useState<IRestaurantState>({
-    restaurantName: "",
+    restaurantName,
     offer: [],
   });
 
-  useEffect(() => {
-    const fetchMenus = async () => {
-      const allMenus = [];
-      for (let i = 0; i < PREVIEW_DAYS; i++) {
-        const restaurantInfos = restaurantScraper.getMenuOfRestaurant(
-          "mensa-am-schloss",
-          moment().subtract(5, "days").add(i, "days").format("YYYY-MM-DD")
-        );
+  const { isFetching } = useQuery(
+    ["cafeteria-menus", restaurantName],
+    fetchMenus,
+    {
+      onSuccess: (menus: IOfferListTypes[]) => {
+        setRestaurant((oldState) => ({
+          ...oldState,
+          offer: menus,
+        }));
+      },
+    }
+  );
 
-        // if (restaurantInfos.status != 200) return;
-        allMenus.push(restaurantInfos);
-      }
+  const [dayOptions, setDayOptions] = useState<IDayOptions[]>([]);
 
-      Promise.all(allMenus).then((resolvedPromise: IResponseTypes[]) => {
-        resolvedPromise.forEach((response: IResponseTypes) => {
-          if (response.status != 200) return;
-          const restaurant: IRestaurantTypes =
-            response.data as IRestaurantTypes;
-          setRestaurant((oldState) => ({
-            restaurantName: restaurant.restaurantName,
-            offer: [...oldState.offer, restaurant.offer],
-          }));
-        });
-      });
-    };
-
-    fetchMenus();
-  }, []);
-
-  if (!restaurant) return <RegularText>Angebot wird geladen ...</RegularText>;
+  if (isFetching)
+    return (
+      <GlobalBody>
+        <RegularText>Angebot wird geladen ...</RegularText>
+      </GlobalBody>
+    );
 
   return (
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
       {/* TODO: Animate header on scroll (maybe implement it at as generic component for all screens) */}
       <ScrollView>
-        {/* Header View */}
-        <View style={restaurantScreenStyles.restaurantNameContainer}>
-          <RegularText style={restaurantScreenStyles.restaurantNameText}>
-            {restaurant.restaurantName}
-          </RegularText>
-        </View>
-
-        {/* DayOptions Dropdown View */}
-        {/* <View>
-          {dayOptions.map((option: IDayOptions, index: number) => (
-            <RegularText key={index}>
-            {option.date} ({option.weekDay})
-            </RegularText>
-          ))}
-        </View> */}
-
         {/* MenuList View */}
         <SnapCarousel
           data={restaurant.offer}
           renderItem={({ item, index, scrollX }: IRenderMenuListProps) => (
             <MenuList
-              menus={item}
+              menus={item.menus}
+              date={item.date}
               index={index}
               scrollX={scrollX}
               lengthOfOffers={restaurant.offer.length}

@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { headerConfig } from "../Navigation/config";
 import MoreScreen from "../../../screens/MoreScreen";
+import NavigationHeader from "../../../components/NavigationHeader";
 
 const Stack = createStackNavigator();
 
@@ -11,7 +12,7 @@ const MoreNavigator = () => {
       <Stack.Screen
         name="MoreScreen"
         component={MoreScreen}
-        options={{ headerTitle: "Mehr" }}
+        options={{ headerTitle: () => <NavigationHeader title="Mehr" /> }}
       />
     </Stack.Navigator>
   );

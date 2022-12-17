@@ -6,6 +6,7 @@ import { IMenuType } from "./types/IMenuType";
 import { IResponseTypes } from "../../types/IResponseTypes";
 import { IDayOptions } from "./types/IDayOptions";
 import moment from "moment";
+import { IOfferListTypes } from "./types/IOfferListTypes";
 export class RestaurantScraper {
   restaurants: Restaurants;
   baseUrl: string;
@@ -92,7 +93,10 @@ export class RestaurantScraper {
 
     const $offer = $(".speiseplan-table").children();
 
-    const offerList: IMenuType[] = [];
+    const offerList: IOfferListTypes = {
+      date,
+      menus: [],
+    };
     // iterate over offer
     $offer.each((_: number, parentElem: any) => {
       const menuName = $(parentElem)
@@ -127,7 +131,7 @@ export class RestaurantScraper {
         menuPriceSelection,
       };
 
-      offerList.push(newMenu);
+      offerList.menus.push(newMenu);
     });
 
     const restaurant: IRestaurantTypes = {

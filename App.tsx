@@ -7,6 +7,7 @@ import "./src/services/i18next/i18next.config";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { DualisProvider } from "./src/hooks/useDualis/useDualis";
 import { MetaDataProvider } from "./src/hooks/useMetadata";
+import { RestaurantProvider } from "./src/hooks/useRestaurant/useRestaurant";
 
 const queryClient = new QueryClient();
 
@@ -26,12 +27,14 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <DualisProvider>
-        <MetaDataProvider>
-          <StatusBar style="light" />
-          <Navigation />
-        </MetaDataProvider>
-      </DualisProvider>
+      <MetaDataProvider>
+        <DualisProvider>
+          <RestaurantProvider>
+            <StatusBar style="light" />
+            <Navigation />
+          </RestaurantProvider>
+        </DualisProvider>
+      </MetaDataProvider>
     </QueryClientProvider>
   );
 }

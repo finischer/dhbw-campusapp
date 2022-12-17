@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { IMenuListProps } from "./menuList.types";
 import MenuItem from "../MenuItem";
@@ -13,9 +13,15 @@ import Animated, {
 } from "react-native-reanimated";
 import { WINDOW_WIDTH } from "../../../../constants/device/device";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../../../constants/layout";
+import moment from "moment";
+import { CARD_WIDTH } from "../MenuItem/menuItem.styles";
+
+const SPACING = WINDOW_WIDTH * 0.02;
+const SIDECARD_LENGTH = (WINDOW_WIDTH * 0.18) / 2;
 
 const MenuList: React.FC<IMenuListProps> = ({
   menus,
+  date,
   index,
   scrollX = 0,
   lengthOfOffers,
@@ -23,9 +29,9 @@ const MenuList: React.FC<IMenuListProps> = ({
   const size = useSharedValue(0.8);
 
   const inputRange = [
-    (index - 1) * WINDOW_WIDTH * 0.8,
-    index * WINDOW_WIDTH * 0.8,
-    (index + 1) * WINDOW_WIDTH * 0.8,
+    (index - 1) * CARD_WIDTH,
+    index * CARD_WIDTH,
+    (index + 1) * CARD_WIDTH,
   ];
 
   size.value = interpolate(
@@ -37,9 +43,9 @@ const MenuList: React.FC<IMenuListProps> = ({
 
   const opacity = useSharedValue(1);
   const opacityInputRange = [
-    (index - 1) * WINDOW_WIDTH * 0.8,
-    index * WINDOW_WIDTH * 0.8,
-    (index + 1) * WINDOW_WIDTH * 0.8,
+    (index - 1) * CARD_WIDTH,
+    index * CARD_WIDTH,
+    (index + 1) * CARD_WIDTH,
   ];
 
   opacity.value = interpolate(
@@ -58,17 +64,10 @@ const MenuList: React.FC<IMenuListProps> = ({
 
   const localMenuListStyles = StyleSheet.create({
     container: {
-      marginLeft: index == 0 ? (WINDOW_WIDTH * 0.18) / 2 : WINDOW_WIDTH * 0.02,
-      marginRight:
-        index == lengthOfOffers - 1
-          ? (WINDOW_WIDTH * 0.18) / 2
-          : WINDOW_WIDTH * 0.02,
+      marginLeft: index == 0 ? SIDECARD_LENGTH : SPACING,
+      marginRight: index == lengthOfOffers - 1 ? SIDECARD_LENGTH : SPACING,
     },
   });
-
-  if (menus.length === 0) {
-    return <RegularText>Kein Angebot für heute verfügbar</RegularText>;
-  }
 
   return (
     <Animated.View
@@ -78,9 +77,20 @@ const MenuList: React.FC<IMenuListProps> = ({
         localMenuListStyles.container,
       ]}
     >
-      {menus.map((menu: IMenuType, index: number) => (
-        <MenuItem key={index} menu={menu} />
-      ))}
+      <View style={menuListStyles.dateContainer}>
+        <RegularText style={menuListStyles.dateText}>
+          {moment(date).format("DD.MM.YYYY")}
+        </RegularText>
+      </View>
+      {menus.length === 0 ? (
+        <View style={menuListStyles.noOfferTodayContainer}>
+          <RegularText>Für heute kein Angebot</RegularText>
+        </View>
+      ) : (
+        menus.map((menu: IMenuType, index: number) => (
+          <MenuItem key={index} menu={menu} />
+        ))
+      )}
     </Animated.View>
   );
 };
