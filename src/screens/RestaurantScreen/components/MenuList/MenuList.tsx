@@ -5,25 +5,16 @@ import MenuItem from "../MenuItem";
 import { IMenuType } from "../../../../api/html_scraper/restaurant/types/IMenuType";
 import { menuListStyles } from "./menuListStyles.styles";
 import RegularText from "../../../../components/RegularText";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
-import { WINDOW_WIDTH } from "../../../../constants/device/device";
-import moment from "moment";
-import { CARD_WIDTH } from "../MenuItem/menuItem.styles";
-import { useTranslation } from "react-i18next";
-import GlobalBody from "../../../../components/GlobalBody";
-import { GLOBAL_PADDING_HORIZONTAL } from "../../../../constants/layout";
 
-const SPACING = 10;
-const SIDECARD_LENGTH = 30;
+import moment from "moment";
+import { useTranslation } from "react-i18next";
+import Animated from "react-native-reanimated";
+import RequestTime from "../../../../components/RequestTime";
+import { useMetadata } from "../../../../hooks/useMetadata";
 
 const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
   const { t } = useTranslation();
-
+  const { dateFormat } = useMetadata();
   const dayName = moment(date).format("dddd").toLowerCase();
 
   const localMenuListStyles = StyleSheet.create({
@@ -36,18 +27,23 @@ const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
     >
       <Animated.View style={menuListStyles.dateContainer}>
         <RegularText style={menuListStyles.dateText}>
-          {t(`common:${dayName}`)}, {moment(date).format("DD.MM.YYYY")}
+          {t(`common:${dayName}`)}, {moment(date).format(dateFormat)}
         </RegularText>
       </Animated.View>
       {menus.length === 0 ? (
         <View style={menuListStyles.noOfferTodayContainer}>
-          <RegularText>{t("restaurantScreen:noOfferThisDay")}</RegularText>
+          <RegularText style={menuListStyles.noOfferTodayText}>
+            {t("restaurantScreen:noOfferThisDay")}
+          </RegularText>
         </View>
       ) : (
         menus.map((menu: IMenuType, index: number) => (
           <MenuItem key={index} menu={menu} />
         ))
       )}
+
+      {/* Request Time */}
+      <RequestTime />
     </Animated.View>
   );
 };

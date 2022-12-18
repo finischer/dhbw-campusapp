@@ -1,5 +1,3 @@
-import { TAB_BAR_HEIGHT } from "./../../../../infrastructure/navigation/Navigation/config";
-import { WINDOW_HEIGHT } from "./../../../../constants/device/device";
 import { StyleSheet } from "react-native";
 export const subjectListStyles = StyleSheet.create({
   filterContainer: {
@@ -9,7 +7,7 @@ export const subjectListStyles = StyleSheet.create({
   },
   chipContainer: {
     marginRight: 5,
-    marginBottom: 10,
+    marginBottom: 7,
   },
   subjectListTitleText: {
     fontWeight: "600",
@@ -23,5 +21,12 @@ export const subjectListStyles = StyleSheet.create({
   subjectListContainer: {
     paddingBottom: 15,
     marginTop: 10,
+  },
+  requestTimeContainer: {
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  requestTimeText: {
+    opacity: 0.3,
   },
 });

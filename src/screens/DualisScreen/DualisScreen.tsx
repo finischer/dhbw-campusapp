@@ -15,8 +15,8 @@ const DualisScreen = () => {
   const { t } = useTranslation("dualisScreen");
 
   const fetchGrades = async () => {
-    const { data: grades } = await getAllGrades();
-    return grades;
+    const { data: grades, requestTime } = await getAllGrades();
+    return { grades, requestTime };
   };
 
   const {
@@ -26,7 +26,7 @@ const DualisScreen = () => {
     refetch: handleFetchGrades,
   } = useQuery("dualis-grades", fetchGrades);
 
-  const subjects = data?.flatMap(
+  const subjects = data?.grades?.flatMap(
     (semester: ISemesterTypes) => semester.subjects
   );
 
@@ -54,7 +54,7 @@ const DualisScreen = () => {
           </Button>
         </View>
       ) : (
-        <SubjectList subjects={subjects} />
+        <SubjectList subjects={subjects} requestTime={data?.requestTime} />
       )}
     </GlobalBody>
   );

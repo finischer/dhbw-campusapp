@@ -17,6 +17,9 @@ export const menuListStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  noOfferTodayText: {
+    textAlign: "center",
+  },
   dateContainer: {
     paddingVertical: 10,
   },

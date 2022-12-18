@@ -12,6 +12,7 @@ import { ISemesterTypes } from "./types/ISemesterTypes";
 import { BASE_URL } from "../../dualis/dualisConstants";
 import { examKeys, IExamTypes } from "./types/IExamTypes";
 import { IAxiosConfig } from "../../../services/axios/axios.types";
+import moment from "moment";
 
 export class DualisScraperController {
   args: string;
@@ -49,10 +50,7 @@ export class DualisScraperController {
     const semesterList: ISemesterTypes[] = [];
     for (const [semesterName, semesterId] of Object.entries(semesterOptions)) {
       const semesterUrl = _generateSemesterUrl(this.args, semesterId);
-      // const semesterHtml = await axios.get(
-      //   semesterUrl,
-      //   this.axiosConfig
-      // );
+
       const subjects: ISubjectTypes[] = await this.getAllSubjectsFromSemester(
         semesterUrl,
         semesterName
@@ -87,6 +85,7 @@ export class DualisScraperController {
       msg: "successful",
       status: 200,
       data: semesterList,
+      requestTime: moment(),
     };
 
     return response;

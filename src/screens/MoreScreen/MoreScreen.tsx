@@ -5,9 +5,9 @@ import RegularText from "../../components/RegularText";
 import { useMetadata } from "../../hooks/useMetadata";
 
 const MoreScreen = () => {
-  const { theme, changeTheme } = useMetadata();
+  const { theme, changeTheme, language, changeLanguage } = useMetadata();
 
-  const toggle = () => {
+  const toggleTheme = () => {
     if (theme === "light") {
       changeTheme("dark");
     } else if (theme === "dark") {
@@ -15,10 +15,19 @@ const MoreScreen = () => {
     }
   };
 
+  const toggleLanguage = () => {
+    if (language === "de") {
+      changeLanguage("en");
+    } else if (language === "en") {
+      changeLanguage("de");
+    }
+  };
+
   return (
     <GlobalBody>
       <RegularText>MoreScreen</RegularText>
-      <Switch onChange={toggle} value={theme === "dark"} />
+      <Switch onChange={toggleTheme} value={theme === "dark"} />
+      <Switch onChange={toggleLanguage} value={language === "de"} />
     </GlobalBody>
   );
 };

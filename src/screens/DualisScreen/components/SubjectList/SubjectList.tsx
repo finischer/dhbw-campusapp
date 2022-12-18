@@ -8,8 +8,17 @@ import { subjectListStyles } from "./subjectList.styles";
 import RegularText from "../../../../components/RegularText";
 import { useTranslation } from "react-i18next";
 import Animated, { Layout } from "react-native-reanimated";
+import moment from "moment";
+import { useMetadata } from "../../../../hooks/useMetadata";
+import RequestTime from "../../../../components/RequestTime";
 
-const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
+const SubjectList = ({
+  subjects,
+  requestTime,
+}: {
+  subjects: ISubjectTypes[];
+  requestTime: moment.Moment | undefined;
+}) => {
   const { t } = useTranslation("dualisScreen");
   const [selectedSemesters, setSelectedSemesters] = useState<string[]>([]);
 
@@ -76,6 +85,7 @@ const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
         )}
         contentContainerStyle={subjectListStyles.subjectListContainer}
         alwaysBounceVertical
+        ListFooterComponent={() => <RequestTime />}
       />
     </Animated.View>
   );

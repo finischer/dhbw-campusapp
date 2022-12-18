@@ -9,9 +9,11 @@ import CloseButton from "../../components/CloseButton";
 import { IExamTypes } from "../../api/html_scraper/dualis/types/IExamTypes";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
+import { useMetadata } from "../../hooks/useMetadata";
 
 const SubjectDetailsScreen = () => {
   const { t } = useTranslation("dualisScreen");
+  const { theme } = useMetadata();
   const { params: subject }: any = useRoute();
   const [statusBarStyle, setStatusBarStyle] = useState<
     "light-content" | "dark-content"
@@ -25,12 +27,12 @@ const SubjectDetailsScreen = () => {
   if (!subject) return <RegularText>{t("noDetailsRetrieved")}</RegularText>;
 
   useEffect(() => {
-    if (isFocused) {
+    if (isFocused && theme === "light") {
       setTimeout(() => {
         setStatusBarStyle("dark-content");
       }, 300);
     }
-  }, [isFocused]);
+  }, [isFocused, theme]);
 
   return (
     <>

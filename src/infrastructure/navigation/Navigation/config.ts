@@ -30,6 +30,12 @@ export const headerConfig = (): StackNavigationOptions => {
     },
     headerBackTitle: "Zurück",
     headerTitleAlign: "center",
+    headerRightContainerStyle: {
+      position: "absolute",
+      right: 0,
+      top: 0,
+      bottom: 0,
+    },
   };
 };
 
