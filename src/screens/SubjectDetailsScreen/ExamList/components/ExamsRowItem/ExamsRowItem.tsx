@@ -7,8 +7,9 @@ import typography from "../../../../../constants/typography";
 import { useMetadata } from "../../../../../hooks/useMetadata";
 import { examsRowStyles } from "./examsRowItem.styles";
 import { useTranslation } from "react-i18next";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 
-const ExamsRowItem = ({ exam }: { exam: IExamTypes }) => {
+const ExamsRowItem = ({ exam, index }: { exam: IExamTypes; index: number }) => {
   const { t } = useTranslation("dualisScreen");
   const { colors } = useMetadata();
 
@@ -24,7 +25,10 @@ const ExamsRowItem = ({ exam }: { exam: IExamTypes }) => {
   });
 
   return (
-    <View style={[examsRowStyles.container, localExamsRowItemStyles.container]}>
+    <Animated.View
+      entering={FadeInLeft.delay(index * 30)}
+      style={[examsRowStyles.container, localExamsRowItemStyles.container]}
+    >
       {/* Content View */}
       <View style={examsRowStyles.contentContainer}>
         {/* Header View */}
@@ -61,7 +65,7 @@ const ExamsRowItem = ({ exam }: { exam: IExamTypes }) => {
           </View>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

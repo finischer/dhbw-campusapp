@@ -72,7 +72,7 @@ const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
       <FlatList
         data={showSubjectList as ISubjectTypes[]}
         renderItem={({ item, index }: ISubjectListRenderItemProps) => (
-          <SubjectRowItem key={index} subject={item} />
+          <SubjectRowItem key={index} subject={item} index={index} />
         )}
         contentContainerStyle={subjectListStyles.subjectListContainer}
         alwaysBounceVertical

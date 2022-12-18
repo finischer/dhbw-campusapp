@@ -9,7 +9,7 @@ const ExamList = ({ exams }: { exams: IExamTypes[] }) => {
     <FlatList
       data={exams}
       renderItem={({ item, index }: IExamListRenderItemProps) => (
-        <ExamsRowItem key={index} exam={item} />
+        <ExamsRowItem key={index} exam={item} index={index} />
       )}
       contentContainerStyle={{ paddingBottom: 50 }} // important! - prevends that last item goes behind the navigation bar
     />

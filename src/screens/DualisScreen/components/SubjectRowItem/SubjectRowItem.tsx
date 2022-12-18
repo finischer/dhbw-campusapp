@@ -12,8 +12,15 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 
-const SubjectRowItem = ({ subject }: { subject: ISubjectTypes }) => {
+const SubjectRowItem = ({
+  subject,
+  index,
+}: {
+  subject: ISubjectTypes;
+  index: number;
+}) => {
   const { t } = useTranslation("dualisScreen");
 
   const { colors } = useMetadata();
@@ -36,7 +43,8 @@ const SubjectRowItem = ({ subject }: { subject: ISubjectTypes }) => {
 
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={openSubjectDetails}>
-      <View
+      <Animated.View
+        entering={FadeInLeft.delay(index * 30)}
         style={[
           subjectRowStyles.container,
           localSubjectRowItemStyles.container,
@@ -89,7 +97,7 @@ const SubjectRowItem = ({ subject }: { subject: ISubjectTypes }) => {
         <View style={subjectRowStyles.detailsButtonContainer}>
           <FeatherIcon name="chevron-right" size={24} />
         </View>
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 };
