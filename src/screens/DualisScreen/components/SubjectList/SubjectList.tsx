@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { View, FlatList } from "react-native";
 import React, { useState } from "react";
 import { ISubjectTypes } from "../../../../api/html_scraper/dualis/types/ISubjectTypes";
 import SubjectRowItem from "../SubjectRowItem";
@@ -7,6 +7,7 @@ import Chip from "../../../../components/Chip";
 import { subjectListStyles } from "./subjectList.styles";
 import RegularText from "../../../../components/RegularText";
 import { useTranslation } from "react-i18next";
+import Animated, { Layout } from "react-native-reanimated";
 
 const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
   const { t } = useTranslation("dualisScreen");
@@ -60,7 +61,7 @@ const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <Animated.View layout={Layout} style={{ flex: 1 }}>
       <RegularText style={subjectListStyles.semesterTitleText}>
         {t("semester")}
       </RegularText>
@@ -76,7 +77,7 @@ const SubjectList = ({ subjects }: { subjects: ISubjectTypes[] }) => {
         contentContainerStyle={subjectListStyles.subjectListContainer}
         alwaysBounceVertical
       />
-    </View>
+    </Animated.View>
   );
 };
 

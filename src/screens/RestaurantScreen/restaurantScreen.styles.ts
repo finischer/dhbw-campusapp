@@ -8,7 +8,6 @@ export const restaurantScreenStyles = StyleSheet.create({
     paddingVertical: 10,
     flex: 1,
     alignItems: "flex-start",
-    paddingHorizontal: 36,
   },
   restaurantNameText: {
     fontWeight: "bold",

@@ -21,21 +21,22 @@ import { useQuery } from "react-query";
 import { restaurantScreenStyles } from "./restaurantScreen.styles";
 import { useRoute } from "@react-navigation/native";
 import Animated from "react-native-reanimated";
+import Loader from "../../components/Loader/Loader";
+import { useTranslation } from "react-i18next";
 
 const RestaurantScreen = () => {
+  const { t } = useTranslation("restaurantScreen");
   const {
     restaurantName,
     formattedRestaurantName,
     fetchMenus,
     changeRestaurant,
-    changeDate,
   } = useRestaurant();
 
   const [restaurant, setRestaurant] = useState<IRestaurantState>({
     restaurantName,
     offer: [],
   });
-  const [dayOptions, setDayOptions] = useState<IDayOptions[]>([]);
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y >= 30) {
@@ -61,32 +62,25 @@ const RestaurantScreen = () => {
   if (isFetching)
     return (
       <GlobalBody centered>
-        <RegularText>Angebot wird geladen ...</RegularText>
+        <Loader text={t("offerLoaderText")} size="small" />
       </GlobalBody>
     );
 
   return (
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
-      {/* TODO: Animate header on scroll (maybe implement it at as generic component for all screens) */}
       <Animated.ScrollView onScroll={handleOnScroll} scrollEventThrottle={16}>
         {/* Restaurant Title View */}
-        <View style={restaurantScreenStyles.restaurantNameContainer}>
+        <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
           <RegularText style={restaurantScreenStyles.restaurantNameText}>
             {formattedRestaurantName}
           </RegularText>
-        </View>
+        </GlobalBody>
 
         {/* MenuList View */}
         <SnapCarousel
           data={restaurant.offer}
-          renderItem={({ item, index, scrollX }: IRenderMenuListProps) => (
-            <MenuList
-              menus={item.menus}
-              date={item.date}
-              index={index}
-              scrollX={scrollX}
-              lengthOfOffers={restaurant.offer.length}
-            />
+          renderItem={({ item }: IRenderMenuListProps) => (
+            <MenuList menus={item.menus} date={item.date} />
           )}
         />
       </Animated.ScrollView>

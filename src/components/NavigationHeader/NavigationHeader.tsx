@@ -1,11 +1,9 @@
-import { View } from "react-native";
 import React from "react";
 import { INavigationHeaderProps } from "./NavigationHeader.types";
 import RegularText from "../RegularText";
 import typography from "../../constants/typography";
 import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
-import { WINDOW_WIDTH } from "../../constants/device/device";
-import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
+import { navHeaderStyles } from "./NavigationHeader.styles";
 
 const NavigationHeader = ({
   title,
@@ -13,13 +11,7 @@ const NavigationHeader = ({
   showSubTitle = false,
 }: INavigationHeaderProps) => {
   return (
-    <Animated.View
-      style={{
-        alignItems: "center",
-        width: 300,
-      }}
-      layout={Layout}
-    >
+    <Animated.View style={navHeaderStyles.container} layout={Layout}>
       <RegularText variant="light" weight="bold">
         {title}
       </RegularText>

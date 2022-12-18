@@ -1,5 +1,5 @@
-import { View, SafeAreaView } from "react-native";
-import React from "react";
+import { View, SafeAreaView, StatusBar } from "react-native";
+import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import RegularText from "../../components/RegularText";
 import GlobalBody from "../../components/GlobalBody";
@@ -8,10 +8,15 @@ import ExamList from "./ExamList";
 import CloseButton from "../../components/CloseButton";
 import { IExamTypes } from "../../api/html_scraper/dualis/types/IExamTypes";
 import { useTranslation } from "react-i18next";
+import { useIsFocused } from "@react-navigation/native";
 
 const SubjectDetailsScreen = () => {
   const { t } = useTranslation("dualisScreen");
   const { params: subject }: any = useRoute();
+  const [statusBarStyle, setStatusBarStyle] = useState<
+    "light-content" | "dark-content"
+  >("light-content");
+  const isFocused = useIsFocused();
 
   const examList: IExamTypes[] = subject.exams.filter(
     (exam: IExamTypes) => exam.examName && exam
@@ -19,8 +24,17 @@ const SubjectDetailsScreen = () => {
 
   if (!subject) return <RegularText>{t("noDetailsRetrieved")}</RegularText>;
 
+  useEffect(() => {
+    if (isFocused) {
+      setTimeout(() => {
+        setStatusBarStyle("dark-content");
+      }, 300);
+    }
+  }, [isFocused]);
+
   return (
     <>
+      {isFocused && <StatusBar barStyle={statusBarStyle} />}
       <GlobalBody style={subjectDetailsScreenStyle.wrapperContainer}>
         {/* Header View */}
         <SafeAreaView style={subjectDetailsScreenStyle.headerContainer}>

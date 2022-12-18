@@ -36,6 +36,6 @@ export const subjectDetailsScreenStyle = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
 });

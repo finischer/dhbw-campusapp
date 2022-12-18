@@ -63,7 +63,8 @@ const DualisNavigator = ({ route, navigation }: any) => {
         screenOptions={{
           presentation: "modal",
           cardOverlayEnabled: true,
-          ...TransitionPresets.ModalPresentationIOS,
+          // ...TransitionPresets.ModalPresentationIOS,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
           // cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
           headerShown: false,
           gestureEnabled: true,

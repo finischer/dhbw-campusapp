@@ -18,6 +18,7 @@ const Chip = ({
   const { colors } = useMetadata();
 
   const iconName: FeatherIconName = selected ? "check" : "x-circle";
+  const iconColor = disabled ? colors.secondary : colors.lightText;
 
   const localChipStyles = StyleSheet.create({
     container: {
@@ -29,15 +30,20 @@ const Chip = ({
     },
   });
 
+  const handleClick = () => {
+    if (disabled) return;
+    onClick();
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={onClick}>
+    <TouchableWithoutFeedback onPress={handleClick}>
       <View style={[chipStyles.container, localChipStyles.container]}>
         <RegularText style={[chipStyles.labelText, localChipStyles.labelText]}>
           {label}
         </RegularText>
         {(selected || disabled) && (
           <View style={{ marginLeft: 5 }}>
-            <Feather name={iconName} size={14} color={colors.lightText} />
+            <Feather name={iconName} size={14} color={iconColor} />
           </View>
         )}
       </View>

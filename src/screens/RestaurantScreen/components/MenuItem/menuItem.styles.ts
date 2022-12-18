@@ -2,7 +2,7 @@ import { GLOBAL_PADDING_HORIZONTAL } from "./../../../../constants/layout/layout
 import { WINDOW_WIDTH } from "./../../../../constants/device/device";
 import { StyleSheet } from "react-native";
 
-export const CARD_WIDTH = WINDOW_WIDTH * 0.8;
+export const CARD_WIDTH = WINDOW_WIDTH - GLOBAL_PADDING_HORIZONTAL * 2;
 
 export const menuItemStyles = StyleSheet.create({
   container: {

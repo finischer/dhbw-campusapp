@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Animated from "react-native-reanimated";
 import { WINDOW_WIDTH } from "../../constants/device/device";
+import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
 
 const SnapCarousel = ({ data, renderItem }: any) => {
   const [scrollX, setScrollX] = useState(0);
@@ -10,9 +11,9 @@ const SnapCarousel = ({ data, renderItem }: any) => {
       <Animated.FlatList
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
-        decelerationRate={0.8}
-        snapToInterval={WINDOW_WIDTH * 0.8 + WINDOW_WIDTH * 0.02 * 1.5}
-        snapToAlignment="start"
+        decelerationRate="fast"
+        snapToInterval={WINDOW_WIDTH}
+        pagingEnabled
         data={data}
         renderItem={({ item, index }: { item: any; index: number }) =>
           renderItem({ item, index, scrollX })

@@ -15,76 +15,30 @@ import { WINDOW_WIDTH } from "../../../../constants/device/device";
 import moment from "moment";
 import { CARD_WIDTH } from "../MenuItem/menuItem.styles";
 import { useTranslation } from "react-i18next";
+import GlobalBody from "../../../../components/GlobalBody";
+import { GLOBAL_PADDING_HORIZONTAL } from "../../../../constants/layout";
 
-const SPACING = WINDOW_WIDTH * 0.02;
-const SIDECARD_LENGTH = (WINDOW_WIDTH * 0.18) / 2;
+const SPACING = 10;
+const SIDECARD_LENGTH = 30;
 
-const MenuList: React.FC<IMenuListProps> = ({
-  menus,
-  date,
-  index,
-  scrollX = 0,
-  lengthOfOffers,
-}) => {
-  const size = useSharedValue(0.8);
+const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
   const { t } = useTranslation();
 
   const dayName = moment(date).format("dddd").toLowerCase();
 
-  const inputRange = [
-    (index - 1) * CARD_WIDTH,
-    index * CARD_WIDTH,
-    (index + 1) * CARD_WIDTH,
-  ];
-
-  size.value = interpolate(
-    scrollX,
-    inputRange,
-    [0.9, 1, 0.9],
-    Extrapolate.CLAMP
-  );
-
-  const opacity = useSharedValue(1);
-  const opacityInputRange = [
-    (index - 1) * CARD_WIDTH,
-    index * CARD_WIDTH,
-    (index + 1) * CARD_WIDTH,
-  ];
-
-  opacity.value = interpolate(
-    scrollX,
-    opacityInputRange,
-    [0.7, 1, 0.7],
-    Extrapolate.CLAMP
-  );
-
-  const animatedMenuListStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scaleY: size.value }],
-      opacity: opacity.value,
-    };
-  });
-
   const localMenuListStyles = StyleSheet.create({
-    container: {
-      marginLeft: index === 0 ? SIDECARD_LENGTH : SPACING,
-      marginRight: index === lengthOfOffers - 1 ? SIDECARD_LENGTH : SPACING,
-    },
+    container: {},
   });
 
   return (
     <Animated.View
-      style={[
-        menuListStyles.container,
-        animatedMenuListStyle,
-        localMenuListStyles.container,
-      ]}
+      style={[menuListStyles.container, localMenuListStyles.container]}
     >
-      <View style={menuListStyles.dateContainer}>
+      <Animated.View style={menuListStyles.dateContainer}>
         <RegularText style={menuListStyles.dateText}>
           {t(`common:${dayName}`)}, {moment(date).format("DD.MM.YYYY")}
         </RegularText>
-      </View>
+      </Animated.View>
       {menus.length === 0 ? (
         <View style={menuListStyles.noOfferTodayContainer}>
           <RegularText>{t("restaurantScreen:noOfferThisDay")}</RegularText>

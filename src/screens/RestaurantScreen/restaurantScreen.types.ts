@@ -7,6 +7,4 @@ export type IRestaurantState = {
 
 export type IRenderMenuListProps = {
   item: IOfferListTypes;
-  index: number;
-  scrollX: number;
 };
