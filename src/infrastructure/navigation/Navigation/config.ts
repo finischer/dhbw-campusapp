@@ -1,9 +1,7 @@
-import { tabBarStyle } from "./navigation.styles";
 import {
   CardStyleInterpolators,
   StackNavigationOptions,
 } from "@react-navigation/stack";
-import { Dimensions } from "react-native";
 import { WINDOW_HEIGHT } from "../../../constants/device/device";
 import typography from "../../../constants/typography";
 import { useMetadata } from "../../../hooks/useMetadata";

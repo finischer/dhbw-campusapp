@@ -4,9 +4,20 @@ import { ITouchableOpacityProps } from "./touchableOpacity.types";
 
 const ACTIVE_OPACITY = 0.7;
 
-const TouchableOpacity = ({ children, ...props }: ITouchableOpacityProps) => {
+const TouchableOpacity = ({
+  children,
+  disabled = false,
+  ...props
+}: ITouchableOpacityProps) => {
   return (
-    <TsOpacity activeOpacity={ACTIVE_OPACITY} {...props}>
+    <TsOpacity
+      activeOpacity={ACTIVE_OPACITY}
+      disabled={disabled}
+      {...props}
+      style={{
+        opacity: disabled ? 0.3 : 1,
+      }}
+    >
       {children}
     </TsOpacity>
   );
