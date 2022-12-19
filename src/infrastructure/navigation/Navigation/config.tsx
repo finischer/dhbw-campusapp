@@ -6,12 +6,16 @@ import { WINDOW_HEIGHT } from "../../../constants/device/device";
 import typography from "../../../constants/typography";
 import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
+import FeatherIcon from "../../../components/FeatherIcon";
+import { useTranslation } from "react-i18next";
 
 export const TAB_BAR_HEIGHT = WINDOW_HEIGHT * 0.1;
 export const HEADER_HEIGHT = WINDOW_HEIGHT * 0.1;
 
 export const headerConfig = (): StackNavigationOptions => {
   const { colors } = useMetadata();
+  const { t } = useTranslation("common");
+  const headerBackTitle = t("back");
 
   return {
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -26,14 +30,15 @@ export const headerConfig = (): StackNavigationOptions => {
       fontFamily: typography.Bold,
       alignSelf: "center",
     },
-    headerBackTitle: "Zurück",
+    headerBackTitle,
     headerTitleAlign: "center",
-    headerRightContainerStyle: {
-      position: "absolute",
-      right: 0,
-      top: 0,
-      bottom: 0,
-    },
+    headerBackImage: () => (
+      <FeatherIcon
+        name="chevron-left"
+        clickable={false}
+        color={colors.lightText}
+      />
+    ),
   };
 };
 

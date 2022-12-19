@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { lang } from "moment";
 import { useState, createContext, useContext } from "react";
 import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
 import { IRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
@@ -6,6 +6,7 @@ import { RestaurantOptions } from "../../api/html_scraper/restaurant/types/Resta
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
 import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
+import { useMetadata } from "../useMetadata";
 
 const PREVIEW_DAYS = 5;
 
@@ -25,7 +26,8 @@ const RestaurantContext = createContext<IRestaurantContext | undefined>(
 const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const restaurantScraper = new RestaurantScraper();
+  const { language } = useMetadata();
+  const restaurantScraper = new RestaurantScraper(language);
 
   const [restaurantName, setRestaurantName] =
     useState<RestaurantOptions>("mensa-am-schloss");

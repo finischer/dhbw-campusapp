@@ -1,12 +1,6 @@
-import moment from "moment";
+import moment, { lang } from "moment";
 import { useState, createContext, useContext, useEffect, useRef } from "react";
 import { Platform } from "react-native";
-import {
-  color,
-  interpolateColor,
-  useDerivedValue,
-  withTiming,
-} from "react-native-reanimated";
 import { darkModeColors, lightModeColors } from "../../constants/colors";
 import {
   ILanguageOptions,
@@ -14,21 +8,7 @@ import {
   IThemeTypes,
 } from "./useMetadata.types";
 import i18n from "i18next";
-import { initReactI18next, useTranslation } from "react-i18next";
-import de from "../../constants/translations/de";
-import en from "../../constants/translations/en";
-import i18next from "i18next";
-
-const translationResources = {
-  de,
-  en,
-};
-
-i18n.use(initReactI18next).init({
-  compatibilityJSON: "v3",
-  resources: translationResources,
-  fallbackLng: "en",
-});
+import { useTranslation } from "react-i18next";
 
 const MetaDataContext = createContext<IMetadataContext | undefined>(undefined);
 
@@ -38,7 +18,7 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const { t } = useTranslation("common");
 
   const [theme, setTheme] = useState<IThemeTypes>("light");
-  const [language, setLanguage] = useState<ILanguageOptions>("de");
+  const [language, setLanguage] = useState<ILanguageOptions>("en");
   const colors = theme === "light" ? lightModeColors : darkModeColors;
   const isAndroid = Platform.OS === "android";
   const isIOS = Platform.OS === "ios";
@@ -51,8 +31,8 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const changeLanguage = (newLanguage: ILanguageOptions) => {
     setLanguage(newLanguage);
-    moment.locale(language);
-    i18n.changeLanguage(language);
+    moment.locale(newLanguage);
+    i18n.changeLanguage(newLanguage);
   };
 
   return (

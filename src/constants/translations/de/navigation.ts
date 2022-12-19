@@ -3,4 +3,5 @@ export default {
   cafeteria: "Mensa",
   lectures: "Vorlesungsplan",
   more: "Mehr",
+  changeLanguage: "Sprache ändern",
 };

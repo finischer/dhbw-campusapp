@@ -7,4 +7,5 @@ export type IFeatherIconProps = {
   color?: string | undefined;
   activeOpacity?: number | undefined;
   onClick?: () => void | undefined;
+  clickable?: boolean;
 };

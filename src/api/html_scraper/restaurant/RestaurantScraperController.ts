@@ -5,13 +5,15 @@ import { Restaurants, RestaurantOptions } from "./types/RestaurantTypes";
 import { IMenuType } from "./types/IMenuType";
 import { IResponseTypes } from "../../types/IResponseTypes";
 import { IDayOptions } from "./types/IDayOptions";
-import moment from "moment";
+import moment, { lang } from "moment";
 import { IOfferListTypes } from "./types/IOfferListTypes";
+import { ILanguageOptions } from "../../../hooks/useMetadata/useMetadata.types";
 export class RestaurantScraper {
   restaurants: Restaurants;
   baseUrl: string;
-  constructor() {
-    this.baseUrl = "https://www.stw-ma.de";
+  constructor(language: ILanguageOptions) {
+    const suffix = language === "de" ? "" : "en";
+    this.baseUrl = `https://www.stw-ma.de/${suffix}`;
     this.restaurants = {
       "mensa-am-schloss": "menüplan_schlossmensa.html",
       "mensaria-metropol":

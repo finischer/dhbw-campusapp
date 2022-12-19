@@ -10,10 +10,15 @@ const FeatherIcon = ({
   color = undefined,
   activeOpacity = undefined,
   onClick = undefined,
+  clickable = true,
 }: IFeatherIconProps) => {
   const { colors } = useMetadata();
 
   const iconColor = color || colors.secondary;
+
+  if (!clickable) {
+    return <Feather name={name} size={size} color={iconColor} />;
+  }
 
   return (
     <TouchableOpacity onPress={onClick}>

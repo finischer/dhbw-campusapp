@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 export const navHeaderStyles = StyleSheet.create({
   container: {
     alignItems: "center",
-    width: WINDOW_WIDTH - GLOBAL_PADDING_HORIZONTAL,
+    width: WINDOW_WIDTH * 0.5 - GLOBAL_PADDING_HORIZONTAL,
   },
   subTitleText: {},
 });

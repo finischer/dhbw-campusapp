@@ -42,8 +42,7 @@ const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
         ))
       )}
 
-      {/* Request Time */}
-      <RequestTime />
+      
     </Animated.View>
   );
 };

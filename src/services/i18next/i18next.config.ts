@@ -1,5 +1,4 @@
 import i18n from "i18next";
-import moment from "moment";
 import { initReactI18next } from "react-i18next";
 import de from "../../constants/translations/de";
 import en from "../../constants/translations/en";

@@ -23,9 +23,13 @@ import { useRoute } from "@react-navigation/native";
 import Animated from "react-native-reanimated";
 import Loader from "../../components/Loader/Loader";
 import { useTranslation } from "react-i18next";
+import RequestTime from "../../components/RequestTime";
+import AdditivesList from "./components/AdditivesList";
+import { useMetadata } from "../../hooks/useMetadata";
 
 const RestaurantScreen = () => {
   const { t } = useTranslation("restaurantScreen");
+  const { language } = useMetadata();
   const {
     restaurantName,
     formattedRestaurantName,
@@ -47,7 +51,7 @@ const RestaurantScreen = () => {
   };
 
   const { isFetching } = useQuery(
-    ["cafeteria-menus", restaurantName],
+    ["cafeteria-menus", restaurantName, language],
     fetchMenus,
     {
       onSuccess: (menus: IOfferListTypes[]) => {
@@ -83,6 +87,12 @@ const RestaurantScreen = () => {
             <MenuList menus={item.menus} date={item.date} />
           )}
         />
+
+        {/* Request Time */}
+        <RequestTime />
+
+        {/* Additive List */}
+        <AdditivesList />
       </Animated.ScrollView>
     </GlobalBody>
   );

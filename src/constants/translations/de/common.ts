@@ -9,4 +9,7 @@ export default {
   timeFormat: "DD.MM.YYYY, HH:mm [Uhr]",
   dateFormat: "DD.MM.YYYY",
   lastUpdated: "Zuletzt aktualisiert am",
+  back: "Zurück",
+  german: "Deutsch",
+  english: "Englisch",
 };
