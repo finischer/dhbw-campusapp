@@ -9,7 +9,7 @@ export const menuItemStyles = StyleSheet.create({
     marginBottom: 5,
     minHeight: 100,
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 5,
     width: CARD_WIDTH,
   },
   menuNameText: {
