@@ -1,3 +1,6 @@
-export type ISecureStorageProviderProps = {
-  children: React.ReactNode;
-};
+export type SecureStoreEntries =
+  | "@email"
+  | "@password"
+  | "@cookies"
+  | "@arguments"
+  | "@ical";

@@ -39,11 +39,34 @@ const MoreScreen = () => {
     );
   };
 
+  const openExternalLink = (url: string) => {
+    Linking.openURL(url);
+  };
+
   return (
     <GlobalBody>
       <ScrollView>
         <RegularRowItem leftIcon="message-square" disabled>
           {t("moreScreen:notifications")}
+        </RegularRowItem>
+        <RegularRowItem leftIcon="calendar" disabled>
+          {t("moreScreen:importCalendar")}
+        </RegularRowItem>
+        <RegularRowItem
+          onClick={() =>
+            openExternalLink(
+              "https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport"
+            )
+          }
+          rightIcon="external-link"
+        >
+          {t("moreScreen:universitySports")}
+        </RegularRowItem>
+        <RegularRowItem
+          onClick={() => openExternalLink("https://www.stw-ma.de")}
+          rightIcon="external-link"
+        >
+          {t("moreScreen:studentUnionMannheim")}
         </RegularRowItem>
         <RegularRowItem leftIcon="calendar" disabled>
           {t("moreScreen:importCalendar")}

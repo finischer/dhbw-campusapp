@@ -3,4 +3,6 @@ export default {
   settings: "Einstellungen",
   importCalendar: "Kalender importieren",
   notifications: "Benachrichtigungen",
+  universitySports: "Hochschulsport",
+  studentUnionMannheim: "Studierendenwerk Mannheim",
 };

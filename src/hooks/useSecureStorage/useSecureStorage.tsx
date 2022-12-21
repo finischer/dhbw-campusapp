@@ -1,18 +1,22 @@
 import * as SecureStore from "expo-secure-store";
+import { SecureStoreEntries } from "./useSecureStorage.types";
 
 const useSecureStorage = () => {
-  const saveValueInSecureStorage = async (key: string, value: any) => {
+  const saveValueInSecureStorage = async (
+    key: SecureStoreEntries,
+    value: any
+  ) => {
     await SecureStore.setItemAsync(key, JSON.stringify(value));
   };
 
-  const getValueFromSecureStorage = async (key: string) => {
+  const getValueFromSecureStorage = async (key: SecureStoreEntries) => {
     const value = await SecureStore.getItemAsync(key);
 
     if (!value) return undefined;
     return JSON.parse(value);
   };
 
-  const removeValueFromSecureStorage = async (key: string) => {
+  const removeValueFromSecureStorage = async (key: SecureStoreEntries) => {
     await SecureStore.deleteItemAsync(key);
   };
 

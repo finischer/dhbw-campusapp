@@ -4,6 +4,9 @@ import { IFeatherIconProps } from "./featherIcon.types";
 import TouchableOpacity from "../TouchableOpacity";
 import { useMetadata } from "../../hooks/useMetadata";
 
+// TODO: Use also other icon sources because all neccessary Icons are not included in Feather Library.
+// For example animal icons are not included in this library
+
 const FeatherIcon = ({
   name,
   size = 24,
