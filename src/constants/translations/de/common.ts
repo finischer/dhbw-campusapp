@@ -12,4 +12,7 @@ export default {
   back: "Zurück",
   german: "Deutsch",
   english: "Englisch",
+  emailSubjectBugFound: "[DHBW CampusApp] Bug gefunden",
+  emailBodyBugFound:
+    "Informationen zum Smartphone:\nHersteller:\n Modell:\nSystem Version:\nApp Version:\nBeschreibung des Bugs:\n",
 };

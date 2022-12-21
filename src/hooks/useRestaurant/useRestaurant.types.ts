@@ -5,6 +5,7 @@ import { RestaurantOptions } from "./../../api/html_scraper/restaurant/types/Res
 export type IRestaurantContext = {
   restaurantName: RestaurantOptions;
   formattedRestaurantName: string;
+  getAllRestaurants(): RestaurantsMapTypes;
   changeRestaurant(restaurant: RestaurantOptions): void;
   changeDate(newDate: string): void;
   choosedDate: string;

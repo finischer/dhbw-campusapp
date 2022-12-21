@@ -2,4 +2,5 @@ import { IMenuType } from "./../../../../api/html_scraper/restaurant/types/IMenu
 
 export type MenuItemProps = {
   menu: IMenuType;
+  index: number;
 };

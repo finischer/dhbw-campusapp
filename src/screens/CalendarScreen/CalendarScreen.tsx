@@ -4,8 +4,8 @@ import RegularText from "../../components/RegularText";
 
 const CalendarScreen = () => {
   return (
-    <GlobalBody>
-      <RegularText>CalendarScreen</RegularText>
+    <GlobalBody centered>
+      <RegularText>Coming soon</RegularText>
     </GlobalBody>
   );
 };

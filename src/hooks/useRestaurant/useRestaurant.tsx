@@ -44,6 +44,10 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
     setChoosedDate(moment(newDate).format("DD.MM.YYYY"));
   };
 
+  const getAllRestaurants = () => {
+    return RESTAURANTS_MAP;
+  };
+
   const fetchMenus = async () => {
     const allMenus: IOfferListTypes[] = [];
     for (let i = 0; i < PREVIEW_DAYS; i++) {
@@ -64,6 +68,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         restaurantName,
         formattedRestaurantName,
+        getAllRestaurants,
         changeRestaurant,
         changeDate,
         choosedDate,

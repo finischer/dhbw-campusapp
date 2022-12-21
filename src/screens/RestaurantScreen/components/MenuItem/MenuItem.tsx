@@ -5,8 +5,9 @@ import RegularText from "../../../../components/RegularText";
 import { menuItemStyles } from "./menuItem.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import { MenuItemProps } from "./menuItem.types";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 
-const MenuItem: React.FC<MenuItemProps> = ({ menu }: { menu: IMenuType }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ menu, index }) => {
   const { colors } = useMetadata();
   const localMenuItemStyles = StyleSheet.create({
     container: {
@@ -15,7 +16,10 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu }: { menu: IMenuType }) => {
   });
 
   return (
-    <View style={[menuItemStyles.container, localMenuItemStyles.container]}>
+    <Animated.View
+      entering={FadeInLeft.delay(index * 30)}
+      style={[menuItemStyles.container, localMenuItemStyles.container]}
+    >
       <RegularText numberOfLines={1} style={menuItemStyles.menuNameText}>
         {menu.menuName}
       </RegularText>
@@ -27,7 +31,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu }: { menu: IMenuType }) => {
           {menu.menuPrice} / {menu.menuPriceSelection}
         </RegularText>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

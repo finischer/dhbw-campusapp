@@ -7,6 +7,7 @@ import { useMetadata } from "../../hooks/useMetadata";
 import FeatherIcon from "../FeatherIcon";
 import TouchableOpacity from "../TouchableOpacity";
 import { IColors } from "../../constants/colors/colors.types";
+import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
 
 const ROW_ITEM_GAP = 10;
 
@@ -23,6 +24,9 @@ const RegularRowItem = ({
   const { colors } = useMetadata();
 
   const textAndIconColor = selected ? colors.lightText : colors.secondary;
+  const rightIconName: FeatherIconName | undefined = selected
+    ? "check"
+    : rightIcon;
 
   const localRegularRowItemStyles = StyleSheet.create({
     container: {
@@ -55,9 +59,13 @@ const RegularRowItem = ({
             {children}
           </RegularText>
         </View>
-        {rightIcon && (
+        {rightIconName && (
           <View style={regularRowItemStyles.rightIconContainer}>
-            <FeatherIcon name={rightIcon} size={20} color={textAndIconColor} />
+            <FeatherIcon
+              name={rightIconName}
+              size={20}
+              color={textAndIconColor}
+            />
           </View>
         )}
       </View>

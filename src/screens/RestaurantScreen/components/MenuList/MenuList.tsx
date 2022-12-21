@@ -38,11 +38,9 @@ const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
         </View>
       ) : (
         menus.map((menu: IMenuType, index: number) => (
-          <MenuItem key={index} menu={menu} />
+          <MenuItem key={index} menu={menu} index={index} />
         ))
       )}
-
-      
     </Animated.View>
   );
 };

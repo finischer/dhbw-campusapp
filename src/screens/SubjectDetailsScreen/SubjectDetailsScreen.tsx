@@ -10,6 +10,7 @@ import { IExamTypes } from "../../api/html_scraper/dualis/types/IExamTypes";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
+import Modal from "../../components/Modal";
 
 const SubjectDetailsScreen = () => {
   const { t } = useTranslation("dualisScreen");
@@ -35,42 +36,23 @@ const SubjectDetailsScreen = () => {
   }, [isFocused, theme]);
 
   return (
-    <>
-      {isFocused && <StatusBar barStyle={statusBarStyle} />}
-      <GlobalBody style={subjectDetailsScreenStyle.wrapperContainer}>
-        {/* Header View */}
-        <SafeAreaView style={subjectDetailsScreenStyle.headerContainer}>
-          <RegularText style={subjectDetailsScreenStyle.subjectNameText}>
-            {subject.subjectName}
-          </RegularText>
-          <RegularText style={subjectDetailsScreenStyle.semesterNameText}>
-            {subject.semester}
-          </RegularText>
-        </SafeAreaView>
+    <Modal title={subject.subjectName} subTitle={subject.semester}>
+      <View style={subjectDetailsScreenStyle.container}>
+        <RegularText style={subjectDetailsScreenStyle.examsTitleText}>
+          {t("finalModuleRequirements")}
+        </RegularText>
 
-        {/* Exams View */}
-        <View style={subjectDetailsScreenStyle.examsContainer}>
-          <RegularText style={subjectDetailsScreenStyle.examsTitleText}>
-            {t("finalModuleRequirements")}
-          </RegularText>
-
-          <View style={subjectDetailsScreenStyle.examsList}>
-            {examList.length === 0 ? (
-              <RegularText style={subjectDetailsScreenStyle.emptyExamsListText}>
-                {t("noExaminationServices")}
-              </RegularText>
-            ) : (
-              <ExamList exams={examList} />
-            )}
-          </View>
+        <View style={subjectDetailsScreenStyle.examsList}>
+          {examList.length === 0 ? (
+            <RegularText style={subjectDetailsScreenStyle.emptyExamsListText}>
+              {t("noExaminationServices")}
+            </RegularText>
+          ) : (
+            <ExamList exams={examList} />
+          )}
         </View>
-
-        {/* Close Button */}
-        <View style={subjectDetailsScreenStyle.closeButtonContainer}>
-          <CloseButton />
-        </View>
-      </GlobalBody>
-    </>
+      </View>
+    </Modal>
   );
 };
 

@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { DeviceEventEmitter } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { DeviceEventEmitter, Modal as RNModal, View } from "react-native";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import RestaurantScreen from "../../../screens/RestaurantScreen";
 import { headerConfig } from "../Navigation/config";
 import { useRestaurant } from "../../../hooks/useRestaurant/useRestaurant";
 import NavigationHeader from "../../../components/NavigationHeader";
 import { useTranslation } from "react-i18next";
+import Modal from "../../../components/Modal";
+import RegularText from "../../../components/RegularText";
+import ChangeRestaurantScreen from "../../../screens/ChangeRestaurantScreen/ChangeRestaurantScreen";
+import { useMetadata } from "../../../hooks/useMetadata";
 
-const Stack = createStackNavigator();
+const RestaurantStack = createStackNavigator();
 
 const RestaurantNavigator = () => {
   const { t } = useTranslation("navigation");
-  const [showSubTitle, setShowSubTitle] = useState(false);
+  const { colors } = useMetadata();
   const { formattedRestaurantName } = useRestaurant();
+  const [showSubTitle, setShowSubTitle] = useState(false);
 
   useEffect(() => {
     const handleShowSubTitle = (newState: boolean) => {
@@ -27,21 +35,40 @@ const RestaurantNavigator = () => {
   }, []);
 
   return (
-    <Stack.Navigator screenOptions={headerConfig()}>
-      <Stack.Screen
-        name="RestaurantScreen"
-        component={RestaurantScreen}
-        options={{
-          headerTitle: () => (
-            <NavigationHeader
-              title={t("cafeteria")}
-              subTitle={formattedRestaurantName}
-              showSubTitle={showSubTitle}
-            />
-          ),
+    <RestaurantStack.Navigator screenOptions={headerConfig()}>
+      <RestaurantStack.Group>
+        <RestaurantStack.Screen
+          name="RestaurantScreen"
+          component={RestaurantScreen}
+          options={{
+            headerTitle: () => (
+              <NavigationHeader
+                title={t("cafeteria")}
+                subTitle={formattedRestaurantName}
+                showSubTitle={showSubTitle}
+              />
+            ),
+          }}
+        />
+      </RestaurantStack.Group>
+      <RestaurantStack.Group
+        screenOptions={{
+          presentation: "modal",
+          cardOverlayEnabled: true,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          headerShown: false,
+          gestureEnabled: true,
+          cardStyle: {
+            backgroundColor: colors.primary,
+          },
         }}
-      />
-    </Stack.Navigator>
+      >
+        <RestaurantStack.Screen
+          name="ChangeRestaurantScreen"
+          component={ChangeRestaurantScreen}
+        />
+      </RestaurantStack.Group>
+    </RestaurantStack.Navigator>
   );
 };
 

@@ -1,4 +1,4 @@
-import { View, Animated, LayoutAnimation } from "react-native";
+import { View, Animated as RNAnimated, LayoutAnimation } from "react-native";
 import React, { useRef, useState } from "react";
 import { ALLERGENES, LABELS, OTHERS } from "./labels";
 import RegularText from "../../../../components/RegularText";
@@ -9,12 +9,16 @@ import FeatherIcon from "../../../../components/FeatherIcon";
 import GlobalBody from "../../../../components/GlobalBody";
 import TouchableOpacity from "../../../../components/TouchableOpacity";
 import { toggleAnimation } from "../../../../constants/animations";
-import { Feather } from "@expo/vector-icons";
+import Animated, {
+  FadeInDown,
+  FadeInUp,
+  FadeOutUp,
+} from "react-native-reanimated";
 
 const AdditivesList = () => {
   const { t } = useTranslation("restaurantScreen");
   const [isOpen, setIsOpen] = useState(false);
-  const animationRef = useRef(new Animated.Value(0)).current;
+  const animationRef = useRef(new RNAnimated.Value(0)).current;
 
   const Item = ({ label, sub }: ILabelTypes) => (
     <View style={additivesListStyles.itemContainer}>
@@ -30,7 +34,7 @@ const AdditivesList = () => {
       useNativeDriver: true,
     };
 
-    Animated.timing(animationRef, animationConfig).start();
+    RNAnimated.timing(animationRef, animationConfig).start();
     LayoutAnimation.configureNext(toggleAnimation);
     setIsOpen((oldState) => !oldState);
   };
@@ -45,13 +49,19 @@ const AdditivesList = () => {
       <TouchableOpacity onPress={toggleOpen}>
         <View style={additivesListStyles.togglerContainer}>
           <RegularText>{t("additivesSubjectToLabeling")}</RegularText>
-          <Animated.View style={{ transform: [{ rotateZ: chevronTransform }] }}>
+          <RNAnimated.View
+            style={{ transform: [{ rotateZ: chevronTransform }] }}
+          >
             <FeatherIcon name="chevron-down" clickable={false} />
-          </Animated.View>
+          </RNAnimated.View>
         </View>
       </TouchableOpacity>
       {isOpen && (
-        <Animated.View style={[additivesListStyles.container]}>
+        <Animated.View
+          entering={FadeInUp}
+          exiting={FadeOutUp}
+          style={[additivesListStyles.container]}
+        >
           {/* Labels */}
           <RegularText>{t("attributes").toUpperCase()}:</RegularText>
           {LABELS.map(({ label, sub }: ILabelTypes, index: number) => (

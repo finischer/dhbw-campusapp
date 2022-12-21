@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   DeviceEventEmitter,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  ScrollView,
-  View,
 } from "react-native";
-import { IDayOptions } from "../../api/html_scraper/restaurant/types/IDayOptions";
 import GlobalBody from "../../components/GlobalBody";
 import RegularText from "../../components/RegularText";
 import SnapCarousel from "../../components/SnapCarousel";
@@ -19,23 +16,24 @@ import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
 import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
 import { useQuery } from "react-query";
 import { restaurantScreenStyles } from "./restaurantScreen.styles";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import Animated from "react-native-reanimated";
 import Loader from "../../components/Loader/Loader";
 import { useTranslation } from "react-i18next";
 import RequestTime from "../../components/RequestTime";
 import AdditivesList from "./components/AdditivesList";
 import { useMetadata } from "../../hooks/useMetadata";
+import TouchableOpacity from "../../components/TouchableOpacity";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
+import FeatherIcon from "../../components/FeatherIcon";
 
 const RestaurantScreen = () => {
   const { t } = useTranslation("restaurantScreen");
   const { language } = useMetadata();
-  const {
-    restaurantName,
-    formattedRestaurantName,
-    fetchMenus,
-    changeRestaurant,
-  } = useRestaurant();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { restaurantName, formattedRestaurantName, fetchMenus } =
+    useRestaurant();
 
   const [restaurant, setRestaurant] = useState<IRestaurantState>({
     restaurantName,
@@ -74,11 +72,20 @@ const RestaurantScreen = () => {
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
       <Animated.ScrollView onScroll={handleOnScroll} scrollEventThrottle={16}>
         {/* Restaurant Title View */}
-        <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
-          <RegularText style={restaurantScreenStyles.restaurantNameText}>
-            {formattedRestaurantName}
-          </RegularText>
-        </GlobalBody>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ChangeRestaurantScreen")}
+        >
+          <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
+            {/* Name of Restaurant */}
+            <RegularText style={restaurantScreenStyles.restaurantNameText}>
+              {formattedRestaurantName}
+            </RegularText>
+            {/* Edit Icon */}
+            <RegularText style={{ marginLeft: 5 }}>
+              <FeatherIcon clickable={false} name="edit" size={20} />
+            </RegularText>
+          </GlobalBody>
+        </TouchableOpacity>
 
         {/* MenuList View */}
         <SnapCarousel

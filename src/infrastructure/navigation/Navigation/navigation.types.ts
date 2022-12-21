@@ -12,4 +12,5 @@ export type RootStackParamList = {
   CalendarScreen?: undefined;
   CanteenScreen?: undefined;
   MoreScreen?: undefined;
+  ChangeRestaurantScreen?: undefined;
 };

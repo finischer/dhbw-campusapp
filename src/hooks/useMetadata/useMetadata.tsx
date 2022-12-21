@@ -1,5 +1,5 @@
-import moment, { lang } from "moment";
-import { useState, createContext, useContext, useEffect, useRef } from "react";
+import moment from "moment";
+import { useState, createContext, useContext } from "react";
 import { Platform } from "react-native";
 import { darkModeColors, lightModeColors } from "../../constants/colors";
 import {

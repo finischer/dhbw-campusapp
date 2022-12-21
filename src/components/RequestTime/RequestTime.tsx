@@ -14,7 +14,10 @@ const RequestTime = ({ requestTime = moment() }: IRequestTimeProps) => {
   return (
     <View style={requestTimeStyles.container}>
       <RegularText style={requestTimeStyles.text}>
-        {t("lastUpdated")}: {requestTime.format(timeFormat)}
+        {t("lastUpdated")}:
+      </RegularText>
+      <RegularText style={requestTimeStyles.text}>
+        {requestTime.format(timeFormat)}
       </RegularText>
     </View>
   );

@@ -1,6 +1,7 @@
 import {
   CardStyleInterpolators,
   StackNavigationOptions,
+  TransitionPresets,
 } from "@react-navigation/stack";
 import { WINDOW_HEIGHT } from "../../../constants/device/device";
 import typography from "../../../constants/typography";

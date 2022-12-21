@@ -16,26 +16,20 @@ export const generalButtonStyle = StyleSheet.create({
 export const textVariantStyle = StyleSheet.create({
   container: {},
   text: {
-    color: "green",
+    fontWeight: "500",
   },
 });
 
 export const containedVariantStyle = StyleSheet.create({
   container: {
     padding: 1,
-    backgroundColor: "green",
   },
-  text: {
-    color: "white",
-  },
+  text: {},
 });
 
 export const outlinedVariantStyle = StyleSheet.create({
   container: {
-    borderColor: "green",
     borderWidth: 1,
   },
-  text: {
-    color: "green",
-  },
+  text: {},
 });

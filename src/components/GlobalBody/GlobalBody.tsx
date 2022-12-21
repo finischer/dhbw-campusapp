@@ -30,7 +30,18 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
           style,
         ]}
       >
-        {children}
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          style={[
+            globalBodyStyles.container,
+            localGlobalBodyStyles.container,
+            style,
+            { paddingHorizontal: 0, paddingVertical: 0 },
+          ]}
+        >
+          {children}
+        </Animated.View>
       </SafeAreaView>
     );
   }
