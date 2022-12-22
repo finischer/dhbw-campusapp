@@ -1,18 +1,18 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
-import { IRegularRowItemProps } from "./regularRowItem.types";
+import { IconNames, IRegularRowItemProps } from "./regularRowItem.types";
 import RegularText from "../RegularText";
 import { regularRowItemStyles } from "./regularRowItem.styles";
 import { useMetadata } from "../../hooks/useMetadata";
-import FeatherIcon from "../FeatherIcon";
 import TouchableOpacity from "../TouchableOpacity";
-import { IColors } from "../../constants/colors/colors.types";
-import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
+import Icon from "../Icon";
 
 const ROW_ITEM_GAP = 10;
 
 const RegularRowItem = ({
   children,
+  leftIconSource = undefined,
+  rightIconSource = undefined,
   leftIcon = undefined,
   rightIcon = undefined,
   selected = false,
@@ -24,7 +24,8 @@ const RegularRowItem = ({
   const { colors } = useMetadata();
 
   const textAndIconColor = selected ? colors.lightText : colors.secondary;
-  const rightIconName: FeatherIconName | undefined = selected
+  const selectedRightIconSource = selected ? "feather" : rightIconSource;
+  const selectedRightIconName: IconNames | undefined = selected
     ? "check"
     : rightIcon;
 
@@ -48,9 +49,14 @@ const RegularRowItem = ({
         ]}
       >
         <View style={regularRowItemStyles.leftContainer}>
-          {leftIcon && (
+          {leftIconSource && leftIcon && (
             <View style={regularRowItemStyles.leftIconContainer}>
-              <FeatherIcon name={leftIcon} size={20} color={textAndIconColor} />
+              <Icon
+                source={leftIconSource}
+                name={leftIcon}
+                size={20}
+                color={textAndIconColor}
+              />
             </View>
           )}
           <RegularText
@@ -59,10 +65,11 @@ const RegularRowItem = ({
             {children}
           </RegularText>
         </View>
-        {rightIconName && (
+        {selectedRightIconSource && selectedRightIconName && (
           <View style={regularRowItemStyles.rightIconContainer}>
-            <FeatherIcon
-              name={rightIconName}
+            <Icon
+              source={selectedRightIconSource}
+              name={selectedRightIconName}
               size={20}
               color={textAndIconColor}
             />

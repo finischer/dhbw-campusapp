@@ -44,7 +44,7 @@ const MoreScreen = () => {
   const openExternalLink = async (url: string) => {
     const canOpenUrl = await Linking.canOpenURL(url);
 
-    if (canOpenUrl) {
+    if (!canOpenUrl) {
       const title = t("common:errorOccured");
       const message = t("moreScreen:alertErrorMessageUrl");
       alert(title, message);
@@ -57,35 +57,51 @@ const MoreScreen = () => {
   return (
     <GlobalBody>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <RegularRowItem leftIcon="message-square" disabled>
+        <RegularRowItem
+          leftIconSource="feather"
+          leftIcon="message-square"
+          disabled
+        >
           {t("moreScreen:notifications")}
         </RegularRowItem>
-        <RegularRowItem leftIcon="calendar" disabled>
+        <RegularRowItem leftIconSource="feather" leftIcon="calendar" disabled>
           {t("moreScreen:importCalendar")}
         </RegularRowItem>
         <RegularRowItem
+          leftIconSource="fa5"
+          leftIcon="table-tennis"
           onClick={() =>
             openExternalLink(
               "https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport"
             )
           }
+          rightIconSource="feather"
           rightIcon="external-link"
         >
           {t("moreScreen:universitySports")}
         </RegularRowItem>
         <RegularRowItem
           onClick={() => openExternalLink("https://www.stw-ma.de")}
+          rightIconSource="feather"
           rightIcon="external-link"
         >
           {t("moreScreen:studentUnionMannheim")}
         </RegularRowItem>
         <RegularRowItem
+          leftIconSource="feather"
           onClick={() => goTo("ChangeLanguageScreen")}
+          rightIconSource="feather"
           rightIcon="chevron-right"
         >
           {t("navigation:changeLanguage")}
         </RegularRowItem>
-        <RegularRowItem leftIcon="settings" rightIcon="chevron-right" disabled>
+        <RegularRowItem
+          leftIconSource="feather"
+          leftIcon="settings"
+          rightIconSource="feather"
+          rightIcon="chevron-right"
+          disabled
+        >
           {t("moreScreen:settings")}
         </RegularRowItem>
 
