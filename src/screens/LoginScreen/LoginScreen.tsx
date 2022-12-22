@@ -17,6 +17,7 @@ import { useMetadata } from "../../hooks/useMetadata";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import useSecureStorage from "../../hooks/useSecureStorage";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
+import { AsyncStorageEntries } from "../../hooks/useAsyncStorage/useAsyncStorage.types";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const { isIOS, colors } = useMetadata();
@@ -49,7 +50,9 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
       const email = await getValueFromSecureStorage("email");
       const password = await getValueFromSecureStorage("password");
 
+      // Show if email and password are in Secure Store
       if (email && password) {
+        // Behavior when user opens the app
         setStayLoggedIn(true);
         setFormState({
           email,
@@ -59,10 +62,12 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
         // Check whether user has permission to login
         const accessGranted = await getDataFromAsyncStorage("accessGranted");
 
-        // In case user pressed the logout button, don't login automatically
+        // Access is false when user pressed the login button
+        // In that case, app should of course not login automatically
         if (accessGranted) {
           handleLogin();
         } else {
+          // If user pressed the logout button, checkbox will be unchecked
           setStayLoggedIn(false);
         }
       }
@@ -80,10 +85,13 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
       setAccessGranted(true);
       storeDataInAsyncStorage("accessGranted", true);
 
+      // When checkbox is checked, save email and password in Secure Store
+      // to login automatically when user will open the app next time
       if (stayLoggedIn) {
         saveValueInSecureStorage("email", email);
         saveValueInSecureStorage("password", password);
       } else {
+        // Remove email and password if checkbox is not checked by the user
         await removeValueFromSecureStorage("email");
         await removeValueFromSecureStorage("password");
       }
