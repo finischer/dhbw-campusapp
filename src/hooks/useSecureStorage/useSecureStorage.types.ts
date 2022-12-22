@@ -1,6 +1,6 @@
 export type SecureStoreEntries =
-  | "@email"
-  | "@password"
-  | "@cookies"
-  | "@arguments"
-  | "@ical";
+  | "email"
+  | "password"
+  | "cookies"
+  | "arguments"
+  | "ical";

@@ -1,12 +1,11 @@
-import moment, { lang } from "moment";
-import { useState, createContext, useContext } from "react";
+import moment from "moment";
+import { useState, createContext, useContext, useEffect } from "react";
 import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
-import { IRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
 import { RestaurantOptions } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
-import { IResponseTypes } from "../../api/types/IResponseTypes";
 import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
 import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
 import { useMetadata } from "../useMetadata";
+import useAsyncStorage from "../useAsyncStorage";
 
 const PREVIEW_DAYS = 5;
 
@@ -27,6 +26,8 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { language } = useMetadata();
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage } =
+    useAsyncStorage();
   const restaurantScraper = new RestaurantScraper(language);
 
   const [restaurantName, setRestaurantName] =
@@ -36,8 +37,18 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const formattedRestaurantName = RESTAURANTS_MAP[restaurantName];
 
+  useEffect(() => {
+    const initializeRestaurant = async () => {
+      const restaurant = await getDataFromAsyncStorage("cafeteria");
+      if (restaurant) setRestaurantName(restaurant);
+    };
+
+    initializeRestaurant();
+  }, []);
+
   const changeRestaurant = (newRestaurant: RestaurantOptions) => {
     setRestaurantName(newRestaurant);
+    storeDataInAsyncStorage("cafeteria", newRestaurant);
   };
 
   const changeDate = (newDate: string) => {

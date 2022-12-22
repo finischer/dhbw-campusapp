@@ -4,4 +4,5 @@ export default {
   login: "Anmelden",
   loginFailed: "Anmeldung fehlgeschlagen",
   loaderText: "Du wirst angemeldet ...",
+  stayLoggedIn: "Angemeldet bleiben",
 };

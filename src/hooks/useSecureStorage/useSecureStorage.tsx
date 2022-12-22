@@ -12,7 +12,7 @@ const useSecureStorage = () => {
   const getValueFromSecureStorage = async (key: SecureStoreEntries) => {
     const value = await SecureStore.getItemAsync(key);
 
-    if (!value) return undefined;
+    if (!value) return "";
     return JSON.parse(value);
   };
 

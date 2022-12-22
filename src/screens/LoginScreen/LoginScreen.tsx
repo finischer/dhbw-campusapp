@@ -1,5 +1,5 @@
 import { View, KeyboardAvoidingView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
 import Input from "../../components/Input";
@@ -15,25 +15,61 @@ import Loader from "../../components/Loader/Loader";
 import FeatherIcon from "../../components/FeatherIcon";
 import { useMetadata } from "../../hooks/useMetadata";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import useSecureStorage from "../../hooks/useSecureStorage";
+import useAsyncStorage from "../../hooks/useAsyncStorage";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const { isIOS, colors } = useMetadata();
+  const {
+    saveValueInSecureStorage,
+    getValueFromSecureStorage,
+    removeValueFromSecureStorage,
+  } = useSecureStorage();
+  const { getDataFromAsyncStorage, storeDataInAsyncStorage } =
+    useAsyncStorage();
   const [formState, setFormState] = useState<ILoginFormStateTypes>({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [stayLoggedIn, setStayLoggedIn] = useState<boolean>(false);
-
   const { login } = useDualis();
   const { t } = useTranslation("loginScreen");
 
+  const stayLoggedInText = t("stayLoggedIn");
   const [isError, setIsError] = useState(false);
   const { isFetching, refetch: handleLogin } = useQuery(
     ["dualis-login"],
     () => loginToDualis(formState.email, formState.password),
     { enabled: false }
   );
+
+  useEffect(() => {
+    const initializeCredentials = async () => {
+      const email = await getValueFromSecureStorage("email");
+      const password = await getValueFromSecureStorage("password");
+
+      if (email && password) {
+        setStayLoggedIn(true);
+        setFormState({
+          email,
+          password,
+        });
+
+        // Check whether user has permission to login
+        const accessGranted = await getDataFromAsyncStorage("accessGranted");
+
+        // In case user pressed the logout button, don't login automatically
+        if (accessGranted) {
+          handleLogin();
+        } else {
+          setStayLoggedIn(false);
+        }
+      }
+    };
+
+    initializeCredentials();
+  }, []);
 
   const loginToDualis = async (email: string, password: string) => {
     setIsError(false);
@@ -42,6 +78,15 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
     if (successful) {
       setIsError(false);
       setAccessGranted(true);
+      storeDataInAsyncStorage("accessGranted", true);
+
+      if (stayLoggedIn) {
+        saveValueInSecureStorage("email", email);
+        saveValueInSecureStorage("password", password);
+      } else {
+        await removeValueFromSecureStorage("email");
+        await removeValueFromSecureStorage("password");
+      }
       return;
     }
 
@@ -63,7 +108,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
     setShowPassword((oldState) => !oldState);
   };
 
-  const toggleStayLoggedIn = () => {
+  const toggleStayLoggedIn = async () => {
     setStayLoggedIn((oldState) => !oldState);
   };
 
@@ -114,12 +159,13 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
           )}
         </View>
 
+        {/* StayLoggedIn Checkbox View */}
         <View style={loginScreenStyles.stayLoggedInContainer}>
           <BouncyCheckbox
             isChecked={stayLoggedIn}
             disableBuiltInState={true}
             fillColor={colors.accent}
-            text="Angemeldet bleiben"
+            text={stayLoggedInText}
             textStyle={[
               loginScreenStyles.stayLoggedInButtonText,
               { color: colors.secondary },

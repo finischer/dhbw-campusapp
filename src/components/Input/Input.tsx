@@ -53,6 +53,7 @@ const Input: React.FC<IInputProps> = ({
         style={[inputStyles.inputField, { borderColor, color: textColor }]}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        value={value}
       />
       <View style={inputStyles.rightIconContainer}>{rightIcon}</View>
     </View>

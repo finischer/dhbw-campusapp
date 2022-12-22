@@ -1,27 +1,17 @@
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageEntries } from "./useAsyncStorage.types";
 
-// TODO: Implement entries for localStorage
-// Entries:
-// - Email (Secured)
-// - Password (Secured)
-// - Cookies (Secured)
-// - Arguments (Secured)
-// - iCal Calender Link (Secured)
-// - Language
-// - Theme (dark or light)
-// - Initial Homescreen (can be choosed by the user)
-// - Cafeteria
-// - Course
-
 const useAsyncStorage = () => {
-  const storeDataInAsyncStorage = (key: AsyncStorageEntries, value: any) => {
+  const storeDataInAsyncStorage = async (
+    key: AsyncStorageEntries,
+    value: any
+  ) => {
     const stringValue = JSON.stringify(value);
-    // TODO: Put in local storage
+    await AsyncStorage.setItem(key, stringValue);
   };
-  const getDataFromAsyncStorage = (key: AsyncStorageEntries) => {
-    const value = ""; // TODO: get from localStorage
-    return JSON.parse(value);
+  const getDataFromAsyncStorage = async (key: AsyncStorageEntries) => {
+    const value = await AsyncStorage.getItem(key);
+    return !value ? "" : JSON.parse(value);
   };
 
   const updateDataInAsyncStorage = (

@@ -10,17 +10,20 @@ import LogoutButton from "../../../components/LogoutButton";
 import SubjectDetailsScreen from "../../../screens/SubjectDetailsScreen";
 import { useMetadata } from "../../../hooks/useMetadata";
 import NavigationHeader from "../../../components/NavigationHeader";
+import useAsyncStorage from "../../../hooks/useAsyncStorage";
 
 const DualisStack = createStackNavigator();
 
 const SCREEN_TITLE = "Dualis";
 
 const DualisNavigator = ({ route, navigation }: any) => {
+  const { storeDataInAsyncStorage } = useAsyncStorage();
   const [accessGranted, setAccessGranted] = useState<boolean>(false);
   const navigationHeaderConfig = headerConfig();
   const { colors } = useMetadata();
 
   const handleLogout = () => {
+    storeDataInAsyncStorage("accessGranted", false);
     setAccessGranted(false);
   };
 
