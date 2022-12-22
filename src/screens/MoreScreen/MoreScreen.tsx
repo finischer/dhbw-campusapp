@@ -11,8 +11,10 @@ import FeatherIcon from "../../components/FeatherIcon";
 import AppInfo from "./components/AppInfo";
 import Button from "../../components/Button/Button";
 import { CONTACT_MAIL } from "../../constants/common";
+import useAlert from "../../hooks/useAlert";
 
 const MoreScreen = () => {
+  const { alert } = useAlert();
   const { theme, changeTheme, language, changeLanguage, colors } =
     useMetadata();
   const navigation = useNavigation();
@@ -39,13 +41,22 @@ const MoreScreen = () => {
     );
   };
 
-  const openExternalLink = (url: string) => {
-    Linking.openURL(url);
+  const openExternalLink = async (url: string) => {
+    const canOpenUrl = await Linking.canOpenURL(url);
+
+    if (canOpenUrl) {
+      const title = t("common:errorOccured");
+      const message = t("moreScreen:alertErrorMessageUrl");
+      alert(title, message);
+      return;
+    }
+
+    await Linking.openURL(url);
   };
 
   return (
     <GlobalBody>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <RegularRowItem leftIcon="message-square" disabled>
           {t("moreScreen:notifications")}
         </RegularRowItem>
@@ -67,9 +78,6 @@ const MoreScreen = () => {
           rightIcon="external-link"
         >
           {t("moreScreen:studentUnionMannheim")}
-        </RegularRowItem>
-        <RegularRowItem leftIcon="calendar" disabled>
-          {t("moreScreen:importCalendar")}
         </RegularRowItem>
         <RegularRowItem
           onClick={() => goTo("ChangeLanguageScreen")}

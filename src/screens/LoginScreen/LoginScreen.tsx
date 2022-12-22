@@ -14,14 +14,17 @@ import { useQuery } from "react-query";
 import Loader from "../../components/Loader/Loader";
 import FeatherIcon from "../../components/FeatherIcon";
 import { useMetadata } from "../../hooks/useMetadata";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
-  const { isIOS } = useMetadata();
+  const { isIOS, colors } = useMetadata();
   const [formState, setFormState] = useState<ILoginFormStateTypes>({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [stayLoggedIn, setStayLoggedIn] = useState<boolean>(false);
+
   const { login } = useDualis();
   const { t } = useTranslation("loginScreen");
 
@@ -58,6 +61,10 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
 
   const toggleShowPassword = () => {
     setShowPassword((oldState) => !oldState);
+  };
+
+  const toggleStayLoggedIn = () => {
+    setStayLoggedIn((oldState) => !oldState);
   };
 
   return (
@@ -98,7 +105,6 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
             value={formState.password}
           />
         </View>
-
         {/* Login Error */}
         <View style={loginScreenStyles.errorContainer}>
           {isError && (
@@ -106,6 +112,20 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
               {t("loginFailed")}
             </RegularText>
           )}
+        </View>
+
+        <View style={loginScreenStyles.stayLoggedInContainer}>
+          <BouncyCheckbox
+            isChecked={stayLoggedIn}
+            disableBuiltInState={true}
+            fillColor={colors.accent}
+            text="Angemeldet bleiben"
+            textStyle={[
+              loginScreenStyles.stayLoggedInButtonText,
+              { color: colors.secondary },
+            ]}
+            onPress={toggleStayLoggedIn}
+          />
         </View>
 
         {/* Login Button */}

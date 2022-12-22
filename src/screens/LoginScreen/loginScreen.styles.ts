@@ -18,8 +18,14 @@ export const loginScreenStyles = StyleSheet.create({
     flexDirection: "row",
   },
   loginButton: {
-    marginTop: 50,
+    marginTop: 30,
     minHeight: 50,
+  },
+  stayLoggedInContainer: {
+    marginTop: 20,
+  },
+  stayLoggedInButtonText: {
+    textDecorationLine: "none",
   },
   loaderContainer: {
     justifyContent: "center",

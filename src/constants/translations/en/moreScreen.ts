@@ -5,4 +5,5 @@ export default {
   notifications: "Notifications",
   universitySports: "University Sports",
   studentUnionMannheim: "Mannheim Student Union",
+  alertErrorMessageUrl: "The URL cannot be opened",
 };

@@ -70,7 +70,11 @@ const RestaurantScreen = () => {
 
   return (
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
-      <Animated.ScrollView onScroll={handleOnScroll} scrollEventThrottle={16}>
+      <Animated.ScrollView
+        onScroll={handleOnScroll}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Restaurant Title View */}
         <TouchableOpacity
           onPress={() => navigation.navigate("ChangeRestaurantScreen")}

@@ -13,6 +13,7 @@ export const subjectListStyles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 3,
     marginTop: 10,
+    marginBottom: 10,
   },
   semesterTitleText: {
     fontWeight: "600",

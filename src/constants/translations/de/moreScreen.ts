@@ -5,4 +5,5 @@ export default {
   notifications: "Benachrichtigungen",
   universitySports: "Hochschulsport",
   studentUnionMannheim: "Studierendenwerk Mannheim",
+  alertErrorMessageUrl: "Die URL kann nicht geöffnet werden",
 };

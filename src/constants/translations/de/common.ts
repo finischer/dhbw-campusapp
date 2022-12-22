@@ -15,4 +15,5 @@ export default {
   emailSubjectBugFound: "[DHBW CampusApp] Bug gefunden",
   emailBodyBugFound:
     "Informationen zum Smartphone:\nHersteller:\n Modell:\nSystem Version:\nApp Version:\nBeschreibung des Bugs:\n",
+  errorOccured: "Es ist ein Fehler aufgetreten",
 };
