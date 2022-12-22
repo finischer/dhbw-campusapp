@@ -14,24 +14,17 @@ const useAsyncStorage = () => {
     return !value ? "" : JSON.parse(value);
   };
 
-  const updateDataInAsyncStorage = (
-    key: AsyncStorageEntries,
-    newValue: any
-  ) => {
-    // TODO
+  const deleteFromAsyncStorage = async (key: AsyncStorageEntries) => {
+    await AsyncStorage.removeItem(key);
   };
-
-  const deleteFromAsyncStorage = (key: AsyncStorageEntries) => {
-    // TODO
-  };
-  const deleteAllFromAsyncStorage = () => {
-    // TODO
+  const deleteAllFromAsyncStorage = async () => {
+    // Only use it when User wants to clear the async storage
+    await AsyncStorage.clear();
   };
 
   return {
     storeDataInAsyncStorage,
     getDataFromAsyncStorage,
-    updateDataInAsyncStorage,
     deleteFromAsyncStorage,
     deleteAllFromAsyncStorage,
   };
