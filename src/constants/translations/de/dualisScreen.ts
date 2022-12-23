@@ -10,6 +10,5 @@ export default {
   semester: "Semester",
   loaderText: "Noten werden abgerufen",
   noGradesError: "Noten konnte nicht abgerufen werden",
-  refreshButtonText: "Nochmal versuchen",
   noExaminationServices: "Es wurden noch keine Prüfungsleistungen eintragen",
 };

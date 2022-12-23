@@ -4,10 +4,8 @@ import { IChipProps } from "./chip.types";
 import RegularText from "../RegularText";
 import { chipStyles } from "./chip.styles";
 import { useMetadata } from "../../hooks/useMetadata";
-import FeatherIcon from "../FeatherIcon";
-import { IFeatherIconProps } from "../FeatherIcon/featherIcon.types";
 import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
-import { Feather } from "@expo/vector-icons";
+import Icon from "../Icon";
 
 const Chip = ({
   label,
@@ -43,7 +41,12 @@ const Chip = ({
         </RegularText>
         {(selected || disabled) && (
           <View style={{ marginLeft: 5 }}>
-            <Feather name={iconName} size={14} color={iconColor} />
+            <Icon
+              source="feather"
+              name={iconName}
+              size={14}
+              color={iconColor}
+            />
           </View>
         )}
       </View>

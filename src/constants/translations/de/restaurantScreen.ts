@@ -5,4 +5,6 @@ export default {
   allergens: "Allergene",
   others: "Sonstiges",
   additivesSubjectToLabeling: "Kennzeichnungspflichtige Zusatzstoffe",
+  errorFetchMenus:
+    'Menü für die Mensa "{{cafeteriaName, string}}" konnte nicht abgerufen werden',
 };

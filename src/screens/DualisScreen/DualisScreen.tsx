@@ -9,6 +9,7 @@ import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
 import { useDualis } from "../../hooks/useDualis";
 import SubjectList from "./components/SubjectList/SubjectList";
+import ErrorView from "../../components/ErrorView";
 
 const DualisScreen = () => {
   const { getAllGrades } = useDualis();
@@ -32,7 +33,7 @@ const DualisScreen = () => {
 
   if (isLoading || isFetching) {
     return (
-      <GlobalBody style={{ alignItems: "center", justifyContent: "center" }}>
+      <GlobalBody centered>
         <Loader text={t("loaderText")} />
       </GlobalBody>
     );
@@ -40,19 +41,10 @@ const DualisScreen = () => {
 
   return (
     <GlobalBody>
-      {!subjects ? (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <RegularText>{t("noGradesError")}</RegularText>
-          <Button
-            variant="outlined"
-            style={{ marginTop: 20 }}
-            onClick={handleFetchGrades}
-          >
-            {t("refreshButtonText")}
-          </Button>
-        </View>
+      {subjects ? (
+        <ErrorView centered onRetry={handleFetchGrades}>
+          {t("noGradesError")}
+        </ErrorView>
       ) : (
         <SubjectList subjects={subjects} requestTime={data?.requestTime} />
       )}

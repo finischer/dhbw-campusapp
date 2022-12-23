@@ -1,5 +1,10 @@
 import React from "react";
-import { Feather, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome,
+  FontAwesome5,
+  Ionicons,
+} from "@expo/vector-icons";
 import TouchableOpacity from "../TouchableOpacity";
 import { useMetadata } from "../../hooks/useMetadata";
 import { IconSources, IIconProps } from "./icon.types";
@@ -25,6 +30,8 @@ const Icon = ({
         return <FontAwesome name={name} size={size} color={iconColor} />;
       case "feather":
         return <Feather name={name} size={size} color={iconColor} />;
+      case "ionicons":
+        return <Ionicons name={name} size={size} color={iconColor} />;
     }
   };
 

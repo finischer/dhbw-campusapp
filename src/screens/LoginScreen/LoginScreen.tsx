@@ -18,6 +18,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import useSecureStorage from "../../hooks/useSecureStorage";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
 import { AsyncStorageEntries } from "../../hooks/useAsyncStorage/useAsyncStorage.types";
+import Icon from "../../components/Icon";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const { isIOS, colors } = useMetadata();
@@ -149,7 +150,8 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
             secureTextEntry={!showPassword}
             onChangeText={(text: string) => handleFormChange("password", text)}
             rightIcon={
-              <FeatherIcon
+              <Icon
+                source="feather"
                 name={showPassword ? "eye-off" : "eye"}
                 size={30}
                 onClick={toggleShowPassword}

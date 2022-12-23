@@ -6,13 +6,13 @@ import TouchableOpacity from "../../../../components/TouchableOpacity";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import { subjectRowStyles } from "./subjectRowItem.styles";
 import typography from "../../../../constants/typography";
-import FeatherIcon from "../../../../components/FeatherIcon";
 import StatusIcon from "./components/StatusIcon";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import Animated, { FadeInLeft } from "react-native-reanimated";
+import Icon from "../../../../components/Icon";
 
 const SubjectRowItem = ({
   subject,
@@ -95,7 +95,7 @@ const SubjectRowItem = ({
 
         {/* Details Button */}
         <View style={subjectRowStyles.detailsButtonContainer}>
-          <FeatherIcon name="chevron-right" size={24} />
+          <Icon source="feather" name="chevron-right" size={24} />
         </View>
       </Animated.View>
     </TouchableOpacity>

@@ -27,6 +27,11 @@ import TouchableOpacity from "../../components/TouchableOpacity";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import FeatherIcon from "../../components/FeatherIcon";
+import ErrorView from "../../components/ErrorView";
+
+const setHeaderSubtitle = (newValue: boolean) => {
+  DeviceEventEmitter.emit("handleShowSubTitle", newValue);
+};
 
 const RestaurantScreen = () => {
   const { t } = useTranslation("restaurantScreen");
@@ -40,26 +45,34 @@ const RestaurantScreen = () => {
     offer: [],
   });
 
+  const {
+    isFetching,
+    isError,
+    refetch: handleFechMenus,
+  } = useQuery(["cafeteria-menus", restaurantName, language], fetchMenus, {
+    onSuccess: (menus: IOfferListTypes[]) => {
+      setHeaderSubtitle(false);
+      setRestaurant((oldState) => ({
+        ...oldState,
+        offer: menus,
+      }));
+    },
+    onError: () => {
+      setHeaderSubtitle(true);
+    },
+  });
+
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y >= 30) {
-      DeviceEventEmitter.emit("handleShowSubTitle", true);
+      setHeaderSubtitle(true);
     } else {
-      DeviceEventEmitter.emit("handleShowSubTitle", false);
+      setHeaderSubtitle(false);
     }
   };
 
-  const { isFetching } = useQuery(
-    ["cafeteria-menus", restaurantName, language],
-    fetchMenus,
-    {
-      onSuccess: (menus: IOfferListTypes[]) => {
-        setRestaurant((oldState) => ({
-          ...oldState,
-          offer: menus,
-        }));
-      },
-    }
-  );
+  const goToChangeNavigationScreen = () => {
+    navigation.navigate("ChangeRestaurantScreen");
+  };
 
   if (isFetching)
     return (
@@ -67,6 +80,24 @@ const RestaurantScreen = () => {
         <Loader text={t("offerLoaderText")} size="small" />
       </GlobalBody>
     );
+
+  if (isError) {
+    return (
+      <GlobalBody centered>
+        <ErrorView
+          centered
+          onRetry={handleFechMenus}
+          showSecondaryButton
+          secondaryButtonText={t("navigation:changeRestaurant")}
+          onClickSecondaryButton={goToChangeNavigationScreen}
+        >
+          {t("errorFetchMenus", {
+            cafeteriaName: formattedRestaurantName,
+          })}
+        </ErrorView>
+      </GlobalBody>
+    );
+  }
 
   return (
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
@@ -76,9 +107,7 @@ const RestaurantScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         {/* Restaurant Title View */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ChangeRestaurantScreen")}
-        >
+        <TouchableOpacity onPress={goToChangeNavigationScreen}>
           <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
             {/* Name of Restaurant */}
             <RegularText style={restaurantScreenStyles.restaurantNameText}>

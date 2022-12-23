@@ -7,11 +7,11 @@ import { useMetadata } from "../../hooks/useMetadata";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { moreScreenStyles } from "./moreScreen.styles";
-import FeatherIcon from "../../components/FeatherIcon";
 import AppInfo from "./components/AppInfo";
 import Button from "../../components/Button/Button";
 import { CONTACT_MAIL } from "../../constants/common";
 import useAlert from "../../hooks/useAlert";
+import Icon from "../../components/Icon";
 
 const MoreScreen = () => {
   const { alert } = useAlert();
@@ -68,8 +68,8 @@ const MoreScreen = () => {
           {t("moreScreen:importCalendar")}
         </RegularRowItem>
         <RegularRowItem
-          leftIconSource="fa5"
-          leftIcon="table-tennis"
+          leftIconSource="ionicons"
+          leftIcon="ios-american-football-outline"
           onClick={() =>
             openExternalLink(
               "https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport"
@@ -81,6 +81,8 @@ const MoreScreen = () => {
           {t("moreScreen:universitySports")}
         </RegularRowItem>
         <RegularRowItem
+          leftIconSource="ionicons"
+          leftIcon="ios-people-outline"
           onClick={() => openExternalLink("https://www.stw-ma.de")}
           rightIconSource="feather"
           rightIcon="external-link"
@@ -88,7 +90,8 @@ const MoreScreen = () => {
           {t("moreScreen:studentUnionMannheim")}
         </RegularRowItem>
         <RegularRowItem
-          leftIconSource="feather"
+          leftIconSource="ionicons"
+          leftIcon="language-outline"
           onClick={() => goTo("ChangeLanguageScreen")}
           rightIconSource="feather"
           rightIcon="chevron-right"
@@ -108,9 +111,9 @@ const MoreScreen = () => {
         {/* Theme Toggler */}
         <View style={moreScreenStyles.switchContainer}>
           <View style={moreScreenStyles.themeSwitchContainer}>
-            <FeatherIcon clickable={false} name="sun" />
+            <Icon source="feather" clickable={false} name="sun" />
             <Switch onChange={toggleTheme} value={theme === "dark"} />
-            <FeatherIcon clickable={false} name="moon" />
+            <Icon source="feather" clickable={false} name="moon" />
           </View>
         </View>
 

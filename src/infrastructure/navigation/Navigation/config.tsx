@@ -9,6 +9,7 @@ import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 import FeatherIcon from "../../../components/FeatherIcon";
 import { useTranslation } from "react-i18next";
+import Icon from "../../../components/Icon";
 
 export const TAB_BAR_HEIGHT = WINDOW_HEIGHT * 0.1;
 export const HEADER_HEIGHT = WINDOW_HEIGHT * 0.1;
@@ -34,7 +35,8 @@ export const headerConfig = (): StackNavigationOptions => {
     headerBackTitle,
     headerTitleAlign: "center",
     headerBackImage: () => (
-      <FeatherIcon
+      <Icon
+        source="feather"
         name="chevron-left"
         clickable={false}
         color={colors.lightText}

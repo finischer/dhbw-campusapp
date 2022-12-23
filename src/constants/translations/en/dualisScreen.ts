@@ -9,7 +9,6 @@ export default {
   subjects: "Subjects",
   semester: "Semester",
   loaderText: "Grades will be loaded ...",
-  noGradesError: "Notes could not be retrieved",
-  refreshButtonText: "Try again",
+  noGradesError: "Grades could not be retrieved",
   noExaminationServices: "No examination services have been entered yet",
 };

@@ -20,6 +20,7 @@ const ChangeLanguageScreen = () => {
       <RegularRowItem
         onClick={() => handleChangeLanguage("de")}
         selected={language === "de"}
+        rightIconSource="feather"
         rightIcon={language === "de" ? rightIcon : undefined}
       >
         Deutsch
@@ -27,6 +28,7 @@ const ChangeLanguageScreen = () => {
       <RegularRowItem
         onClick={() => handleChangeLanguage("en")}
         selected={language === "en"}
+        rightIconSource="feather"
         rightIcon={language === "en" ? rightIcon : undefined}
       >
         English

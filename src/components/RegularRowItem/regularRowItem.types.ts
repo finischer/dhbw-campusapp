@@ -3,7 +3,6 @@ import {
   FontAwesomeIconName,
   IoniconsIconName,
 } from "./../../services/expo-vector-icons/expo-vector-icons.types";
-import { IconSources } from "./../Icon/icon.types";
 import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
 
 export type IconNames =

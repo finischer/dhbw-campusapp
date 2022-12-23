@@ -5,4 +5,6 @@ export default {
   allergens: "Allergens",
   others: "Others",
   additivesSubjectToLabeling: "Additives subject to labeling",
+  errorFetchMenus:
+    "Menu for Cafeteria '{{cafeteriaName, string}}' could not be retrieved",
 };

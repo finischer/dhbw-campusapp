@@ -14,6 +14,7 @@ import Animated, {
   FadeInUp,
   FadeOutUp,
 } from "react-native-reanimated";
+import Icon from "../../../../components/Icon";
 
 const AdditivesList = () => {
   const { t } = useTranslation("restaurantScreen");
@@ -52,7 +53,7 @@ const AdditivesList = () => {
           <RNAnimated.View
             style={{ transform: [{ rotateZ: chevronTransform }] }}
           >
-            <FeatherIcon name="chevron-down" clickable={false} />
+            <Icon source="feather" name="chevron-down" clickable={false} />
           </RNAnimated.View>
         </View>
       </TouchableOpacity>
