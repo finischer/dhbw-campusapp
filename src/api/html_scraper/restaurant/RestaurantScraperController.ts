@@ -8,6 +8,7 @@ import { IDayOptions } from "./types/IDayOptions";
 import moment, { lang } from "moment";
 import { IOfferListTypes } from "./types/IOfferListTypes";
 import { ILanguageOptions } from "../../../hooks/useMetadata/useMetadata.types";
+import { MenuIconNames } from "../../../screens/RestaurantScreen/components/MenuIcon/menuIcon.types";
 export class RestaurantScraper {
   restaurants: Restaurants;
   baseUrl: string;
@@ -110,13 +111,14 @@ export class RestaurantScraper {
         .text()
         .trim();
 
-      const menuIcons: Array<string> = [];
+      const menuIcons: Array<MenuIconNames> = [];
       $(parentElem)
         .find(".speiseplan-table-menu-icon")
         .find(".icon")
         .each((_: number, childElem: any) => {
           const classNameOfIcon = $(childElem).attr("class").split(" ")[1];
-          menuIcons.push(classNameOfIcon);
+          const iconName: MenuIconNames = classNameOfIcon.split("-")[1];
+          menuIcons.push(iconName);
         });
 
       const menuPrice = $(parentElem).find(".price").text().trim();

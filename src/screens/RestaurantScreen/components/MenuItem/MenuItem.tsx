@@ -1,11 +1,12 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
-import { IMenuType } from "../../../../api/html_scraper/restaurant/types/IMenuType";
 import RegularText from "../../../../components/RegularText";
 import { menuItemStyles } from "./menuItem.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import { MenuItemProps } from "./menuItem.types";
 import Animated, { FadeInLeft } from "react-native-reanimated";
+import MenuIcon from "../MenuIcon";
+import { MenuIconNames } from "../MenuIcon/menuIcon.types";
 
 const MenuItem: React.FC<MenuItemProps> = ({ menu, index }) => {
   const { colors } = useMetadata();
@@ -27,6 +28,15 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, index }) => {
         {menu.menuDescription}
       </RegularText>
       <View style={menuItemStyles.bottomContainer}>
+        <View style={menuItemStyles.iconsContainer}>
+          {menu.menuIcons
+            .filter(
+              (icon: MenuIconNames) => icon !== "deer" && icon !== "shellfish"
+            )
+            .map((icon: MenuIconNames, index: number) => {
+              return <MenuIcon key={index} name={icon} />;
+            })}
+        </View>
         <RegularText style={menuItemStyles.priceText}>
           {menu.menuPrice} / {menu.menuPriceSelection}
         </RegularText>

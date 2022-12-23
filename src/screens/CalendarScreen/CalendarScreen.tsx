@@ -5,7 +5,9 @@ import RegularText from "../../components/RegularText";
 const CalendarScreen = () => {
   return (
     <GlobalBody centered>
-      <RegularText>Coming soon</RegularText>
+      <RegularText style={{ textAlign: "center" }}>
+        Du musst zuerst einen Kurs auswählen, um den Vorlesungsplan zu sehen
+      </RegularText>
     </GlobalBody>
   );
 };

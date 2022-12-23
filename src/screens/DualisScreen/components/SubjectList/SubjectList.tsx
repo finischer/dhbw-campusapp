@@ -1,25 +1,27 @@
-import { View, FlatList } from "react-native";
-import React, { useState } from "react";
+import { View, FlatList, RefreshControl } from "react-native";
+import React, { useCallback, useState } from "react";
 import { ISubjectTypes } from "../../../../api/html_scraper/dualis/types/ISubjectTypes";
 import SubjectRowItem from "../SubjectRowItem";
-import { ISubjectListRenderItemProps } from "./subjectList.types";
+import {
+  ISubjectListProps,
+  ISubjectListRenderItemProps,
+} from "./subjectList.types";
 import Chip from "../../../../components/Chip";
 import { subjectListStyles } from "./subjectList.styles";
 import RegularText from "../../../../components/RegularText";
 import { useTranslation } from "react-i18next";
 import Animated, { Layout } from "react-native-reanimated";
-import moment from "moment";
-import { useMetadata } from "../../../../hooks/useMetadata";
 import RequestTime from "../../../../components/RequestTime";
+import { useMetadata } from "../../../../hooks/useMetadata";
 
-const SubjectList = ({
+const SubjectList: React.FC<ISubjectListProps> = ({
   subjects,
   requestTime,
-}: {
-  subjects: ISubjectTypes[];
-  requestTime: moment.Moment | undefined;
+  onRefresh = undefined,
 }) => {
   const { t } = useTranslation("dualisScreen");
+  const { colors } = useMetadata();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [selectedSemesters, setSelectedSemesters] = useState<string[]>([]);
 
   const filteredSubjects = subjects
@@ -54,6 +56,14 @@ const SubjectList = ({
     );
   });
 
+  // Will be executed grades are refreshed
+  const handleOnRefresh = useCallback(async () => {
+    if (onRefresh !== undefined) {
+      setRefreshing(true);
+      await onRefresh().then(() => setRefreshing(false));
+    }
+  }, []);
+
   const toggleFilter = (semester: string) => {
     if (selectedSemesters.includes(semester)) {
       const newSelectedSemesters = selectedSemesters.filter(
@@ -86,6 +96,13 @@ const SubjectList = ({
         contentContainerStyle={subjectListStyles.subjectListContainer}
         alwaysBounceVertical
         ListFooterComponent={() => <RequestTime />}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.accent}
+            refreshing={refreshing}
+            onRefresh={handleOnRefresh}
+          />
+        }
       />
     </Animated.View>
   );

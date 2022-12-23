@@ -167,11 +167,11 @@ const OTHERS: ILabelTypes[] = [
     label: "Bio",
   },
   {
-    sub: "Fisch",
+    sub: "Fi",
     label: "Fisch",
   },
   {
-    sub: "Huhn",
+    sub: "G",
     label: "Geflügel",
   },
   {
@@ -187,19 +187,19 @@ const OTHERS: ILabelTypes[] = [
     label: "Meeresfrüchte",
   },
   {
-    sub: "Rind",
+    sub: "R",
     label: "Rind",
   },
   {
-    sub: "Schwein",
+    sub: "S",
     label: "Schweinefleisch",
   },
   {
-    sub: "Karrotte",
+    sub: "Veg",
     label: "Vegetarisch",
   },
   {
-    sub: "Blatt",
+    sub: "Vga",
     label: "Vegan",
   },
   {

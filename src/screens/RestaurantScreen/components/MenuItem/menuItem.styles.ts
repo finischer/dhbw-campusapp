@@ -19,9 +19,16 @@ export const menuItemStyles = StyleSheet.create({
     marginTop: 5,
   },
   bottomContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 15,
     alignItems: "flex-end",
   },
+  iconsContainer: {
+    // backgroundColor: "red",
+    flexDirection: "row",
+  },
+  iconContainer: {},
   priceText: {
     fontWeight: "700",
   },

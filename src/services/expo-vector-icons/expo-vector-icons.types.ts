@@ -3,6 +3,7 @@ import {
   FontAwesome,
   FontAwesome5,
   Ionicons,
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
 export type FeatherIconName = React.ComponentProps<typeof Feather>["name"];
@@ -14,3 +15,6 @@ export type FontAwesome5IconName = React.ComponentProps<
 >["name"];
 
 export type IoniconsIconName = React.ComponentProps<typeof Ionicons>["name"];
+export type MaterialCommunityIconName = React.ComponentProps<
+  typeof MaterialCommunityIcons
+>["name"];

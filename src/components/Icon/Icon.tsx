@@ -4,10 +4,11 @@ import {
   FontAwesome,
   FontAwesome5,
   Ionicons,
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import TouchableOpacity from "../TouchableOpacity";
 import { useMetadata } from "../../hooks/useMetadata";
-import { IconSources, IIconProps } from "./icon.types";
+import { IIconProps } from "./icon.types";
 
 const Icon = ({
   name,
@@ -32,6 +33,10 @@ const Icon = ({
         return <Feather name={name} size={size} color={iconColor} />;
       case "ionicons":
         return <Ionicons name={name} size={size} color={iconColor} />;
+      case "mci":
+        return (
+          <MaterialCommunityIcons name={name} size={size} color={iconColor} />
+        );
     }
   };
 

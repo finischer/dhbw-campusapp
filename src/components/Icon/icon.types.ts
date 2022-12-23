@@ -3,9 +3,10 @@ import {
   FontAwesomeIconName,
   FontAwesome5IconName,
   IoniconsIconName,
+  MaterialCommunityIconName,
 } from "./../../services/expo-vector-icons/expo-vector-icons.types";
 
-export type IconSources = "fa5" | "fa" | "feather" | "ionicons";
+export type IconSources = "fa5" | "fa" | "feather" | "ionicons" | "mci";
 
 type ConditionalProps =
   | {
@@ -23,6 +24,10 @@ type ConditionalProps =
   | {
       source: "ionicons";
       name: IoniconsIconName;
+    }
+  | {
+      source: "mci";
+      name: MaterialCommunityIconName;
     };
 
 export type IIconProps = {

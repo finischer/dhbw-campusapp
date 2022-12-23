@@ -23,7 +23,6 @@ const DualisScreen = () => {
   const {
     isLoading,
     data,
-    isFetching,
     refetch: handleFetchGrades,
   } = useQuery("dualis-grades", fetchGrades);
 
@@ -31,7 +30,7 @@ const DualisScreen = () => {
     (semester: ISemesterTypes) => semester.subjects
   );
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return (
       <GlobalBody centered>
         <Loader text={t("loaderText")} />
@@ -41,12 +40,16 @@ const DualisScreen = () => {
 
   return (
     <GlobalBody>
-      {subjects ? (
+      {!subjects ? (
         <ErrorView centered onRetry={handleFetchGrades}>
           {t("noGradesError")}
         </ErrorView>
       ) : (
-        <SubjectList subjects={subjects} requestTime={data?.requestTime} />
+        <SubjectList
+          subjects={subjects}
+          requestTime={data?.requestTime}
+          onRefresh={handleFetchGrades}
+        />
       )}
     </GlobalBody>
   );
