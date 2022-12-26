@@ -1,13 +1,14 @@
+import { SIZES } from "./../../../../../constants/layout/layout";
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../../../../constants/layout";
 import typography from "../../../../../constants/typography";
 
 export const examsRowStyles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginBottom: 7,
+    padding: SPACING.m,
+    marginBottom: SPACING.sm,
     flexDirection: "row",
-    borderRadius: 5,
+    borderRadius: SIZES.borderRadius,
     justifyContent: "space-between",
   },
   contentContainer: {
@@ -20,11 +21,10 @@ export const examsRowStyles = StyleSheet.create({
   bottomContainer: {
     flexDirection: "row",
     alignItems: "stretch",
-    marginTop: 10,
+    marginTop: SPACING.sm,
   },
   bottomText: {
     fontWeight: "400",
-    paddingRight: 10,
     fontSize: typography.small * 1.1,
     width: 150,
   },

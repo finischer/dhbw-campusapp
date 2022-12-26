@@ -1,31 +1,31 @@
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../../../constants/layout";
 export const subjectListStyles = StyleSheet.create({
   filterContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 10,
+    marginTop: SPACING.sm,
   },
   chipContainer: {
-    marginRight: 5,
-    marginBottom: 7,
+    marginRight: SPACING.s,
+    marginBottom: SPACING.sm,
   },
   subjectListTitleText: {
     fontWeight: "600",
     marginLeft: 3,
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: SPACING.sm,
   },
   semesterTitleText: {
     fontWeight: "600",
-    marginLeft: 3,
+    marginLeft: SPACING.s,
   },
   subjectListContainer: {
-    paddingBottom: 15,
-    marginTop: 10,
+    paddingBottom: SPACING.md,
+    marginTop: SPACING.sm,
   },
   requestTimeContainer: {
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: SPACING.m,
   },
   requestTimeText: {
     opacity: 0.3,

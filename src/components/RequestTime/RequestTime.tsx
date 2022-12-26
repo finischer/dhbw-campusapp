@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const RequestTime = ({ requestTime = moment() }: IRequestTimeProps) => {
   const { t } = useTranslation("common");
-  const { timeFormat } = useMetadata();
+  const { timeFormat, dateFormat } = useMetadata();
 
   return (
     <View style={requestTimeStyles.container}>
@@ -17,7 +17,7 @@ const RequestTime = ({ requestTime = moment() }: IRequestTimeProps) => {
         {t("lastUpdated")}:
       </RegularText>
       <RegularText style={requestTimeStyles.text}>
-        {requestTime.format(timeFormat)}
+        {requestTime.format(dateFormat)}, {requestTime.format(timeFormat)}
       </RegularText>
     </View>
   );

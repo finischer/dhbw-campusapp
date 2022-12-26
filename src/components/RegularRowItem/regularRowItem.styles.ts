@@ -1,10 +1,11 @@
+import { SIZES } from "./../../constants/layout/layout";
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../constants/layout";
 export const regularRowItemStyles = StyleSheet.create({
   container: {
     height: 50,
-    paddingLeft: 20,
-    paddingRight: 10,
-    borderRadius: 5,
+    paddingHorizontal: SPACING.m,
+    borderRadius: SIZES.borderRadius,
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
@@ -14,7 +15,7 @@ export const regularRowItemStyles = StyleSheet.create({
   },
   text: {},
   leftIconContainer: {
-    paddingRight: 10,
+    paddingRight: SPACING.m,
   },
   rightIconContainer: {},
 });

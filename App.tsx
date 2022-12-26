@@ -8,6 +8,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { DualisProvider } from "./src/hooks/useDualis/useDualis";
 import { MetaDataProvider } from "./src/hooks/useMetadata";
 import { RestaurantProvider } from "./src/hooks/useRestaurant/useRestaurant";
+import { LecturesProvider } from "./src/hooks/useLectures";
 
 const queryClient = new QueryClient();
 
@@ -30,8 +31,10 @@ export default function App() {
       <MetaDataProvider>
         <DualisProvider>
           <RestaurantProvider>
-            <StatusBar style="light" />
-            <Navigation />
+            <LecturesProvider>
+              <StatusBar style="light" />
+              <Navigation />
+            </LecturesProvider>
           </RestaurantProvider>
         </DualisProvider>
       </MetaDataProvider>

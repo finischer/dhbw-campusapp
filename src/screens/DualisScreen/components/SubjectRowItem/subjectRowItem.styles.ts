@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
+import { SIZES, SPACING } from "../../../../constants/layout";
 import typography from "../../../../constants/typography";
 
 export const subjectRowStyles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginBottom: 7,
+    padding: SPACING.m,
+    marginBottom: SPACING.sm,
     flexDirection: "row",
-    borderRadius: 5,
+    borderRadius: SIZES.borderRadius,
     justifyContent: "space-between",
   },
   contentContainer: {
@@ -23,12 +23,12 @@ export const subjectRowStyles = StyleSheet.create({
     justifyContent: "space-between",
     flex: 1,
     width: "100%",
-    marginTop: 10,
+    marginTop: SPACING.sm,
     flexWrap: "wrap",
   },
   bottomText: {
     fontWeight: "400",
-    paddingRight: 10,
+    paddingRight: SPACING.m,
     fontSize: typography.small * 1.1,
   },
   subjectStatusContainer: {
@@ -37,7 +37,7 @@ export const subjectRowStyles = StyleSheet.create({
     justifyContent: "center",
   },
   statusIconContainer: {
-    left: -10,
+    left: -12,
   },
   statusIcon: {},
   detailsButtonContainer: {

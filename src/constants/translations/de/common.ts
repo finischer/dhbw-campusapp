@@ -6,7 +6,7 @@ export default {
   friday: "Freitag",
   saturday: "Samstag",
   sunday: "Sonntag",
-  timeFormat: "DD.MM.YYYY, HH:mm [Uhr]",
+  timeFormat: "HH:mm [Uhr]",
   dateFormat: "DD.MM.YYYY",
   lastUpdated: "Zuletzt aktualisiert am",
   back: "Zurück",

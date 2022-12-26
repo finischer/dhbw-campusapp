@@ -2,12 +2,12 @@ import { View, StyleSheet } from "react-native";
 import React from "react";
 import { IExamTypes } from "../../../../../api/html_scraper/dualis/types/IExamTypes";
 import RegularText from "../../../../../components/RegularText";
-import TouchableOpacity from "../../../../../components/TouchableOpacity";
 import typography from "../../../../../constants/typography";
 import { useMetadata } from "../../../../../hooks/useMetadata";
 import { examsRowStyles } from "./examsRowItem.styles";
 import { useTranslation } from "react-i18next";
 import Animated, { FadeInLeft } from "react-native-reanimated";
+import { SPACING } from "../../../../../constants/layout";
 
 const ExamsRowItem = ({ exam, index }: { exam: IExamTypes; index: number }) => {
   const { t } = useTranslation("dualisScreen");
@@ -21,6 +21,7 @@ const ExamsRowItem = ({ exam, index }: { exam: IExamTypes; index: number }) => {
       color: colors.secondary,
       opacity: 0.5,
       fontSize: typography.small,
+      paddingBottom: SPACING.s,
     },
   });
 
@@ -40,11 +41,9 @@ const ExamsRowItem = ({ exam, index }: { exam: IExamTypes; index: number }) => {
         )}
 
         {/* Title - Name of subject */}
-        <View style={{ marginTop: 3 }}>
-          <RegularText numberOfLines={3} style={examsRowStyles.subjectName}>
-            {exam.examName}
-          </RegularText>
-        </View>
+        <RegularText numberOfLines={3} style={examsRowStyles.subjectName}>
+          {exam.examName}
+        </RegularText>
 
         {/* Details View - Final grade, credits, status */}
         <View style={examsRowStyles.bottomContainer}>

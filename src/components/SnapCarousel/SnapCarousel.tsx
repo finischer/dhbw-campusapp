@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Animated from "react-native-reanimated";
 import { WINDOW_WIDTH } from "../../constants/device/device";
-import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
 
 const SnapCarousel = ({ data, renderItem }: any) => {
   const [scrollX, setScrollX] = useState(0);

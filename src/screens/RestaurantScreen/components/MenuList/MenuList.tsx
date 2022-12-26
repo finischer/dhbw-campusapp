@@ -9,7 +9,6 @@ import RegularText from "../../../../components/RegularText";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import Animated from "react-native-reanimated";
-import RequestTime from "../../../../components/RequestTime";
 import { useMetadata } from "../../../../hooks/useMetadata";
 
 const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
