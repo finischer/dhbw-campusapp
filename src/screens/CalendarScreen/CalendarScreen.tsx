@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { useQuery } from "react-query";
 import { OrganizedLectures } from "../../api/lectures/lectures.types";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
@@ -19,12 +18,10 @@ const CalendarScreen = () => {
     return { lectures, requestTime };
   };
 
-  const {
-    isLoading,
-    isFetching,
-    data,
-    refetch: handleFetchSchedule,
-  } = useQuery(["lectures-schedule", courseId], fetchSchedule);
+  const { isLoading, isFetching, data } = useQuery(
+    ["lectures-schedule", courseId],
+    fetchSchedule
+  );
 
   if (courseId === undefined) {
     return (

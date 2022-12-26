@@ -13,4 +13,5 @@ export type RootStackParamList = {
   CanteenScreen?: undefined;
   MoreScreen?: undefined;
   ChangeRestaurantScreen?: undefined;
+  ChangeCourseScreen?: undefined;
 };

@@ -1,16 +1,17 @@
+import cheerio from "cheerio-without-node-native";
 import axios from "axios";
 import ICAL from "ical.js";
 import moment from "moment";
-import { LectureType, OrganizedLectures } from "./lectures.types";
+import { ICourse, LectureType, OrganizedLectures } from "./lectures.types";
 import { IResponseTypes } from "../types/IResponseTypes";
 
 export class LecturesController {
-  baseUrl: string | undefined;
+  baseUrl: string;
   icalUrl: string | undefined;
 
   constructor(
     icalUrl: string | undefined = undefined,
-    courseId: number | undefined = undefined
+    courseId: string | undefined = undefined
   ) {
     this.baseUrl = "http://vorlesungsplan.dhbw-mannheim.de/ical.php";
     if (courseId !== undefined) {
@@ -21,16 +22,61 @@ export class LecturesController {
     }
   }
 
-  generateCourseUrl(courseId: number) {
+  generateCourseUrl(courseId: string) {
     return this.baseUrl + `?uid=${courseId}`;
   }
 
-  changeCalendarByCourseId(courseId: number) {
+  changeCalendarByCourseId(courseId: string) {
     this.icalUrl = this.generateCourseUrl(courseId);
   }
 
   changeCalendarByIcalUrl(icalUrl: string) {
     this.icalUrl = icalUrl;
+  }
+
+  async getCourses(): Promise<IResponseTypes> {
+    const res = await axios.get(this.baseUrl);
+
+    if (res.status === 503) {
+      return {
+        status: res.status,
+        msg: "service unavailable",
+        data: undefined,
+      };
+    } else if (res.status !== 200) {
+      return {
+        status: res.status,
+        msg: "not ok",
+        data: undefined,
+      };
+    }
+
+    const $ = cheerio.load(res.data);
+
+    const $courseOptions = $("#class_select").find("option");
+
+    const courseList: ICourse[] = [];
+
+    $courseOptions.each((index: number, element: any) => {
+      // jump over the first element (it is not a course)
+      if (index > 0) {
+        const courseName = $(element).attr("label").trim();
+        const courseId = $(element).attr("value").trim();
+
+        const newCourse: ICourse = {
+          courseId,
+          courseName,
+        };
+
+        courseList.push(newCourse);
+      }
+    });
+
+    return {
+      status: res.status,
+      msg: "ok",
+      data: courseList,
+    };
   }
 
   async getLecturesFromiCalData(icalDataString: string) {

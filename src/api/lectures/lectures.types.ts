@@ -12,3 +12,8 @@ export type OrganizedLectures = {
   title: string;
   data: LectureType[];
 };
+
+export type ICourse = {
+  courseId: string;
+  courseName: string;
+};

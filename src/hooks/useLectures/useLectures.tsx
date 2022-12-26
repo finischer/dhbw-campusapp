@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import { LecturesController } from "../../api/lectures/lecturesController";
-import { IResponseTypes } from "../../api/types/IResponseTypes";
 import { ILecturesContext } from "./useLectures.types";
 
 const LecturesContext = createContext<ILecturesContext | undefined>(undefined);
@@ -12,10 +11,10 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
   const [icalUrl, setIcalUrl] = useState<string | undefined>(undefined);
 
   // only course IDs from DHBW Mannheim Interface
-  const [courseId, setCourseId] = useState<number | undefined>(undefined);
+  const [courseId, setCourseId] = useState<string | undefined>(undefined);
   const lecturesController = new LecturesController(icalUrl, courseId);
 
-  const changeCourseByCourseId = (newCourseId: number) => {
+  const changeCourseByCourseId = (newCourseId: string) => {
     setCourseId(newCourseId);
     lecturesController.changeCalendarByCourseId(newCourseId);
   };
@@ -31,6 +30,11 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
     return schedule;
   };
 
+  const getCourses = async () => {
+    const courses = await lecturesController.getCourses();
+    return courses;
+  };
+
   return (
     <LecturesContext.Provider
       value={{
@@ -38,6 +42,7 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
         changeCourseByCourseId,
         changeCourseByUrl,
         getSchedule,
+        getCourses,
       }}
     >
       {children}

@@ -3,10 +3,12 @@ import React from "react";
 import { IScheduleProps } from "./schedule.types";
 import LectureRowItem from "../LectureRowItem";
 import DateHeader from "../DateHeader";
+import { scheduleStyles } from "./schedule.styles";
 
 const Schedule: React.FC<IScheduleProps> = ({ lectures, ...props }) => {
   return (
     <SectionList
+      contentContainerStyle={scheduleStyles.container}
       stickySectionHeadersEnabled
       sections={lectures}
       keyExtractor={(item: any, index: number) => item + index}

@@ -9,7 +9,7 @@ const LogoutButton = ({ onClick }: ILogoutButtonProps) => {
   const { colors } = useMetadata();
 
   return (
-    <View style={{ marginRight: 10 }}>
+    <View style={{ marginRight: 20 }}>
       <TouchableOpacity onPress={onClick}>
         <Feather name="log-out" size={27} color={colors.lightText} />
       </TouchableOpacity>

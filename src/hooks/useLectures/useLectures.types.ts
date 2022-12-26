@@ -1,8 +1,9 @@
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 
 export type ILecturesContext = {
-  courseId: number | undefined;
+  courseId: string | undefined;
   getSchedule(): Promise<IResponseTypes>;
-  changeCourseByCourseId(newCourseId: number): void;
+  changeCourseByCourseId(newCourseId: string): void;
   changeCourseByUrl(newIcalUrl: string): void;
+  getCourses(): Promise<IResponseTypes>; // TODO: set return type
 };

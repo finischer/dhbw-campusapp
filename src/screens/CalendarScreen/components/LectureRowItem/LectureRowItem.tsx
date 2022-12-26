@@ -5,7 +5,7 @@ import RegularText from "../../../../components/RegularText";
 import { lectureRowItemStyles } from "./lectureRow.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import moment from "moment";
-import Animated, { FadeInLeft } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
 
 const LECTURE_TIME_FORMAT = "HH:mm";

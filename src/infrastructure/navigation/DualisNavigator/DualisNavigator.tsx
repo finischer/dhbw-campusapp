@@ -16,7 +16,7 @@ const DualisStack = createStackNavigator();
 
 const SCREEN_TITLE = "Dualis";
 
-const DualisNavigator = ({ route, navigation }: any) => {
+const DualisNavigator = () => {
   const { storeDataInAsyncStorage } = useAsyncStorage();
   const [accessGranted, setAccessGranted] = useState<boolean>(false);
   const navigationHeaderConfig = headerConfig();

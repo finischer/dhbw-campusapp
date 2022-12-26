@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { _auth, _logout } from "../../api/dualis/dualisConnector";
 import { DualisScraperController } from "../../api/html_scraper/dualis/DualisScraperController";
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
-import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import { IDualisContext, IDualisUser } from "./useDualis.types";
 
