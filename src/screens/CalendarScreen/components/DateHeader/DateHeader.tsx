@@ -6,10 +6,12 @@ import { dateHeaderStyles } from "./dateHeader.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import Animated from "react-native-reanimated";
+import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
 
 const TITLE_DATE_FORMAT = "DD.MM.YYYY";
 
-const DateHeader: React.FC<IDateHeaderProps> = ({ title }) => {
+const DateHeader: React.FC<IDateHeaderProps> = ({ title, index }) => {
   const { t } = useTranslation();
   const { colors, dateFormat } = useMetadata();
 
@@ -22,12 +24,15 @@ const DateHeader: React.FC<IDateHeaderProps> = ({ title }) => {
   });
 
   return (
-    <View style={[dateHeaderStyles.container, localDateHeaderStyles.container]}>
+    <Animated.View
+      entering={enteringDelayedAnimation(index)}
+      style={[dateHeaderStyles.container, localDateHeaderStyles.container]}
+    >
       <RegularText variant="light" style={dateHeaderStyles.text}>
         {t(`common:${dayName}`)},{" "}
         {moment(title, TITLE_DATE_FORMAT).format(dateFormat)}
       </RegularText>
-    </View>
+    </Animated.View>
   );
 };
 

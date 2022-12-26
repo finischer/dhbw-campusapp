@@ -10,9 +10,11 @@ const Schedule: React.FC<IScheduleProps> = ({ lectures, ...props }) => {
       stickySectionHeadersEnabled
       sections={lectures}
       keyExtractor={(item: any, index: number) => item + index}
-      renderItem={({ item }) => <LectureRowItem lecture={item} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <DateHeader title={title} />
+      renderItem={({ item, index }) => (
+        <LectureRowItem lecture={item} index={index} />
+      )}
+      renderSectionHeader={({ section: { title, index } }) => (
+        <DateHeader title={title} index={index} />
       )}
       {...props}
     />

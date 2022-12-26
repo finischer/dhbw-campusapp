@@ -7,6 +7,7 @@ import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
+import RequestTime from "../../components/RequestTime";
 import { useLectures } from "../../hooks/useLectures";
 import Schedule from "./components/Schedule";
 
@@ -67,6 +68,7 @@ const CalendarScreen = () => {
         //     <RegularText>Vorlesungsplan</RegularText>
         //   </View>
         // )}
+        ListFooterComponent={() => <RequestTime />}
       />
     </GlobalBody>
   );

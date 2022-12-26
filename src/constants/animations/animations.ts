@@ -1,4 +1,5 @@
 import { LayoutAnimation } from "react-native";
+import { FadeInLeft } from "react-native-reanimated";
 
 export const toggleAnimation = {
   duration: 300,
@@ -13,3 +14,6 @@ export const toggleAnimation = {
     type: LayoutAnimation.Types.easeInEaseOut,
   },
 };
+
+export const enteringDelayedAnimation = (index: number) =>
+  FadeInLeft.delay(30 * index);

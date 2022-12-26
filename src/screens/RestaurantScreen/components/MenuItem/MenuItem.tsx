@@ -7,6 +7,7 @@ import { MenuItemProps } from "./menuItem.types";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import MenuIcon from "../MenuIcon";
 import { MenuIconNames } from "../MenuIcon/menuIcon.types";
+import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
 
 const MenuItem: React.FC<MenuItemProps> = ({ menu, index }) => {
   const { colors } = useMetadata();
@@ -18,7 +19,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, index }) => {
 
   return (
     <Animated.View
-      entering={FadeInLeft.delay(index * 30)}
+      entering={enteringDelayedAnimation(index)}
       style={[menuItemStyles.container, localMenuItemStyles.container]}
     >
       <RegularText numberOfLines={1} style={menuItemStyles.menuNameText}>

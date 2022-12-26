@@ -13,6 +13,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import Icon from "../../../../components/Icon";
+import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
 
 const SubjectRowItem = ({
   subject,
@@ -44,7 +45,7 @@ const SubjectRowItem = ({
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={openSubjectDetails}>
       <Animated.View
-        entering={FadeInLeft.delay(index * 30)}
+        entering={enteringDelayedAnimation(index)}
         style={[
           subjectRowStyles.container,
           localSubjectRowItemStyles.container,
