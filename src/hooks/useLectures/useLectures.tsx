@@ -1,5 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { ICourse } from "../../api/lectures/lectures.types";
 import { LecturesController } from "../../api/lectures/lecturesController";
+import useAsyncStorage from "../useAsyncStorage";
 import { ILecturesContext } from "./useLectures.types";
 
 const LecturesContext = createContext<ILecturesContext | undefined>(undefined);
@@ -7,21 +9,41 @@ const LecturesContext = createContext<ILecturesContext | undefined>(undefined);
 const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { getDataFromAsyncStorage, storeDataInAsyncStorage } =
+    useAsyncStorage();
+
   // ical url for own calendar imports
   const [icalUrl, setIcalUrl] = useState<string | undefined>(undefined);
 
   // only course IDs from DHBW Mannheim Interface
-  const [courseId, setCourseId] = useState<string | undefined>(undefined);
-  const lecturesController = new LecturesController(icalUrl, courseId);
+  const [course, setCourse] = useState<ICourse | undefined>(undefined);
+  const lecturesController = new LecturesController(icalUrl, course?.courseId);
 
-  const changeCourseByCourseId = (newCourseId: string) => {
-    setCourseId(newCourseId);
-    lecturesController.changeCalendarByCourseId(newCourseId);
+  useEffect(() => {
+    const initializeCourseAndIcalUrl = async () => {
+      const course = await getDataFromAsyncStorage("course");
+      if (course) setCourse(course);
+
+      const icalurl = await getDataFromAsyncStorage("icalUrl");
+      if (icalUrl) setIcalUrl(icalUrl);
+    };
+
+    initializeCourseAndIcalUrl();
+  }, []);
+
+  const changeCourse = (newCourse: ICourse) => {
+    setCourse(newCourse);
+    lecturesController.changeCalendarByCourseId(newCourse.courseId);
+
+    // store course in async storage
+    storeDataInAsyncStorage("course", newCourse);
   };
 
   const changeCourseByUrl = (newIcalUrl: string) => {
     setIcalUrl(newIcalUrl);
     lecturesController.changeCalendarByIcalUrl(newIcalUrl);
+
+    storeDataInAsyncStorage("icalUrl", newIcalUrl);
   };
 
   const getSchedule = async () => {
@@ -35,11 +57,17 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
     return courses;
   };
 
+  const getCourseById = async (courseId: string) => {
+    const { data: course } = await lecturesController.getCourseById(courseId);
+    return course;
+  };
+
   return (
     <LecturesContext.Provider
       value={{
-        courseId,
-        changeCourseByCourseId,
+        course,
+        changeCourse,
+        getCourseById,
         changeCourseByUrl,
         getSchedule,
         getCourses,

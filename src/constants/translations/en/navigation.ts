@@ -3,6 +3,6 @@ export default {
   cafeteria: "Cafeteria",
   lectures: "Lectures",
   more: "More",
-  changeLanguage: "Choose language",
-  changeRestaurant: "Choose cafeteria",
+  changeLanguage: "Select language",
+  changeRestaurant: "Select cafeteria",
 };

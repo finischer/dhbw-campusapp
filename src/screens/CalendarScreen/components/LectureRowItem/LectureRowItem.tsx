@@ -6,7 +6,7 @@ import { lectureRowItemStyles } from "./lectureRow.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import moment from "moment";
 import Animated from "react-native-reanimated";
-import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
+import { enteringDelayedAnimation } from "../../../../constants/animations";
 
 const LECTURE_TIME_FORMAT = "HH:mm";
 

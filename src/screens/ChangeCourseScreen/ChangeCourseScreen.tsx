@@ -1,19 +1,19 @@
-import { Icon } from "@expo/vector-icons/build/createIconSet";
-import moment from "moment";
 import React from "react";
-import { FlatList, ScrollView } from "react-native";
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
+import { useTranslation } from "react-i18next";
+import { FlatList, View } from "react-native";
 import { useQuery } from "react-query";
 import { ICourse } from "../../api/lectures/lectures.types";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal";
 import RegularRowItem from "../../components/RegularRowItem";
-import RegularText from "../../components/RegularText";
 import { useLectures } from "../../hooks/useLectures";
 
 const ChangeCourseScreen = () => {
-  const { getCourses, changeCourseByCourseId, courseId } = useLectures();
+  const { t } = useTranslation("calendarScreen");
+  const { getCourses, changeCourse, course } = useLectures();
+
+  const modalTitle = t("selectCourse");
 
   const fetchCourses = async () => {
     const { data: courseList, requestTime } = await getCourses();
@@ -25,34 +25,36 @@ const ChangeCourseScreen = () => {
   if (isLoading) {
     return (
       <GlobalBody centered>
-        <Loader text="Kurse werden geladen ..." />
-      </GlobalBody>
-    );
-  }
-
-  if (data?.courseList === undefined) {
-    return (
-      <GlobalBody centered>
-        <RegularText>Error</RegularText>
+        <Loader text={t("loadingCourses")} />
       </GlobalBody>
     );
   }
 
   return (
-    <Modal title="Kurs auswählen">
+    <Modal title={modalTitle}>
       {/* CourseList View */}
       <FlatList
-        data={data.courseList as ICourse[]}
-        renderItem={({ item: course }: { item: ICourse }) => {
+        data={data?.courseList as ICourse[]}
+        renderItem={({
+          item: itemCourse,
+          index,
+        }: {
+          item: ICourse;
+          index: number;
+        }) => {
           const isSelected =
-            courseId !== undefined ? courseId === course.courseId : false;
+            course !== undefined
+              ? itemCourse.courseId === course.courseId
+              : false;
           return (
-            <RegularRowItem
-              onClick={() => changeCourseByCourseId(course.courseId)}
-              selected={isSelected}
-            >
-              {course.courseName}
-            </RegularRowItem>
+            <View>
+              <RegularRowItem
+                onClick={() => changeCourse(itemCourse)}
+                selected={isSelected}
+              >
+                {itemCourse.courseName}
+              </RegularRowItem>
+            </View>
           );
         }}
         keyExtractor={(course: ICourse, index: number) => index.toString()} // TODO: check for duplicated

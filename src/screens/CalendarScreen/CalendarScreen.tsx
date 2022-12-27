@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { OrganizedLectures } from "../../api/lectures/lectures.types";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
@@ -7,11 +8,33 @@ import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
 import RequestTime from "../../components/RequestTime";
+import { SPACING } from "../../constants/layout";
 import { useLectures } from "../../hooks/useLectures";
 import Schedule from "./components/Schedule";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
+import typography from "../../constants/typography";
+import {
+  DeviceEventEmitter,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  View,
+} from "react-native";
+import Icon from "../../components/Icon";
+import { calendarScreenStyles } from "./calendarScreen.styles";
+import TouchableOpacity from "../../components/TouchableOpacity";
+
+const setHeaderSubtitle = (newValue: boolean) => {
+  DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
+};
 
 const CalendarScreen = () => {
-  const { courseId, changeCourseByCourseId, getSchedule } = useLectures();
+  const { t } = useTranslation("calendarScreen");
+  const { course, changeCourse, getSchedule, getCourseById } = useLectures();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const loaderText = t("loadingLectures");
 
   const fetchSchedule = async () => {
     const { data: lectures, requestTime }: IResponseTypes = await getSchedule();
@@ -19,22 +42,50 @@ const CalendarScreen = () => {
   };
 
   const { isLoading, isFetching, data } = useQuery(
-    ["lectures-schedule", courseId],
+    ["lectures-schedule", course?.courseId],
     fetchSchedule
   );
 
-  if (courseId === undefined) {
+  const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.contentOffset.y >= 38) {
+      setHeaderSubtitle(true);
+    } else {
+      setHeaderSubtitle(false);
+    }
+  };
+
+  const ListHeader = () => (
+    <TouchableOpacity onPress={() => navigation.navigate("ChangeCourseScreen")}>
+      <View style={calendarScreenStyles.listHeaderContainer}>
+        <RegularText size={typography.h2} weight="bold">
+          {course?.courseName}
+        </RegularText>
+        <View style={calendarScreenStyles.headerIconContainer}>
+          <Icon source="feather" clickable={false} name="edit" size={20} />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const NoLecturesView = () => (
+    <View style={calendarScreenStyles.noLecturesContainer}>
+      <RegularText>{t("noEventsScheduled")}</RegularText>
+    </View>
+  );
+
+  if (course === undefined) {
     return (
       <GlobalBody centered>
         <RegularText style={{ textAlign: "center" }}>
-          Du musst zuerst einen Kurs auswählen, um den Vorlesungsplan zu sehen
+          {t("onFirstUseSelectCourseText")}
         </RegularText>
 
         <Button
           variant="outlined"
-          onClick={() => changeCourseByCourseId(8119001)}
+          onClick={() => navigation.navigate("ChangeCourseScreen")}
+          style={{ marginTop: SPACING.xl }}
         >
-          Kurs auswählen
+          {t("selectCourse")}
         </Button>
       </GlobalBody>
     );
@@ -43,15 +94,7 @@ const CalendarScreen = () => {
   if (isLoading || isFetching) {
     return (
       <GlobalBody centered>
-        <Loader text="Vorlesungen werden geladen ..." />
-      </GlobalBody>
-    );
-  }
-
-  if (data === undefined) {
-    return (
-      <GlobalBody centered>
-        <RegularText>Data is undefined</RegularText>
+        <Loader text={loaderText} />
       </GlobalBody>
     );
   }
@@ -59,13 +102,12 @@ const CalendarScreen = () => {
   return (
     <GlobalBody>
       <Schedule
-        lectures={data.lectures as OrganizedLectures[]}
-        // ListHeaderComponent={() => (
-        //   <View>
-        //     <RegularText>Vorlesungsplan</RegularText>
-        //   </View>
-        // )}
+        onScroll={handleOnScroll}
+        scrollEventThrottle={16}
+        lectures={data?.lectures as OrganizedLectures[]}
+        ListHeaderComponent={() => <ListHeader />}
         ListFooterComponent={() => <RequestTime />}
+        ListEmptyComponent={() => <NoLecturesView />}
       />
     </GlobalBody>
   );

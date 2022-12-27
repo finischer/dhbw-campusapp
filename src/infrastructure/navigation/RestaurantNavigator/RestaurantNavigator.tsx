@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DeviceEventEmitter, Modal as RNModal, View } from "react-native";
+import { DeviceEventEmitter } from "react-native";
 import {
   createStackNavigator,
   TransitionPresets,
@@ -9,8 +9,6 @@ import { headerConfig } from "../Navigation/config";
 import { useRestaurant } from "../../../hooks/useRestaurant/useRestaurant";
 import NavigationHeader from "../../../components/NavigationHeader";
 import { useTranslation } from "react-i18next";
-import Modal from "../../../components/Modal";
-import RegularText from "../../../components/RegularText";
 import ChangeRestaurantScreen from "../../../screens/ChangeRestaurantScreen/ChangeRestaurantScreen";
 import { useMetadata } from "../../../hooks/useMetadata";
 

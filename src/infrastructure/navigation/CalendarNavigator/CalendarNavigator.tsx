@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   createStackNavigator,
   StackNavigationProp,
   TransitionPresets,
 } from "@react-navigation/stack";
-import { View } from "react-native";
+import { DeviceEventEmitter, View } from "react-native";
 import { headerConfig } from "../Navigation/config";
 import CalendarScreen from "../../../screens/CalendarScreen";
 import NavigationHeader from "../../../components/NavigationHeader";
@@ -14,13 +14,34 @@ import ChangeCourseScreen from "../../../screens/ChangeCourseScreen";
 import Icon from "../../../components/Icon";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../Navigation/navigation.types";
+import { useLectures } from "../../../hooks/useLectures";
 
 const CalendarStack = createStackNavigator();
 
 const CalendarNavigator = () => {
   const { colors } = useMetadata();
+  const { course } = useLectures();
   const { t } = useTranslation("navigation");
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const [showSubTitle, setShowSubTitle] = useState(false);
+
+  useEffect(() => {
+    const handleShowSubTitle = (newState: boolean) => {
+      setShowSubTitle(newState);
+    };
+
+    DeviceEventEmitter.addListener(
+      "handleShowSubTitle-CalendarScreen",
+      handleShowSubTitle
+    );
+
+    return () => {
+      DeviceEventEmitter.removeAllListeners(
+        "handleShowSubTitle-CalendarScreen"
+      );
+    };
+  }, []);
 
   const goToChangeCourseScreen = () => {
     navigation.navigate("ChangeCourseScreen");
@@ -32,7 +53,13 @@ const CalendarNavigator = () => {
         name="CalendarScreen"
         component={CalendarScreen}
         options={{
-          headerTitle: () => <NavigationHeader title={t("lectures")} />,
+          headerTitle: () => (
+            <NavigationHeader
+              title={t("lectures")}
+              subTitle={course?.courseName}
+              showSubTitle={showSubTitle}
+            />
+          ),
           headerRight: () => (
             <View style={{ marginRight: 20 }}>
               <Icon

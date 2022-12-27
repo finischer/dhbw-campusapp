@@ -3,6 +3,7 @@ import {
   DeviceEventEmitter,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  View,
 } from "react-native";
 import GlobalBody from "../../components/GlobalBody";
 import RegularText from "../../components/RegularText";
@@ -28,6 +29,9 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import FeatherIcon from "../../components/FeatherIcon";
 import ErrorView from "../../components/ErrorView";
+import typography from "../../constants/typography";
+import { SPACING } from "../../constants/layout";
+import Icon from "../../components/Icon";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle", newValue);
@@ -63,7 +67,7 @@ const RestaurantScreen = () => {
   });
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y >= 30) {
+    if (e.nativeEvent.contentOffset.y >= 38) {
       setHeaderSubtitle(true);
     } else {
       setHeaderSubtitle(false);
@@ -110,13 +114,13 @@ const RestaurantScreen = () => {
         <TouchableOpacity onPress={goToChangeNavigationScreen}>
           <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
             {/* Name of Restaurant */}
-            <RegularText style={restaurantScreenStyles.restaurantNameText}>
+            <RegularText weight="bold" size={typography.h2}>
               {formattedRestaurantName}
             </RegularText>
             {/* Edit Icon */}
-            <RegularText style={{ marginLeft: 5 }}>
-              <FeatherIcon clickable={false} name="edit" size={20} />
-            </RegularText>
+            <View style={{ marginLeft: SPACING.s }}>
+              <Icon source="feather" clickable={false} name="edit" size={20} />
+            </View>
           </GlobalBody>
         </TouchableOpacity>
 

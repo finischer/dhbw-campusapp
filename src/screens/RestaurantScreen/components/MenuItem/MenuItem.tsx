@@ -4,10 +4,10 @@ import RegularText from "../../../../components/RegularText";
 import { menuItemStyles } from "./menuItem.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import { MenuItemProps } from "./menuItem.types";
-import Animated, { FadeInLeft } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import MenuIcon from "../MenuIcon";
 import { MenuIconNames } from "../MenuIcon/menuIcon.types";
-import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
+import { enteringDelayedAnimation } from "../../../../constants/animations";
 
 const MenuItem: React.FC<MenuItemProps> = ({ menu, index }) => {
   const { colors } = useMetadata();

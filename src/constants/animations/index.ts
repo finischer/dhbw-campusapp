@@ -1,1 +1,1 @@
-export { toggleAnimation } from "./animations";
+export { toggleAnimation, enteringDelayedAnimation } from "./animations";

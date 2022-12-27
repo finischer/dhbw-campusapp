@@ -4,6 +4,7 @@ import loginScreen from "./loginScreen";
 import dualisScreen from "./dualisScreen";
 import restaurantScreen from "./restaurantScreen";
 import moreScreen from "./moreScreen";
+import calendarScreen from "./calendarScreen";
 
 export default {
   common,
@@ -12,4 +13,5 @@ export default {
   dualisScreen,
   restaurantScreen,
   moreScreen,
+  calendarScreen,
 };

@@ -34,6 +34,27 @@ export class LecturesController {
     this.icalUrl = icalUrl;
   }
 
+  async getCourseById(courseId: string): Promise<IResponseTypes> {
+    const res = await this.getCourses();
+
+    if (res.status !== 200)
+      return {
+        status: res.status,
+        msg: "not ok",
+        data: undefined,
+      };
+
+    const allCourses: ICourse[] = res.data as ICourse[];
+
+    const course = allCourses.find((course) => course.courseId === courseId);
+
+    return {
+      status: res.status,
+      msg: "not ok",
+      data: course,
+    };
+  }
+
   async getCourses(): Promise<IResponseTypes> {
     const res = await axios.get(this.baseUrl);
 

@@ -4,4 +4,5 @@ export type AsyncStorageEntries =
   | "initialHomescreen"
   | "cafeteria"
   | "course"
+  | "icalUrl"
   | "accessGranted";

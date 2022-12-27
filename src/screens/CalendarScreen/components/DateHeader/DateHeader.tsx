@@ -7,7 +7,7 @@ import { useMetadata } from "../../../../hooks/useMetadata";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import Animated from "react-native-reanimated";
-import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
+import { enteringDelayedAnimation } from "../../../../constants/animations";
 
 const TITLE_DATE_FORMAT = "DD.MM.YYYY";
 

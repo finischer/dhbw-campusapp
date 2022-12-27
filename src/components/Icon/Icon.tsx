@@ -15,7 +15,7 @@ const Icon = ({
   source,
   size = 24,
   color = undefined,
-  activeOpacity = undefined,
+  activeOpacity = 0.7,
   onClick = undefined,
   clickable = true,
 }: IIconProps) => {
@@ -40,11 +40,14 @@ const Icon = ({
     }
   };
 
-  if (!clickable) {
-    getIcon();
-  }
-
-  return <TouchableOpacity onPress={onClick}>{getIcon()}</TouchableOpacity>;
+  return (
+    <TouchableOpacity
+      activeOpacity={!clickable ? 1 : activeOpacity}
+      onPress={onClick}
+    >
+      {getIcon()}
+    </TouchableOpacity>
+  );
 };
 
 export default Icon;
