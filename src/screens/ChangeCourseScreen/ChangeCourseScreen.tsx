@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import { useQuery } from "react-query";
@@ -6,12 +6,14 @@ import { ICourse } from "../../api/lectures/lectures.types";
 import GlobalBody from "../../components/GlobalBody";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal";
+import { IModalFunctions } from "../../components/Modal/modal.types";
 import RegularRowItem from "../../components/RegularRowItem";
 import { useLectures } from "../../hooks/useLectures";
 
 const ChangeCourseScreen = () => {
   const { t } = useTranslation("calendarScreen");
   const { getCourses, changeCourse, course } = useLectures();
+  const modalRef = useRef<IModalFunctions | null>(null);
 
   const modalTitle = t("selectCourse");
 
@@ -31,10 +33,12 @@ const ChangeCourseScreen = () => {
   }
 
   return (
-    <Modal title={modalTitle}>
+    <Modal ref={modalRef} title={modalTitle}>
       {/* CourseList View */}
       <FlatList
         data={data?.courseList as ICourse[]}
+        onScrollBeginDrag={() => modalRef.current?.disappearCloseButton()}
+        onScrollEndDrag={() => modalRef.current?.appearCloseButton()}
         renderItem={({
           item: itemCourse,
           index,

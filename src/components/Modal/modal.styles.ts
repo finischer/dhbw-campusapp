@@ -1,3 +1,4 @@
+import { SPACING } from "./../../constants/layout/layout";
 import { StyleSheet } from "react-native";
 
 export const modalStyles = StyleSheet.create({
@@ -24,7 +25,18 @@ export const modalStyles = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: "center",
-    paddingTop: 15,
-    paddingBottom: 40,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    zIndex: 999,
+    elevation: 6,
   },
 });
