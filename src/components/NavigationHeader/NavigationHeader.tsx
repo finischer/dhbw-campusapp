@@ -5,6 +5,8 @@ import typography from "../../constants/typography";
 import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
 import { navHeaderStyles } from "./NavigationHeader.styles";
 
+// TODO: add generic subtitle-layout animation
+
 const NavigationHeader = ({
   title,
   subTitle = "",

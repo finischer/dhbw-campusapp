@@ -24,7 +24,7 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
       const course = await getDataFromAsyncStorage("course");
       if (course) setCourse(course);
 
-      const icalurl = await getDataFromAsyncStorage("icalUrl");
+      const icalUrl = await getDataFromAsyncStorage("icalUrl");
       if (icalUrl) setIcalUrl(icalUrl);
     };
 
@@ -48,7 +48,6 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getSchedule = async () => {
     const schedule = await lecturesController.getSchedule();
-
     return schedule;
   };
 

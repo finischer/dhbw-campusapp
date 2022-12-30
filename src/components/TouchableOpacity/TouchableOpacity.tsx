@@ -3,6 +3,7 @@ import React from "react";
 import { ITouchableOpacityProps } from "./touchableOpacity.types";
 
 const ACTIVE_OPACITY = 0.7;
+const DISABLED_OPACITY = 0.3;
 
 const TouchableOpacity = ({
   children,
@@ -15,7 +16,7 @@ const TouchableOpacity = ({
       disabled={disabled}
       {...props}
       style={{
-        opacity: disabled ? 0.3 : 1,
+        opacity: disabled ? DISABLED_OPACITY : 1,
       }}
     >
       {children}

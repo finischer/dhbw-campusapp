@@ -13,7 +13,7 @@ export class LecturesController {
     icalUrl: string | undefined = undefined,
     courseId: string | undefined = undefined
   ) {
-    this.baseUrl = "http://vorlesungsplan.dhbw-mannheim.de/ical.php";
+    this.baseUrl = "https://vorlesungsplan.dhbw-mannheim.de/ical.php";
     if (courseId !== undefined) {
       this.icalUrl = this.generateCourseUrl(courseId);
     } else if (icalUrl !== undefined) {
@@ -213,18 +213,20 @@ export class LecturesController {
   async getSchedule(): Promise<IResponseTypes> {
     let lectures = undefined;
 
-    if (this.icalUrl === undefined)
+    if (this.icalUrl === undefined) {
       return {
         status: 400,
         msg: "ical url is undefined",
         data: undefined,
       };
+    }
 
     try {
       const response = await axios.get(this.icalUrl, {
         headers: {
           "Cache-control": "no-cache",
         },
+        timeout: 10000,
       });
 
       if (response.status === 503) {
@@ -264,161 +266,3 @@ export class LecturesController {
     };
   }
 }
-
-// import { API_URL } from "@env";
-// import axios from "axios";
-// import { format, startOfToday } from "date-fns";
-// import ICAL from "ical.js";
-// import { resolve } from "../helpers";
-// import { instance } from "./axios.config";
-
-// async function getLecturesFromiCalData(iCalendarData) {
-//   var jcalData = ICAL.parse(iCalendarData);
-//   var comp = new ICAL.Component(jcalData);
-
-//   // Timezone
-//   var timezoneComp = comp.getFirstSubcomponent("vtimezone");
-//   if (!timezoneComp) {
-//     return {};
-//   }
-
-//   var tzid = timezoneComp.getFirstProperty("tzid");
-//   var timezone = new ICAL.Timezone({
-//     component: timezoneComp,
-//     tzid,
-//   });
-
-//   ICAL.TimezoneService.register(tzid, timezone);
-
-//   // Events
-//   let vevents = comp.getAllSubcomponents("vevent");
-
-//   let lectures = vevents.map((vevent) => {
-//     let event = new ICAL.Event(vevent);
-
-//     const location = event.location.replace("Raum", "").trim();
-
-//     const new_event = {
-//       uid: event.uid,
-//       lecture: event.summary,
-//       startDate: event.startDate.toJSDate(),
-//       startTime: event.startDate.toJSDate().getTime(),
-//       endDate: event.endDate.toJSDate(),
-//       endTime: event.endDate.toJSDate().getTime(),
-//       location,
-//     };
-
-//     return new_event;
-//   });
-
-//   var range = 180;
-//   var rangeStart = startOfToday();
-//   var rangeEnd = new Date().setDate(rangeStart.getDate() + range);
-
-//   var filteredLectures = lectures.filter((filterLecture) => {
-//     return (
-//       filterLecture.startTime >= rangeStart.getTime() &&
-//       filterLecture.endDate <= rangeEnd
-//     );
-//   });
-
-//   filteredLectures.sort((lecture1, lecture2) => {
-//     if (lecture1.startDate < lecture2.startDate) {
-//       return -1;
-//     }
-
-//     if (lecture1.startDate > lecture2.startDate) {
-//       return 1;
-//     }
-
-//     return 0;
-//   });
-
-//   const sortedByDateLectures = filteredLectures.map((event) => {
-//     const startTime = format(event.startTime, "HH:mm");
-//     const endTime = format(event.endTime, "HH:mm");
-
-//     return {
-//       uid: event.uid,
-//       lecture: event.lecture,
-//       startDate: event.startDate,
-//       startTime: startTime,
-//       endTime: endTime,
-//       location: event.location,
-//     };
-//   });
-
-//   var organized_lectures = [];
-
-//   for (var i = 0; i < sortedByDateLectures.length; i++) {
-//     const firstEvent = sortedByDateLectures[i];
-//     const startDate = format(firstEvent.startDate, "dd.MM.yyyy");
-
-//     const tmp_arr = organized_lectures.filter(
-//       (item) => item.title === startDate
-//     );
-
-//     if (tmp_arr.length !== 0) {
-//       continue;
-//     }
-
-//     const firstEventDate = new Date(firstEvent.startDate).setHours(0, 0, 0, 0);
-
-//     const result = sortedByDateLectures.filter((event) => {
-//       const date = new Date(event.startDate).setHours(0, 0, 0, 0);
-
-//       return firstEventDate === date;
-//     });
-
-//     organized_lectures.push({
-//       title: startDate,
-//       data: result,
-//     });
-//   }
-
-//   return organized_lectures;
-// }
-
-// export async function getItems(url) {
-//   let lectures = null;
-//   let status = null;
-
-//   try {
-//     const response = await fetch(url, { cache: "no-store" });
-
-//     if (response.status === 503) {
-//       status = {
-//         code: response.status,
-//         msg: "serviceUnavailable",
-//       };
-//     } else if (response.status !== 200) {
-//       status = {
-//         code: response.status,
-//         msg: "not ok",
-//       };
-//     } else {
-//       const responseBody = await response.text();
-//       status = {
-//         code: response.status,
-//         msg: "ok",
-//       };
-//       lectures = await getLecturesFromiCalData(responseBody).then((res) => res);
-//     }
-//   } catch (err) {
-//     return {
-//       lectures: null,
-//       status: {
-//         code: 400,
-//         msg: "wrongUrl",
-//       },
-//     };
-//   }
-
-//   return { lectures, status };
-// }
-
-// export async function getCourses() {
-//   return await resolve(
-//     instance.get("/api/v1.0/courses").then((res) => res.data)
-//   );
-// }

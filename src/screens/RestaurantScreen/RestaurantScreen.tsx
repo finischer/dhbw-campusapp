@@ -67,7 +67,7 @@ const RestaurantScreen = () => {
   });
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y >= 38) {
+    if (e.nativeEvent.contentOffset.y >= 33) {
       setHeaderSubtitle(true);
     } else {
       setHeaderSubtitle(false);
@@ -111,18 +111,12 @@ const RestaurantScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         {/* Restaurant Title View */}
-        <TouchableOpacity onPress={goToChangeNavigationScreen}>
-          <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
-            {/* Name of Restaurant */}
-            <RegularText weight="bold" size={typography.h2}>
-              {formattedRestaurantName}
-            </RegularText>
-            {/* Edit Icon */}
-            <View style={{ marginLeft: SPACING.s }}>
-              <Icon source="feather" clickable={false} name="edit" size={20} />
-            </View>
-          </GlobalBody>
-        </TouchableOpacity>
+        <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
+          {/* Name of Restaurant */}
+          <RegularText weight="bold" size={typography.h2}>
+            {formattedRestaurantName}
+          </RegularText>
+        </GlobalBody>
 
         {/* MenuList View */}
         <SnapCarousel

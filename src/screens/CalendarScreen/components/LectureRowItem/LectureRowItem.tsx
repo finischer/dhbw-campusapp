@@ -5,7 +5,7 @@ import RegularText from "../../../../components/RegularText";
 import { lectureRowItemStyles } from "./lectureRow.styles";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import moment from "moment";
-import Animated from "react-native-reanimated";
+import Animated, { Layout } from "react-native-reanimated";
 import { enteringDelayedAnimation } from "../../../../constants/animations";
 
 const LECTURE_TIME_FORMAT = "HH:mm";
@@ -22,6 +22,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ lecture, index }) => {
   return (
     <Animated.View
       entering={enteringDelayedAnimation(index)}
+      layout={Layout}
       style={[lectureRowItemStyles.container, localRowItemStyles.container]}
     >
       {/* Time of lecture View */}

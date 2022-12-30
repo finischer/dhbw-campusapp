@@ -2,6 +2,7 @@ export type IColors = {
   primary: string;
   primaryDarker: string;
   secondary: string;
+  secondaryDarker: string;
   accent: string;
   success: string;
   container: string;

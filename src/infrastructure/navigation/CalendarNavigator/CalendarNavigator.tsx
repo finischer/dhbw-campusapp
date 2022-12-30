@@ -15,6 +15,7 @@ import Icon from "../../../components/Icon";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../Navigation/navigation.types";
 import { useLectures } from "../../../hooks/useLectures";
+import { GLOBAL_PADDING_HORIZONTAL } from "../../../constants/layout";
 
 const CalendarStack = createStackNavigator();
 
@@ -61,7 +62,7 @@ const CalendarNavigator = () => {
             />
           ),
           headerRight: () => (
-            <View style={{ marginRight: 20 }}>
+            <View style={{ marginRight: GLOBAL_PADDING_HORIZONTAL }}>
               <Icon
                 source="feather"
                 name="edit"

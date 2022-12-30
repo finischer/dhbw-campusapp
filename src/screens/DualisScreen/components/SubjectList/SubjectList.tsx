@@ -95,7 +95,7 @@ const SubjectList: React.FC<ISubjectListProps> = ({
         )}
         contentContainerStyle={subjectListStyles.subjectListContainer}
         alwaysBounceVertical
-        ListFooterComponent={() => <RequestTime />}
+        ListFooterComponent={<RequestTime />}
         refreshControl={
           <RefreshControl
             tintColor={colors.accent}

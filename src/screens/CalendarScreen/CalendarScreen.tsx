@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { OrganizedLectures } from "../../api/lectures/lectures.types";
@@ -14,16 +14,14 @@ import Schedule from "./components/Schedule";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
-import typography from "../../constants/typography";
 import {
   DeviceEventEmitter,
   NativeScrollEvent,
   NativeSyntheticEvent,
   View,
 } from "react-native";
-import Icon from "../../components/Icon";
 import { calendarScreenStyles } from "./calendarScreen.styles";
-import TouchableOpacity from "../../components/TouchableOpacity";
+import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
@@ -31,8 +29,9 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
-  const { course, changeCourse, getSchedule, getCourseById } = useLectures();
+  const { course, getSchedule } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [searchString, setSearchString] = useState<string>("");
 
   const loaderText = t("loadingLectures");
 
@@ -47,25 +46,38 @@ const CalendarScreen = () => {
   );
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y >= 38) {
+    if (e.nativeEvent.contentOffset.y >= 22) {
       setHeaderSubtitle(true);
     } else {
       setHeaderSubtitle(false);
     }
   };
 
-  const ListHeader = () => (
-    <TouchableOpacity onPress={() => navigation.navigate("ChangeCourseScreen")}>
-      <View style={calendarScreenStyles.listHeaderContainer}>
-        <RegularText size={typography.h2} weight="bold">
-          {course?.courseName}
-        </RegularText>
-        <View style={calendarScreenStyles.headerIconContainer}>
-          <Icon source="feather" clickable={false} name="edit" size={20} />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  const searchForAppointment = (text: string) => {
+    setSearchString(text);
+  };
+
+  const filterLectures = (
+    searchString: string,
+    rawLectures: OrganizedLectures[]
+  ) => {
+    if (searchString.length === 0 || !rawLectures) {
+      return rawLectures;
+    }
+
+    //Do not touch downloaded lectures
+    const lectures: OrganizedLectures[] = [...rawLectures];
+    searchString = searchString.toLowerCase();
+    for (let i = 0; i < lectures.length; i++) {
+      //Do not touch original data
+      let lecture = Object.assign({}, lectures[i]);
+      lecture.data = lecture.data.filter((date) =>
+        date.lecture.toLowerCase().includes(searchString)
+      );
+      lectures[i] = lecture;
+    }
+    return lectures.filter((lecture) => lecture.data.length !== 0);
+  };
 
   const NoLecturesView = () => (
     <View style={calendarScreenStyles.noLecturesContainer}>
@@ -99,15 +111,31 @@ const CalendarScreen = () => {
     );
   }
 
+  if (data?.lectures === undefined) {
+    return (
+      <GlobalBody centered>
+        <RegularText>Es ist ein Fehler aufgetreten</RegularText>
+      </GlobalBody>
+    );
+  }
+
   return (
     <GlobalBody>
       <Schedule
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
-        lectures={data?.lectures as OrganizedLectures[]}
-        ListHeaderComponent={() => <ListHeader />}
-        ListFooterComponent={() => <RequestTime />}
-        ListEmptyComponent={() => <NoLecturesView />}
+        lectures={filterLectures(
+          searchString,
+          data?.lectures as OrganizedLectures[]
+        )}
+        ListHeaderComponent={
+          <ScheduleHeader
+            searchString={searchString}
+            onSearch={searchForAppointment}
+          />
+        }
+        ListFooterComponent={<RequestTime />}
+        ListEmptyComponent={<NoLecturesView />}
       />
     </GlobalBody>
   );
