@@ -9,7 +9,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 
-const TRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
+const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 
 const Modal = React.forwardRef<IModalFunctions, IModalProps>(
   (
@@ -52,7 +52,7 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
     const appearCloseButton = () => {
       const timeoutId = setTimeout(() => {
         setShowCloseButton(true);
-      }, TRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS);
+      }, THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS);
 
       setTimeoutId(timeoutId);
     };
