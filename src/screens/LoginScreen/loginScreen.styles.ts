@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../constants/layout";
 
 export const loginScreenStyles = StyleSheet.create({
   wrapperView: {
@@ -11,6 +12,7 @@ export const loginScreenStyles = StyleSheet.create({
   },
   title: {},
   inputFields: {
+    marginTop: SPACING.xxl,
     height: 150,
     justifyContent: "space-around",
   },
