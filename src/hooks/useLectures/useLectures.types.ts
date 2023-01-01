@@ -6,6 +6,6 @@ export type ILecturesContext = {
   getSchedule(): Promise<IResponseTypes>;
   changeCourse(newCourse: ICourse): void;
   changeCourseByUrl(newIcalUrl: string): void;
-  getCourses(): Promise<IResponseTypes>; // TODO: set return type
+  getCourses(): Promise<IResponseTypes>;
   getCourseById(courseId: string): void;
 };
