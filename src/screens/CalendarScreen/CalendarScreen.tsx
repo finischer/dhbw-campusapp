@@ -22,6 +22,7 @@ import {
 } from "react-native";
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
+import ErrorView from "../../components/ErrorView";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
@@ -40,10 +41,13 @@ const CalendarScreen = () => {
     return { lectures, requestTime };
   };
 
-  const { isLoading, isFetching, data } = useQuery(
-    ["lectures-schedule", course?.courseId],
-    fetchSchedule
-  );
+  const {
+    isLoading,
+    isFetching,
+    isError,
+    data,
+    refetch: refetchLectures,
+  } = useQuery(["lectures-schedule", course?.courseId], fetchSchedule);
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y >= 22) {
@@ -65,11 +69,11 @@ const CalendarScreen = () => {
       return rawLectures;
     }
 
-    //Do not touch downloaded lectures
+    // do not touch downloaded lectures
     const lectures: OrganizedLectures[] = [...rawLectures];
     searchString = searchString.toLowerCase();
     for (let i = 0; i < lectures.length; i++) {
-      //Do not touch original data
+      // do not touch original data
       let lecture = Object.assign({}, lectures[i]);
       lecture.data = lecture.data.filter((date) =>
         date.lecture.toLowerCase().includes(searchString)
@@ -111,11 +115,11 @@ const CalendarScreen = () => {
     );
   }
 
-  if (data?.lectures === undefined) {
+  if (data?.lectures === undefined || isError) {
     return (
-      <GlobalBody centered>
-        <RegularText>Es ist ein Fehler aufgetreten</RegularText>
-      </GlobalBody>
+      <ErrorView centered onRetry={refetchLectures}>
+        {t("common:errorOccured")}
+      </ErrorView>
     );
   }
 
@@ -134,7 +138,7 @@ const CalendarScreen = () => {
             onSearch={searchForAppointment}
           />
         }
-        ListFooterComponent={<RequestTime />}
+        ListFooterComponent={<RequestTime requestTime={data.requestTime} />}
         ListEmptyComponent={<NoLecturesView />}
       />
     </GlobalBody>

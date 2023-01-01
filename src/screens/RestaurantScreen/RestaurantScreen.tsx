@@ -3,7 +3,6 @@ import {
   DeviceEventEmitter,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  View,
 } from "react-native";
 import GlobalBody from "../../components/GlobalBody";
 import RegularText from "../../components/RegularText";
@@ -24,14 +23,11 @@ import { useTranslation } from "react-i18next";
 import RequestTime from "../../components/RequestTime";
 import AdditivesList from "./components/AdditivesList";
 import { useMetadata } from "../../hooks/useMetadata";
-import TouchableOpacity from "../../components/TouchableOpacity";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
-import FeatherIcon from "../../components/FeatherIcon";
 import ErrorView from "../../components/ErrorView";
 import typography from "../../constants/typography";
-import { SPACING } from "../../constants/layout";
-import Icon from "../../components/Icon";
+import moment from "moment";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle", newValue);
@@ -47,6 +43,7 @@ const RestaurantScreen = () => {
   const [restaurant, setRestaurant] = useState<IRestaurantState>({
     restaurantName,
     offer: [],
+    requestTime: undefined,
   });
 
   const {
@@ -59,6 +56,7 @@ const RestaurantScreen = () => {
       setRestaurant((oldState) => ({
         ...oldState,
         offer: menus,
+        requestTime: moment(),
       }));
     },
     onError: () => {
@@ -127,7 +125,7 @@ const RestaurantScreen = () => {
         />
 
         {/* Request Time */}
-        <RequestTime />
+        <RequestTime requestTime={restaurant.requestTime} />
 
         {/* Additive List */}
         <AdditivesList />

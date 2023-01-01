@@ -4,12 +4,14 @@ import { GlobalBodyTypes } from "./globalBody.types";
 import { globalBodyStyles } from "./globalBody.styles";
 import { useMetadata } from "../../hooks/useMetadata";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
 
 const GlobalBody: React.FC<GlobalBodyTypes> = ({
   children,
   safeAreaView = false,
   style = {},
   centered = false,
+  noPadding = false,
 }) => {
   const { colors } = useMetadata();
 
@@ -18,6 +20,9 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
       backgroundColor: colors.primary,
       justifyContent: centered ? "center" : undefined,
       alignItems: centered ? "center" : undefined,
+      paddingHorizontal: noPadding ? 0 : GLOBAL_PADDING_HORIZONTAL,
+      paddingVertical: noPadding ? 0 : 10,
+      paddingBottom: 0,
     },
   });
 

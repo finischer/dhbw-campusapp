@@ -1,17 +1,31 @@
+import { SPACING } from "./../../constants/layout/layout";
 import { StyleSheet } from "react-native";
-import { SPACING } from "../../constants/layout";
+
 export const searchbarStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 1,
+    paddingVertical: SPACING.s,
   },
   searchInputContainer: {
-    width: "100%",
     marginLeft: SPACING.s,
+    flex: 1,
+    paddingRight: SPACING.xl,
+  },
+  clearIconContainerWrapper: {
+    position: "absolute",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    right: 0,
+    width: 40,
+    height: 40,
   },
   clearIconContainer: {
-    position: "absolute",
-    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 20,
+    width: 20,
+    borderRadius: 100,
   },
 });

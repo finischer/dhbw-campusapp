@@ -50,7 +50,9 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ lecture, index }) => {
 
       {/* Location of lecture View */}
       <View style={lectureRowItemStyles.column3}>
-        <RegularText>{lecture.location}</RegularText>
+        <RegularText style={lectureRowItemStyles.column3text}>
+          {lecture.location}
+        </RegularText>
       </View>
     </Animated.View>
   );

@@ -1,4 +1,9 @@
-import { View, StatusBar, SafeAreaView } from "react-native";
+import {
+  View,
+  StatusBar,
+  SafeAreaView,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { IModalFunctions, IModalProps } from "./modal.types";
 import { modalStyles } from "./modal.styles";
@@ -8,26 +13,19 @@ import CloseButton from "../CloseButton";
 import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import Searchbar from "../Searchbar";
 
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 
 const Modal = React.forwardRef<IModalFunctions, IModalProps>(
-  (
-    {
-      title,
-      subTitle,
-      children,
-      // showCloseButton = true,
-    },
-    ref
-  ) => {
+  ({ title, subTitle, children, withCloseButton = true }, ref) => {
     const { theme } = useMetadata();
     const [statusBarStyle, setStatusBarStyle] = useState<
       "light-content" | "dark-content"
     >("light-content");
     const isFocused = useIsFocused();
 
-    const [showCloseButton, setShowCloseButton] = useState(true);
+    const [showCloseButton, setShowCloseButton] = useState(withCloseButton);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(
       undefined
     );
@@ -37,9 +35,14 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
         setTimeout(() => {
           setStatusBarStyle("dark-content");
         }, 300);
+      } else if (theme === "dark") {
+        setTimeout(() => {
+          setStatusBarStyle("light-content");
+        });
       }
     }, [isFocused, theme]);
 
+    // add local functions, so that you can use these functions in other components
     useImperativeHandle(ref, () => ({
       appearCloseButton: () => {
         appearCloseButton();

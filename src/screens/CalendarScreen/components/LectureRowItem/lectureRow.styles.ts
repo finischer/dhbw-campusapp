@@ -27,6 +27,9 @@ export const lectureRowItemStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
+  column3text: {
+    textAlign: "center",
+  },
   column1text: {
     fontSize: typography.small,
   },

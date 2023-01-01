@@ -17,16 +17,8 @@ const ErrorView: React.FC<IErrorViewProps> = ({
 }) => {
   const { t } = useTranslation("common");
 
-  const styleCentered = centered ? "center" : undefined;
-
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: styleCentered,
-        alignItems: styleCentered,
-      }}
-    >
+    <GlobalBody centered={centered}>
       <RegularText style={errorViewStyles.text}>{children}</RegularText>
       <View style={errorViewStyles.buttonsContainer}>
         {onRetry && (
@@ -40,7 +32,7 @@ const ErrorView: React.FC<IErrorViewProps> = ({
           </Button>
         )}
       </View>
-    </View>
+    </GlobalBody>
   );
 };
 

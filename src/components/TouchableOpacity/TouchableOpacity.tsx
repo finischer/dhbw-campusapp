@@ -14,10 +14,10 @@ const TouchableOpacity = ({
     <TsOpacity
       activeOpacity={ACTIVE_OPACITY}
       disabled={disabled}
-      {...props}
       style={{
         opacity: disabled ? DISABLED_OPACITY : 1,
       }}
+      {...props}
     >
       {children}
     </TsOpacity>

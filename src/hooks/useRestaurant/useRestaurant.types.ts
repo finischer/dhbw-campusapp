@@ -1,5 +1,4 @@
-import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
-import { IMenuType } from "./../../api/html_scraper/restaurant/types/IMenuType";
+import { IOfferListTypes } from "./../../api/html_scraper/restaurant/types/IOfferListTypes";
 import { RestaurantOptions } from "./../../api/html_scraper/restaurant/types/RestaurantTypes";
 
 export type IRestaurantContext = {

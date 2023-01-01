@@ -6,6 +6,7 @@ import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferL
 import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
 import { useMetadata } from "../useMetadata";
 import useAsyncStorage from "../useAsyncStorage";
+import { IResponseTypes } from "../../api/types/IResponseTypes";
 
 const PREVIEW_DAYS = 5;
 
@@ -62,13 +63,14 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchMenus = async () => {
     const allMenus: IOfferListTypes[] = [];
     for (let i = 0; i < PREVIEW_DAYS; i++) {
-      const restaurantInfos = await restaurantScraper.getMenuOfRestaurant(
-        restaurantName,
-        moment().add(i, "days").format("YYYY-MM-DD")
-      );
+      const restaurantInfos: IResponseTypes =
+        await restaurantScraper.getMenuOfRestaurant(
+          restaurantName,
+          moment().add(i, "days").format("YYYY-MM-DD")
+        );
 
       if (restaurantInfos.status != 200) continue;
-      allMenus.push(restaurantInfos.data.offer);
+      allMenus.push(restaurantInfos.data?.offer);
     }
 
     return allMenus;

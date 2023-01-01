@@ -5,4 +5,5 @@ export default {
   loadingCourses: "Kurse werden geladen ...",
   loadingLectures: "Vorlesungsplan wird geladen ...",
   noEventsScheduled: "Keine Veranstaltungen geplant",
+  noMatchesFor: 'Keine Treffer für "{{searchString, string}}"',
 };

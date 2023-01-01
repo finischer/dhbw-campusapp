@@ -1,10 +1,8 @@
-import { SPACING } from "./../../constants/layout/layout";
 import { StyleSheet } from "react-native";
 
 export const modalStyles = StyleSheet.create({
   wrapperContainer: {
     position: "relative",
-    flex: 10,
   },
   headerContainer: {
     alignItems: "center",
@@ -21,7 +19,7 @@ export const modalStyles = StyleSheet.create({
   },
   bodyContainer: {
     marginTop: 10,
-    flex: 6,
+    flex: 1,
   },
   closeButtonContainer: {
     alignItems: "center",

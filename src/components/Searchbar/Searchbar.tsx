@@ -1,9 +1,8 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import React, { useRef, useState } from "react";
 import Input from "../Input";
 import Icon from "../Icon";
 import { useMetadata } from "../../hooks/useMetadata";
-import { SPACING } from "../../constants/layout";
 import { ISearchbarProps } from "./searchbar.types";
 import { searchbarStyles } from "./searchbar.styles";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -28,6 +27,10 @@ const Searchbar: React.FC<ISearchbarProps> = ({ onSearch, searchString }) => {
   const localSearchBarStyles = StyleSheet.create({
     container: {
       borderBottomColor: colors.secondary,
+    },
+    clearIconContainer: {
+      backgroundColor: colors.secondary,
+      opacity: 0.3,
     },
   });
 
@@ -57,19 +60,27 @@ const Searchbar: React.FC<ISearchbarProps> = ({ onSearch, searchString }) => {
 
       {/* Clear Icon View */}
       {hasInput && (
-        <Animated.View
-          entering={FadeIn.duration(300)}
-          exiting={FadeOut.duration(100)}
-          style={searchbarStyles.clearIconContainer}
+        <TouchableOpacity
+          style={[searchbarStyles.clearIconContainerWrapper]}
+          onPress={clearInput}
         >
-          <Icon
-            source="feather"
-            name="x-circle"
-            size={21}
-            clickable={false}
-            onClick={clearInput}
-          />
-        </Animated.View>
+          <Animated.View
+            entering={FadeIn.duration(300)}
+            exiting={FadeOut.duration(100)}
+            style={[
+              searchbarStyles.clearIconContainer,
+              localSearchBarStyles.clearIconContainer,
+            ]}
+          >
+            <Icon
+              source="feather"
+              name="x"
+              size={12}
+              clickable={false}
+              color={colors.primary}
+            />
+          </Animated.View>
+        </TouchableOpacity>
       )}
     </View>
   );
