@@ -3,21 +3,27 @@ import React from "react";
 import { GlobalBodyTypes } from "./globalBody.types";
 import { globalBodyStyles } from "./globalBody.styles";
 import { useMetadata } from "../../hooks/useMetadata";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import Animated, {
+  FadeIn,
+  FadeOut,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
+import { darkModeColors, lightModeColors } from "../../constants/colors";
 
 const GlobalBody: React.FC<GlobalBodyTypes> = ({
   children,
-  safeAreaView = false,
   style = {},
   centered = false,
   noPadding = false,
 }) => {
-  const { colors } = useMetadata();
+  const { theme } = useMetadata();
 
   const localGlobalBodyStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.primary,
       justifyContent: centered ? "center" : undefined,
       alignItems: centered ? "center" : undefined,
       paddingHorizontal: noPadding ? 0 : GLOBAL_PADDING_HORIZONTAL,
@@ -26,37 +32,29 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
     },
   });
 
-  if (safeAreaView) {
-    return (
-      <SafeAreaView
-        style={[
-          globalBodyStyles.container,
-          localGlobalBodyStyles.container,
-          style,
-        ]}
-      >
-        <Animated.View
-          entering={FadeIn}
-          exiting={FadeOut}
-          style={[
-            globalBodyStyles.container,
-            localGlobalBodyStyles.container,
-            style,
-            { paddingHorizontal: 0, paddingVertical: 0 },
-          ]}
-        >
-          {children}
-        </Animated.View>
-      </SafeAreaView>
+  const progess = useDerivedValue(() => {
+    return withTiming(theme === "dark" ? 1 : 0);
+  });
+
+  const rStyles = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progess.value,
+      [0, 1],
+      [lightModeColors.primary, darkModeColors.primary]
     );
-  }
+
+    return {
+      backgroundColor,
+    };
+  });
 
   return (
-    <View
+    <Animated.View
       style={[
         globalBodyStyles.container,
         localGlobalBodyStyles.container,
         style,
+        rStyles,
       ]}
     >
       <Animated.View
@@ -71,7 +69,7 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
       >
         {children}
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 };
 

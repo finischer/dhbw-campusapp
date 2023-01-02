@@ -14,7 +14,7 @@ type ConditionalLink =
 
 export type IRegularTextTypes = Partial<TextInputProps> &
   ConditionalLink & {
-    variant?: IRegularTextVariants | null | undefined;
+    variant?: IRegularTextVariants | undefined;
     accentColor?: boolean;
     weight?: TextStyle["fontWeight"];
     size?: TextStyle["fontSize"];

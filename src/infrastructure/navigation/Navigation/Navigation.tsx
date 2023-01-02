@@ -11,7 +11,6 @@ import { TAB_BAR_ICON_NAMES } from "./config";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
-import FeatherIcon from "../../../components/FeatherIcon";
 import Icon from "../../../components/Icon";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -30,7 +29,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        barStyle={tabBarStyle(colors)}
+        barStyle={[tabBarStyle(colors)]}
         activeColor={colors.accent}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {

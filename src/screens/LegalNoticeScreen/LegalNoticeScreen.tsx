@@ -38,10 +38,16 @@ const LegalNoticeScreen = () => {
         {/* Contact View */}
         <Section title="Kontakt">
           <ContactRow iconName="mail">
-            niklasfischer.business@gmail.com
+            <RegularText isLink url="mailto:niklasfischer.business@gmail.com">
+              niklasfischer.business@gmail.com
+            </RegularText>
           </ContactRow>
 
-          <ContactRow iconName="phone">+49 17656131846</ContactRow>
+          <ContactRow iconName="phone">
+            <RegularText isLink url="tel:+4917656131846">
+              +49 17656131846
+            </RegularText>
+          </ContactRow>
         </Section>
 
         <Section title="Haftungsausschluss - Disclaimer">
@@ -127,6 +133,7 @@ const LegalNoticeScreen = () => {
               unterliegen dem deutschen Urheberrecht (
               <RegularText
                 isLink
+                accentColor
                 url="http://www.gesetze-im-internet.de/bundesrecht/urhg/gesamt.pdf"
               >
                 http://www.gesetze-im-internet.de/bundesrecht/urhg/gesamt.pdf
@@ -138,6 +145,7 @@ const LegalNoticeScreen = () => {
               Urhebers i.S.d. Urhebergesetzes (
               <RegularText
                 isLink
+                accentColor
                 url="http://www.gesetze-im-internet.de/bundesrecht/urhg/gesamt.pdf"
               >
                 http://www.gesetze-im-internet.de/bundesrecht/urhg/gesamt.pdf

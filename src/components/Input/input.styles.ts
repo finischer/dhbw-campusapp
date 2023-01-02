@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../constants/layout";
 import typography from "../../constants/typography";
 
 export const inputStyles = StyleSheet.create({
@@ -13,7 +14,7 @@ export const inputStyles = StyleSheet.create({
   rightIconContainer: {
     position: "absolute",
     right: 0,
-    top: 10,
+    top: SPACING.sm,
   },
   leftIconContainer: {},
 });

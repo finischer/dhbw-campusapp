@@ -1,9 +1,4 @@
-import {
-  View,
-  StatusBar,
-  SafeAreaView,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, StatusBar, SafeAreaView } from "react-native";
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { IModalFunctions, IModalProps } from "./modal.types";
 import { modalStyles } from "./modal.styles";
@@ -13,7 +8,6 @@ import CloseButton from "../CloseButton";
 import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
-import Searchbar from "../Searchbar";
 
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 

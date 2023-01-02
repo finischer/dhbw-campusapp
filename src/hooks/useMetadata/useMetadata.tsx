@@ -10,6 +10,12 @@ import {
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import useAsyncStorage from "../useAsyncStorage";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const MetaDataContext = createContext<IMetadataContext | undefined>(undefined);
 
@@ -31,6 +37,7 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const initializeMetadata = async () => {
       const theme: IThemeTypes = await getDataFromAsyncStorage("theme");
+
       if (theme) changeTheme(theme);
 
       const language: ILanguageOptions = await getDataFromAsyncStorage(

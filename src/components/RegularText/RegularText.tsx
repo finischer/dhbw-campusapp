@@ -6,6 +6,13 @@ import useAlert from "../../hooks/useAlert";
 import typography from "../../constants/typography";
 import { IColors } from "../../constants/colors/colors.types";
 import { useTranslation } from "react-i18next";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { darkModeColors, lightModeColors } from "../../constants/colors";
 
 const _getTextColor = (variant: IRegularTextVariants, colors: IColors) => {
   if (variant === "light") return colors.lightText;
@@ -14,7 +21,7 @@ const _getTextColor = (variant: IRegularTextVariants, colors: IColors) => {
 };
 
 const RegularText: React.FC<IRegularTextTypes> = ({
-  variant = null,
+  variant = undefined,
   accentColor = false,
   weight = "normal",
   size = typography.body,
@@ -25,7 +32,7 @@ const RegularText: React.FC<IRegularTextTypes> = ({
   url = undefined,
   ...props
 }) => {
-  const { colors } = useMetadata();
+  const { colors, theme } = useMetadata();
   const { alert } = useAlert();
   const { t } = useTranslation();
   const textColor = variant ? _getTextColor(variant, colors) : colors.secondary;
@@ -38,9 +45,24 @@ const RegularText: React.FC<IRegularTextTypes> = ({
       fontSize: size,
     },
     linkStyle: {
-      color: colors.accent,
       textDecorationLine: "underline",
     },
+  });
+
+  const progess = useDerivedValue(() => {
+    return withTiming(theme === "dark" ? 1 : 0);
+  });
+
+  const rStyles = useAnimatedStyle(() => {
+    const color = interpolateColor(
+      progess.value,
+      [0, 1],
+      [lightModeColors.secondary, darkModeColors.secondary]
+    );
+
+    return {
+      color: variant ? textColor : color,
+    };
   });
 
   const openLink = async () => {
@@ -55,17 +77,18 @@ const RegularText: React.FC<IRegularTextTypes> = ({
   };
 
   return (
-    <Text
+    <Animated.Text
       style={[
         localRegularTextStyles.textContainer,
         style,
         isLink && localRegularTextStyles.linkStyle,
+        rStyles,
       ]}
       onPress={isLink ? openLink : undefined}
       {...props}
     >
       {children}
-    </Text>
+    </Animated.Text>
   );
 };
 
