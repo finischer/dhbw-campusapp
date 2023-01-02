@@ -6,13 +6,6 @@ import { regularRowItemStyles } from "./regularRowItem.styles";
 import { useMetadata } from "../../hooks/useMetadata";
 import TouchableOpacity from "../TouchableOpacity";
 import Icon from "../Icon";
-import Animated, {
-  interpolateColor,
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { darkModeColors, lightModeColors } from "../../constants/colors";
 
 const ROW_ITEM_GAP = 10;
 
@@ -28,7 +21,7 @@ const RegularRowItem = ({
   marginTop = ROW_ITEM_GAP,
   marginBottom = 0,
 }: IRegularRowItemProps) => {
-  const { colors, theme } = useMetadata();
+  const { colors } = useMetadata();
 
   const textAndIconColor = selected ? colors.lightText : colors.secondary;
   const selectedRightIconSource = selected ? "feather" : rightIconSource;
@@ -38,45 +31,21 @@ const RegularRowItem = ({
 
   const localRegularRowItemStyles = StyleSheet.create({
     container: {
-      // backgroundColor: selected ? colors.accent : colors.primaryDarker,
+      backgroundColor: selected ? colors.accent : colors.primaryDarker,
       marginTop,
       marginBottom,
     },
     text: {
-      // color: textAndIconColor,
+      color: textAndIconColor,
     },
-  });
-
-  const progess = useDerivedValue(() => {
-    return withTiming(theme === "dark" ? 1 : 0);
-  });
-
-  const rStyles = useAnimatedStyle(() => {
-    const color = interpolateColor(
-      progess.value,
-      [0, 1],
-      [lightModeColors.secondary, darkModeColors.secondary]
-    );
-
-    const backgroundColor = interpolateColor(
-      progess.value,
-      [0, 1],
-      [lightModeColors.primaryDarker, darkModeColors.primaryDarker]
-    );
-
-    return {
-      color: selected ? colors.lightText : color,
-      backgroundColor: selected ? colors.accent : backgroundColor,
-    };
   });
 
   return (
     <TouchableOpacity disabled={disabled} onPress={onClick}>
-      <Animated.View
+      <View
         style={[
           regularRowItemStyles.container,
           localRegularRowItemStyles.container,
-          rStyles,
         ]}
       >
         <View style={regularRowItemStyles.leftContainer}>
@@ -106,7 +75,7 @@ const RegularRowItem = ({
             />
           </View>
         )}
-      </Animated.View>
+      </View>
     </TouchableOpacity>
   );
 };

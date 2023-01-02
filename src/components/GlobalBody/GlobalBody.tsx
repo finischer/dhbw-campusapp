@@ -13,6 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
 import { darkModeColors, lightModeColors } from "../../constants/colors";
+import { Colors } from "react-native-paper";
 
 const GlobalBody: React.FC<GlobalBodyTypes> = ({
   children,
@@ -20,10 +21,11 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
   centered = false,
   noPadding = false,
 }) => {
-  const { theme } = useMetadata();
+  const { colors } = useMetadata();
 
   const localGlobalBodyStyles = StyleSheet.create({
     container: {
+      backgroundColor: colors.primary,
       justifyContent: centered ? "center" : undefined,
       alignItems: centered ? "center" : undefined,
       paddingHorizontal: noPadding ? 0 : GLOBAL_PADDING_HORIZONTAL,
@@ -32,29 +34,30 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
     },
   });
 
-  const progess = useDerivedValue(() => {
-    return withTiming(theme === "dark" ? 1 : 0);
-  });
+  // TODO: set animation on theme change correctly
 
-  const rStyles = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      progess.value,
-      [0, 1],
-      [lightModeColors.primary, darkModeColors.primary]
-    );
+  // const progess = useDerivedValue(() => {
+  //   return withTiming(theme === "dark" ? 1 : 0);
+  // });
 
-    return {
-      backgroundColor,
-    };
-  });
+  // const rStyles = useAnimatedStyle(() => {
+  //   const backgroundColor = interpolateColor(
+  //     progess.value,
+  //     [0, 1],
+  //     [lightModeColors.primary, darkModeColors.primary]
+  //   );
+
+  //   return {
+  //     backgroundColor,
+  //   };
+  // });
 
   return (
-    <Animated.View
+    <View
       style={[
         globalBodyStyles.container,
         localGlobalBodyStyles.container,
         style,
-        rStyles,
       ]}
     >
       <Animated.View
@@ -69,7 +72,7 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
       >
         {children}
       </Animated.View>
-    </Animated.View>
+    </View>
   );
 };
 

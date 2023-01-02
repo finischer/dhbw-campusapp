@@ -49,22 +49,6 @@ const RegularText: React.FC<IRegularTextTypes> = ({
     },
   });
 
-  const progess = useDerivedValue(() => {
-    return withTiming(theme === "dark" ? 1 : 0);
-  });
-
-  const rStyles = useAnimatedStyle(() => {
-    const color = interpolateColor(
-      progess.value,
-      [0, 1],
-      [lightModeColors.secondary, darkModeColors.secondary]
-    );
-
-    return {
-      color: variant ? textColor : color,
-    };
-  });
-
   const openLink = async () => {
     if (url) {
       const canOpenUrl = await Linking.canOpenURL(url);
@@ -77,18 +61,17 @@ const RegularText: React.FC<IRegularTextTypes> = ({
   };
 
   return (
-    <Animated.Text
+    <Text
       style={[
         localRegularTextStyles.textContainer,
         style,
         isLink && localRegularTextStyles.linkStyle,
-        rStyles,
       ]}
       onPress={isLink ? openLink : undefined}
       {...props}
     >
       {children}
-    </Animated.Text>
+    </Text>
   );
 };
 
