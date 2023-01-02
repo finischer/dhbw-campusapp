@@ -6,4 +6,5 @@ export default {
   universitySports: "Hochschulsport",
   studentUnionMannheim: "Studierendenwerk Mannheim",
   alertErrorMessageUrl: "Die URL kann nicht geöffnet werden",
+  legalNotice: "Impressum",
 };

@@ -17,4 +17,5 @@ export default {
     "Informationen zum Smartphone:\nHersteller:\n Modell:\nSystem Version:\nApp Version:\nBeschreibung des Bugs:\n",
   errorOccured: "Es ist ein Fehler aufgetreten",
   refreshButtonText: "Nochmal versuchen",
+  alertUrlError: "Link kann nicht geöffnet werden",
 };

@@ -12,12 +12,14 @@ import Button from "../../components/Button/Button";
 import { CONTACT_MAIL } from "../../constants/common";
 import useAlert from "../../hooks/useAlert";
 import Icon from "../../components/Icon";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 
 const MoreScreen = () => {
   const { alert } = useAlert();
   const { theme, changeTheme, language, changeLanguage, colors } =
     useMetadata();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
 
   const toggleTheme = () => {
@@ -28,8 +30,8 @@ const MoreScreen = () => {
     }
   };
 
-  const goTo = (to: string) => {
-    navigation.navigate(to as never);
+  const goTo = (to: keyof RootStackParamList) => {
+    navigation.navigate(to);
   };
 
   const handleReportBug = async () => {
@@ -106,6 +108,15 @@ const MoreScreen = () => {
           disabled
         >
           {t("moreScreen:settings")}
+        </RegularRowItem>
+        <RegularRowItem
+          leftIconSource="feather"
+          leftIcon="info"
+          rightIconSource="feather"
+          rightIcon="chevron-right"
+          onClick={() => goTo("LegalNoticeScreen")}
+        >
+          {t("moreScreen:legalNotice")}
         </RegularRowItem>
 
         {/* Theme Toggler */}

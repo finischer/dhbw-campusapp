@@ -80,6 +80,7 @@ const Input = React.forwardRef<any, IInputProps>(
           value={value}
           placeholder={!floatingLabel ? label : ""}
           placeholderTextColor={colors.secondaryDarker}
+          selectionColor={colors.accent}
         />
         {rightIcon && (
           <View style={inputStyles.rightIconContainer}>{rightIcon}</View>
