@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { useContext, useState } from "react";
 import { _auth, _logout } from "../../api/dualis/dualisConnector";
 import { DualisScraperController } from "../../api/html_scraper/dualis/DualisScraperController";

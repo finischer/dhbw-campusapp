@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import Animated, { FadeInLeft } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import Icon from "../../../../components/Icon";
 import { enteringDelayedAnimation } from "../../../../constants/animations/animations";
 
