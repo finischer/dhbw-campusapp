@@ -1,19 +1,10 @@
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React from "react";
 import { GlobalBodyTypes } from "./globalBody.types";
 import { globalBodyStyles } from "./globalBody.styles";
 import { useMetadata } from "../../hooks/useMetadata";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  interpolateColor,
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../constants/layout";
-import { darkModeColors, lightModeColors } from "../../constants/colors";
-import { Colors } from "react-native-paper";
 
 const GlobalBody: React.FC<GlobalBodyTypes> = ({
   children,

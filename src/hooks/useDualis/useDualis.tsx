@@ -1,8 +1,14 @@
+import moment from "moment";
 import React, { useContext, useState } from "react";
 import { _auth, _logout } from "../../api/dualis/dualisConnector";
 import { DualisScraperController } from "../../api/html_scraper/dualis/DualisScraperController";
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
+import {
+  DEMO_PASSWORD,
+  DEMO_USERNAME,
+  dummy_grades,
+} from "../../data/testData";
 import { IDualisContext, IDualisUser } from "./useDualis.types";
 
 const DualisContext = React.createContext<IDualisContext | undefined>(
@@ -12,6 +18,7 @@ const DualisContext = React.createContext<IDualisContext | undefined>(
 const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [useDummyData, setUseDummyData] = useState(false);
   const [args, setArgs] = useState<string | null | undefined>(null);
   const [cookies, setCookies] = useState<string | null | undefined>(null);
   const [user, setUser] = useState<IDualisUser>({
@@ -23,6 +30,11 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
     useState<DualisScraperController | null>(null);
 
   const login = async (username: string, password: string) => {
+    if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
+      setUseDummyData(true);
+      return true;
+    } // necessary for employees at apple to test the app before deployment
+
     const res = await _auth(username, password);
 
     if (res.status === 200) {
@@ -59,6 +71,15 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAllGrades = async () => {
+    if (useDummyData) {
+      console.log("Dummy Grades: ", dummy_grades);
+      return {
+        msg: "Dummy data",
+        status: 200,
+        data: dummy_grades,
+      };
+    }
+
     if (!dualisScraperController) {
       const res: IResponseTypes = {
         msg: "Scrap grades failed. DualisScraperController is undefined",
