@@ -18,4 +18,5 @@ export default {
   errorOccured: "An error occured",
   refreshButtonText: "Try again",
   alertUrlError: "Link cannot be opened",
+  cancel: "Cancel",
 };

@@ -9,8 +9,11 @@ const LecturesContext = createContext<ILecturesContext | undefined>(undefined);
 const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { getDataFromAsyncStorage, storeDataInAsyncStorage } =
-    useAsyncStorage();
+  const {
+    getDataFromAsyncStorage,
+    storeDataInAsyncStorage,
+    deleteFromAsyncStorage,
+  } = useAsyncStorage();
 
   // ical url for own calendar imports
   const [icalUrl, setIcalUrl] = useState<string | undefined>(undefined);
@@ -33,21 +36,26 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const changeCourse = (newCourse: ICourse) => {
     setCourse(newCourse);
+    setIcalUrl(undefined);
     lecturesController.changeCalendarByCourseId(newCourse.courseId);
 
     // store course in async storage
     storeDataInAsyncStorage("course", newCourse);
+    deleteFromAsyncStorage("icalUrl");
   };
 
   const changeCourseByUrl = (newIcalUrl: string) => {
     setIcalUrl(newIcalUrl);
+    setCourse(undefined);
     lecturesController.changeCalendarByIcalUrl(newIcalUrl);
 
+    deleteFromAsyncStorage("course");
     storeDataInAsyncStorage("icalUrl", newIcalUrl);
   };
 
   const getSchedule = async () => {
-    const schedule = await lecturesController.getSchedule();
+    const schedule = await lecturesController.getScheduleFromWeb();
+
     return schedule;
   };
 
@@ -65,6 +73,7 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
     <LecturesContext.Provider
       value={{
         course,
+        icalUrl,
         changeCourse,
         getCourseById,
         changeCourseByUrl,

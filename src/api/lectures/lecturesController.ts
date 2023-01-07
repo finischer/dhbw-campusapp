@@ -14,11 +14,11 @@ export class LecturesController {
     courseId: string | undefined = undefined
   ) {
     this.baseUrl = "https://vorlesungsplan.dhbw-mannheim.de/ical.php";
-    if (courseId !== undefined) {
-      this.icalUrl = this.generateCourseUrl(courseId);
-    } else if (icalUrl !== undefined) {
+    if (icalUrl !== undefined) {
       // own ical url --> for import calendar feature (some courses are using a google calendar for their lectures)
       this.icalUrl = icalUrl;
+    } else if (courseId !== undefined) {
+      this.icalUrl = this.generateCourseUrl(courseId);
     }
   }
 
@@ -210,7 +210,7 @@ export class LecturesController {
     return organizedLectures;
   }
 
-  async getSchedule(): Promise<IResponseTypes> {
+  async getScheduleFromWeb(): Promise<IResponseTypes> {
     let lectures = undefined;
 
     if (this.icalUrl === undefined) {

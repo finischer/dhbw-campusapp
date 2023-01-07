@@ -30,7 +30,7 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
-  const { course, getSchedule } = useLectures();
+  const { icalUrl, course, getSchedule } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [searchString, setSearchString] = useState<string>("");
 
@@ -47,10 +47,10 @@ const CalendarScreen = () => {
     isError,
     data,
     refetch: refetchLectures,
-  } = useQuery(["lectures-schedule", course?.courseId], fetchSchedule);
+  } = useQuery(["lectures-schedule", course?.courseId, icalUrl], fetchSchedule);
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y >= 22) {
+    if (e.nativeEvent.contentOffset.y >= 22 && course !== undefined) {
       setHeaderSubtitle(true);
     } else {
       setHeaderSubtitle(false);
@@ -89,7 +89,7 @@ const CalendarScreen = () => {
     </View>
   );
 
-  if (course === undefined) {
+  if (course === undefined && icalUrl === undefined) {
     return (
       <GlobalBody centered>
         <RegularText style={{ textAlign: "center" }}>

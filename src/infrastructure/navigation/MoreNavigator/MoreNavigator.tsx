@@ -6,6 +6,7 @@ import NavigationHeader from "../../../components/NavigationHeader";
 import ChangeLanguageScreen from "../../../screens/ChangeLanguageScreen";
 import { useTranslation } from "react-i18next";
 import LegalNoticeScreen from "../../../screens/LegalNoticeScreen";
+import ImportCalendarScreen from "../../../screens/ImportCalendarScreen";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,15 @@ const MoreNavigator = () => {
           ),
         }}
       />
+      {/* <Stack.Screen
+        name="ImportCalendarScreen"
+        component={ImportCalendarScreen}
+        options={{
+          headerTitle: () => (
+            <NavigationHeader title={t("moreScreen:importCalendar")} />
+          ),
+        }}
+      /> */}
     </Stack.Navigator>
   );
 };

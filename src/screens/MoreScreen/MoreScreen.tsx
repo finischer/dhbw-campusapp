@@ -1,9 +1,10 @@
 import React from "react";
-import { ScrollView, View, Linking } from "react-native";
+import { ScrollView, View, Linking, Alert } from "react-native";
 import GlobalBody from "../../components/GlobalBody";
 import RegularRowItem from "../../components/RegularRowItem";
 import Switch from "../../components/Switch/Switch";
 import { useMetadata } from "../../hooks/useMetadata";
+import { useLectures } from "../../hooks/useLectures";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { moreScreenStyles } from "./moreScreen.styles";
@@ -16,9 +17,10 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 
 const MoreScreen = () => {
-  const { alert } = useAlert();
+  const { alert, prompt } = useAlert();
   const { theme, changeTheme, language, changeLanguage, colors } =
     useMetadata();
+  const { changeCourseByUrl, icalUrl } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
 
@@ -56,6 +58,20 @@ const MoreScreen = () => {
     await Linking.openURL(url);
   };
 
+  const importCalendar = () => {
+    const promptMessage = t("moreScreen:importCalendarPromptMessage");
+    const buttonText = t("moreScreen:importCalendar");
+
+    prompt(
+      "iCal Link",
+      promptMessage,
+      buttonText,
+      (newLink: string) => changeCourseByUrl(newLink),
+      undefined,
+      icalUrl
+    );
+  };
+
   return (
     <GlobalBody>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -66,7 +82,12 @@ const MoreScreen = () => {
         >
           {t("moreScreen:notifications")}
         </RegularRowItem>
-        <RegularRowItem leftIconSource="feather" leftIcon="calendar" disabled>
+        <RegularRowItem
+          leftIconSource="feather"
+          leftIcon="calendar"
+          // onClick={() => goTo("ImportCalendarScreen")}
+          onClick={importCalendar}
+        >
           {t("moreScreen:importCalendar")}
         </RegularRowItem>
         <RegularRowItem
