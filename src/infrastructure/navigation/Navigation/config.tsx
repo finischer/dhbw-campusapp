@@ -1,13 +1,11 @@
 import {
   CardStyleInterpolators,
   StackNavigationOptions,
-  TransitionPresets,
 } from "@react-navigation/stack";
 import { WINDOW_HEIGHT } from "../../../constants/device/device";
 import typography from "../../../constants/typography";
 import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
-import FeatherIcon from "../../../components/FeatherIcon";
 import { useTranslation } from "react-i18next";
 import Icon from "../../../components/Icon";
 

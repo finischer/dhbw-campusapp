@@ -5,15 +5,10 @@ import RegularText from "../../../../components/RegularText";
 import { ILabelTypes } from "./additivesList.types";
 import { additivesListStyles } from "./additivesList.styles";
 import { useTranslation } from "react-i18next";
-import FeatherIcon from "../../../../components/FeatherIcon";
 import GlobalBody from "../../../../components/GlobalBody";
 import TouchableOpacity from "../../../../components/TouchableOpacity";
 import { toggleAnimation } from "../../../../constants/animations";
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  FadeOutUp,
-} from "react-native-reanimated";
+import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
 import Icon from "../../../../components/Icon";
 
 const AdditivesList = () => {

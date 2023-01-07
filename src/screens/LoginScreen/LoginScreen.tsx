@@ -12,7 +12,6 @@ import { ILoginFormStateTypes, ILoginScreenProps } from "./loginScreen.types";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader/Loader";
-import FeatherIcon from "../../components/FeatherIcon";
 import { useMetadata } from "../../hooks/useMetadata";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import useSecureStorage from "../../hooks/useSecureStorage";
