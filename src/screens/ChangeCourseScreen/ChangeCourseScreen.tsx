@@ -10,6 +10,7 @@ import Modal from "../../components/Modal";
 import { IModalFunctions } from "../../components/Modal/modal.types";
 import RegularText from "../../components/RegularText";
 import Searchbar from "../../components/Searchbar";
+import { SPACING } from "../../constants/layout";
 import { useLectures } from "../../hooks/useLectures";
 import { changeCourseScreenStyles } from "./changeCourseScreen.styles";
 import CourseRow from "./components/CourseRow";
@@ -36,7 +37,7 @@ const ChangeCourseScreen = () => {
   } = useQuery("lectures-courses", fetchCourses);
 
   const transformString = (str: string) => {
-    return str.toLowerCase().trim().replaceAll(" ", "");
+    return str.toLowerCase().trim().replace(/\s/g, "");
   };
 
   const filterCourses = (courses: ICourse[]) => {
@@ -99,6 +100,7 @@ const ChangeCourseScreen = () => {
         data={filterCourses(data?.courseList as ICourse[])}
         onScrollBeginDrag={() => modalRef.current?.disappearCloseButton()}
         onScrollEndDrag={() => modalRef.current?.appearCloseButton()}
+        contentContainerStyle={{ paddingBottom: SPACING.md }}
         ListEmptyComponent={
           <View style={changeCourseScreenStyles.noCoursesFoundContainer}>
             <RegularText style={changeCourseScreenStyles.noCoursesFoundText}>
