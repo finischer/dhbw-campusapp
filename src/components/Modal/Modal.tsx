@@ -7,7 +7,13 @@ import GlobalBody from "../GlobalBody";
 import CloseButton from "../CloseButton";
 import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
-import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  FadeInUp,
+  FadeOutDown,
+  FadeOutUp,
+  Layout,
+} from "react-native-reanimated";
 
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 
@@ -68,13 +74,19 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
             {/* Header View */}
             <View style={modalStyles.headerContainer}>
               <RegularText style={modalStyles.titleText}>{title}</RegularText>
-              <RegularText style={modalStyles.subTitleText}>
-                {subTitle}
-              </RegularText>
+              {subTitle && (
+                <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
+                  <RegularText style={modalStyles.subTitleText}>
+                    {subTitle}
+                  </RegularText>
+                </Animated.View>
+              )}
             </View>
 
             {/* Content View */}
-            <View style={modalStyles.bodyContainer}>{children}</View>
+            <Animated.View style={modalStyles.bodyContainer} layout={Layout}>
+              {children}
+            </Animated.View>
 
             {/* Close Button */}
             {showCloseButton && (
