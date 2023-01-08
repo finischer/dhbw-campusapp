@@ -6,7 +6,6 @@ import NavigationHeader from "../../../components/NavigationHeader";
 import ChangeLanguageScreen from "../../../screens/ChangeLanguageScreen";
 import { useTranslation } from "react-i18next";
 import LegalNoticeScreen from "../../../screens/LegalNoticeScreen";
-import ImportCalendarScreen from "../../../screens/ImportCalendarScreen";
 
 const Stack = createStackNavigator();
 

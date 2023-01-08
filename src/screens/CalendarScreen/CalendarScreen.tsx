@@ -23,6 +23,7 @@ import {
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
 import ErrorView from "../../components/ErrorView";
+import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
@@ -33,6 +34,7 @@ const CalendarScreen = () => {
   const { icalUrl, course, getSchedule } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [searchString, setSearchString] = useState<string>("");
+  const { importCalendar } = moreScreenFunctions();
 
   const loaderText = t("loadingLectures");
 

@@ -40,6 +40,10 @@ const RegularRowItem = ({
     },
   });
 
+  const LocalLeftIconView = ({ children }: { children: React.ReactNode }) => (
+    <View style={regularRowItemStyles.leftIconContainer}>{children}</View>
+  );
+
   return (
     <TouchableOpacity disabled={disabled} onPress={onClick}>
       <View
@@ -49,15 +53,18 @@ const RegularRowItem = ({
         ]}
       >
         <View style={regularRowItemStyles.leftContainer}>
+          {typeof leftIcon === "function" && (
+            <LocalLeftIconView>{leftIcon()}</LocalLeftIconView>
+          )}
           {leftIconSource && leftIcon && (
-            <View style={regularRowItemStyles.leftIconContainer}>
+            <LocalLeftIconView>
               <Icon
                 source={leftIconSource}
                 name={leftIcon}
                 size={20}
                 color={textAndIconColor}
               />
-            </View>
+            </LocalLeftIconView>
           )}
           <RegularText
             style={[regularRowItemStyles.text, localRegularRowItemStyles.text]}

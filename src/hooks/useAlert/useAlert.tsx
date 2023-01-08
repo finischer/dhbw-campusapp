@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Alert, AlertButton, AlertType, ButtonProps } from "react-native";
 import { useMetadata } from "../useMetadata";
 import { IAlertButton } from "./useAlert.types";
+import Dialog from "react-native-dialog";
 
 const useAlert = () => {
   const { t } = useTranslation();
@@ -48,8 +49,6 @@ const useAlert = () => {
         cancelable: true,
       }
     );
-
-    // TODO Add prompt for android (currently this prompt is only for iOS)
   };
 
   return { alert, prompt };

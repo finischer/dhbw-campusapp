@@ -55,7 +55,6 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getSchedule = async () => {
     const schedule = await lecturesController.getScheduleFromWeb();
-
     return schedule;
   };
 

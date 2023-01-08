@@ -11,6 +11,7 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
   style = {},
   centered = false,
   noPadding = false,
+  noVerticalPadding = false,
 }) => {
   const { colors } = useMetadata();
 
@@ -20,7 +21,7 @@ const GlobalBody: React.FC<GlobalBodyTypes> = ({
       justifyContent: centered ? "center" : undefined,
       alignItems: centered ? "center" : undefined,
       paddingHorizontal: noPadding ? 0 : GLOBAL_PADDING_HORIZONTAL,
-      paddingVertical: noPadding ? 0 : 10,
+      paddingVertical: noPadding || noVerticalPadding ? 0 : 10,
       paddingBottom: 0,
     },
   });

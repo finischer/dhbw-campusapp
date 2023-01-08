@@ -26,7 +26,7 @@ const ContactRow = ({
 
 const LegalNoticeScreen = () => {
   return (
-    <GlobalBody>
+    <GlobalBody noVerticalPadding>
       <ScrollView>
         {/* General Infos View */}
         <Section title="Angaben gem. § 5 TMG">
@@ -50,7 +50,7 @@ const LegalNoticeScreen = () => {
           </ContactRow>
         </Section>
 
-        <Section title="Haftungsausschluss - Disclaimer">
+        {/* <Section title="Haftungsausschluss - Disclaimer">
           <Subsection title="Haftung für Inhalte" withMarginTop={false}>
             <RegularText>
               Alle Inhalte unseres Internetauftritts wurden mit größter Sorgfalt
@@ -160,7 +160,7 @@ const LegalNoticeScreen = () => {
               werden wir derartige Inhalte unverzüglich entfernen.
             </RegularText>
           </Subsection>
-        </Section>
+        </Section> */}
       </ScrollView>
     </GlobalBody>
   );

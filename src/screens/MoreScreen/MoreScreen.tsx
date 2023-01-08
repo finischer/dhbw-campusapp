@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { ScrollView, View, Linking, Alert } from "react-native";
 import GlobalBody from "../../components/GlobalBody";
 import RegularRowItem from "../../components/RegularRowItem";
@@ -15,14 +15,18 @@ import useAlert from "../../hooks/useAlert";
 import Icon from "../../components/Icon";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
+import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
+import ImportCalendarDialog from "../../components/ImportCalendarDialog";
+import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
 
 const MoreScreen = () => {
-  const { alert, prompt } = useAlert();
-  const { theme, changeTheme, language, changeLanguage, colors } =
-    useMetadata();
-  const { changeCourseByUrl, icalUrl } = useLectures();
+  const { alert } = useAlert();
+  const { theme, changeTheme, isAndroid } = useMetadata();
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
+  const { importCalendar } = moreScreenFunctions();
+  const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
   const toggleTheme = () => {
     if (theme === "light") {
@@ -58,22 +62,17 @@ const MoreScreen = () => {
     await Linking.openURL(url);
   };
 
-  const importCalendar = () => {
-    const promptMessage = t("moreScreen:importCalendarPromptMessage");
-    const buttonText = t("moreScreen:importCalendar");
+  const handleImportCalendar = () => {
+    if (isAndroid) {
+      return importCalendarRef.current?.openDialog();
+    }
 
-    prompt(
-      "iCal Link",
-      promptMessage,
-      buttonText,
-      (newLink: string) => changeCourseByUrl(newLink),
-      undefined,
-      icalUrl
-    );
+    importCalendar();
   };
 
   return (
-    <GlobalBody>
+    <GlobalBody noVerticalPadding>
+      <ImportCalendarDialog ref={importCalendarRef} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <RegularRowItem
           leftIconSource="feather"
@@ -85,8 +84,9 @@ const MoreScreen = () => {
         <RegularRowItem
           leftIconSource="feather"
           leftIcon="calendar"
-          // onClick={() => goTo("ImportCalendarScreen")}
-          onClick={importCalendar}
+          onClick={handleImportCalendar}
+          rightIconSource="feather"
+          rightIcon="download"
         >
           {t("moreScreen:importCalendar")}
         </RegularRowItem>

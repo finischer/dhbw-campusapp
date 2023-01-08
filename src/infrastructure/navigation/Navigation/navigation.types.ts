@@ -16,5 +16,4 @@ export type RootStackParamList = {
   ChangeLanguageScreen?: undefined;
   ChangeCourseScreen?: undefined;
   LegalNoticeScreen?: undefined;
-  ImportCalendarScreen?: undefined;
 };

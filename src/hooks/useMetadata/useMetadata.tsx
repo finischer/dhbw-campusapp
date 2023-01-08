@@ -7,15 +7,8 @@ import {
   IMetadataContext,
   IThemeTypes,
 } from "./useMetadata.types";
-import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import useAsyncStorage from "../useAsyncStorage";
-import Animated, {
-  interpolateColor,
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
-} from "react-native-reanimated";
 
 const MetaDataContext = createContext<IMetadataContext | undefined>(undefined);
 
@@ -24,10 +17,12 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { storeDataInAsyncStorage, getDataFromAsyncStorage } =
     useAsyncStorage();
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
 
   const [theme, setTheme] = useState<IThemeTypes>("light");
-  const [language, setLanguage] = useState<ILanguageOptions>("de");
+  const [language, setLanguage] = useState<ILanguageOptions>(
+    i18n.language as ILanguageOptions
+  );
   const colors = theme === "light" ? lightModeColors : darkModeColors;
   const isAndroid = Platform.OS === "android";
   const isIOS = Platform.OS === "ios";
