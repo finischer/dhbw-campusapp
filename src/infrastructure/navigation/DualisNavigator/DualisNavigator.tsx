@@ -68,7 +68,6 @@ const DualisNavigator = () => {
           cardOverlayEnabled: true,
           ...TransitionPresets.ModalSlideFromBottomIOS,
           headerShown: false,
-          gestureEnabled: true,
           cardStyle: {
             backgroundColor: colors.primary,
           },

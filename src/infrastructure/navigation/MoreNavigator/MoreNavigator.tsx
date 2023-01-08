@@ -40,15 +40,6 @@ const MoreNavigator = () => {
           ),
         }}
       />
-      {/* <Stack.Screen
-        name="ImportCalendarScreen"
-        component={ImportCalendarScreen}
-        options={{
-          headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:importCalendar")} />
-          ),
-        }}
-      /> */}
     </Stack.Navigator>
   );
 };
