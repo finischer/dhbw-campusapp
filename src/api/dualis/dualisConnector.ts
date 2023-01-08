@@ -2,6 +2,9 @@ import axios from "axios";
 import qs from "qs";
 import { BASE_URL, LOGIN_ENDPOINT } from "./dualisConstants";
 
+// Description:
+// These functions are used to log in and log out of Dualis
+
 const _auth = async (username: string, password: string) => {
   const url = BASE_URL + LOGIN_ENDPOINT;
 

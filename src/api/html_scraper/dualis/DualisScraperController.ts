@@ -1,6 +1,6 @@
+import { IResponseTypes } from "./../../types/IResponseTypes";
 import axios from "axios";
 import {
-  getConfig,
   _generateCourseResultsUrl,
   _generateSemesterUrl,
   _getExamUrlOfSubject,
@@ -11,7 +11,8 @@ import { ISubjectTypes, subjectKeys } from "./types/ISubjectTypes";
 import { ISemesterTypes } from "./types/ISemesterTypes";
 import { BASE_URL } from "../../dualis/dualisConstants";
 import { examKeys, IExamTypes } from "./types/IExamTypes";
-import { IAxiosConfig } from "../../../services/axios/types/IAxiosTypes";
+import { IAxiosConfig } from "../../../services/axios/axios.types";
+import moment from "moment";
 
 export class DualisScraperController {
   args: string;
@@ -29,17 +30,17 @@ export class DualisScraperController {
     };
   }
 
-  #sessionValid() {
-    return this.args && this.cookies;
-  }
-
   async getAllGrades() {
     // url to semester overview
     const url = _generateCourseResultsUrl(this.args);
     const res = await axios.get(url, this.axiosConfig);
 
     if (res.status !== 200) {
-      return { msg: "Error: scrap grades failed", status: res.status };
+      return {
+        msg: "Error: scrap grades failed",
+        status: res.status,
+        data: undefined,
+      };
     }
 
     // get all semesters
@@ -49,12 +50,10 @@ export class DualisScraperController {
     const semesterList: ISemesterTypes[] = [];
     for (const [semesterName, semesterId] of Object.entries(semesterOptions)) {
       const semesterUrl = _generateSemesterUrl(this.args, semesterId);
-      // const semesterHtml = await axios.get(
-      //   semesterUrl,
-      //   this.axiosConfig
-      // );
+
       const subjects: ISubjectTypes[] = await this.getAllSubjectsFromSemester(
-        semesterUrl
+        semesterUrl,
+        semesterName
       );
 
       const subjectsWithExams = await Promise.all(
@@ -73,6 +72,7 @@ export class DualisScraperController {
       );
 
       const newSemester: ISemesterTypes = {
+        semesterId,
         credits: "",
         gpa: "",
         semester: semesterName,
@@ -81,7 +81,14 @@ export class DualisScraperController {
       semesterList.push(newSemester);
     }
 
-    return semesterList;
+    const response: IResponseTypes = {
+      msg: "successful",
+      status: 200,
+      data: semesterList,
+      requestTime: moment(),
+    };
+
+    return response;
   }
 
   async getSemesterInformation() {
@@ -108,7 +115,7 @@ export class DualisScraperController {
     return semesterOptions;
   }
 
-  async getAllSubjectsFromSemester(semesterUrl: string) {
+  async getAllSubjectsFromSemester(semesterUrl: string, semesterName: string) {
     const semesterHtml = await axios.get(semesterUrl, this.axiosConfig);
     const $ = cheerio.load(semesterHtml.data);
     const $subjects = $(".nb > tbody > tr");
@@ -128,6 +135,7 @@ export class DualisScraperController {
           subjectGrade: "",
           subjectCredits: "",
           subjectStatus: "",
+          semester: semesterName,
           examsPath: "",
           exams: [],
         };

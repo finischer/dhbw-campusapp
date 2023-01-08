@@ -1,11 +1,14 @@
+import moment from "moment";
 import { IExamTypes } from "./IExamTypes";
 
+// TODO: Add subjectId
 export type ISubjectTypes = {
   subjectNr: string;
   subjectName: string;
   subjectGrade: string;
   subjectCredits: string;
   subjectStatus: string;
+  semester: string;
   examsPath: string;
   exams: IExamTypes[];
 };
