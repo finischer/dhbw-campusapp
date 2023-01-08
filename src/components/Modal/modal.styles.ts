@@ -23,9 +23,8 @@ export const modalStyles = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: "center",
+    alignSelf: "center",
     position: "absolute",
-    left: 0,
-    right: 0,
     bottom: 20,
     shadowColor: "#000",
     shadowOffset: {
