@@ -71,33 +71,35 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
         {isFocused && <StatusBar barStyle={statusBarStyle} />}
         <GlobalBody style={modalStyles.wrapperContainer}>
           <SafeAreaView style={{ flex: 1 }}>
-            {/* Header View */}
-            <View style={modalStyles.headerContainer}>
-              <RegularText style={modalStyles.titleText}>{title}</RegularText>
-              {subTitle && (
-                <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
-                  <RegularText style={modalStyles.subTitleText}>
-                    {subTitle}
-                  </RegularText>
+            <View style={{ flex: 1 }}>
+              {/* Header View */}
+              <View style={modalStyles.headerContainer}>
+                <RegularText style={modalStyles.titleText}>{title}</RegularText>
+                {subTitle && (
+                  <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
+                    <RegularText style={modalStyles.subTitleText}>
+                      {subTitle}
+                    </RegularText>
+                  </Animated.View>
+                )}
+              </View>
+
+              {/* Content View */}
+              <Animated.View style={modalStyles.bodyContainer} layout={Layout}>
+                {children}
+              </Animated.View>
+
+              {/* Close Button */}
+              {showCloseButton && (
+                <Animated.View
+                  entering={FadeInDown}
+                  exiting={FadeOutDown}
+                  style={modalStyles.closeButtonContainer}
+                >
+                  <CloseButton />
                 </Animated.View>
               )}
             </View>
-
-            {/* Content View */}
-            <Animated.View style={modalStyles.bodyContainer} layout={Layout}>
-              {children}
-            </Animated.View>
-
-            {/* Close Button */}
-            {showCloseButton && (
-              <Animated.View
-                entering={FadeInDown}
-                exiting={FadeOutDown}
-                style={modalStyles.closeButtonContainer}
-              >
-                <CloseButton />
-              </Animated.View>
-            )}
           </SafeAreaView>
         </GlobalBody>
       </>

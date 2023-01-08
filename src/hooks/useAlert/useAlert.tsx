@@ -49,7 +49,7 @@ const useAlert = () => {
       }
     );
 
-    // TODO Add prompt for android
+    // TODO Add prompt for android (currently this prompt is only for iOS)
   };
 
   return { alert, prompt };
