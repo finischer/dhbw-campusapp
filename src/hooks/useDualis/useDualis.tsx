@@ -58,6 +58,7 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = async () => {
     setUseDummyData(false);
+    console.log("Logout!");
     if (!args || !cookies) return false;
 
     const res = await _logout(args, cookies);
@@ -71,8 +72,8 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAllGrades = async () => {
+    console.log("useDummyData: ", useDummyData);
     if (useDummyData) {
-      console.log("Dummy Grades: ", dummy_grades);
       return {
         msg: "Dummy data",
         status: 200,

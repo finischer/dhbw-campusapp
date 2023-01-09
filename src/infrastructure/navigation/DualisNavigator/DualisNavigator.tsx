@@ -11,6 +11,7 @@ import SubjectDetailsScreen from "../../../screens/SubjectDetailsScreen";
 import { useMetadata } from "../../../hooks/useMetadata";
 import NavigationHeader from "../../../components/NavigationHeader";
 import useAsyncStorage from "../../../hooks/useAsyncStorage";
+import { useDualis } from "../../../hooks/useDualis";
 
 const DualisStack = createStackNavigator();
 
@@ -21,8 +22,10 @@ const DualisNavigator = () => {
   const [accessGranted, setAccessGranted] = useState<boolean>(false);
   const navigationHeaderConfig = headerConfig();
   const { colors } = useMetadata();
+  const { logout: logoutFromDualis } = useDualis();
 
   const handleLogout = () => {
+    logoutFromDualis();
     storeDataInAsyncStorage("accessGranted", false);
     setAccessGranted(false);
   };

@@ -9,7 +9,7 @@ import SubjectList from "./components/SubjectList/SubjectList";
 import ErrorView from "../../components/ErrorView";
 
 const DualisScreen = () => {
-  const { getAllGrades } = useDualis();
+  const { getAllGrades, cookies } = useDualis();
   const { t } = useTranslation("dualisScreen");
 
   const fetchGrades = async () => {
@@ -21,7 +21,7 @@ const DualisScreen = () => {
     isLoading,
     data,
     refetch: handleFetchGrades,
-  } = useQuery("dualis-grades", fetchGrades);
+  } = useQuery(["dualis-grades", cookies], fetchGrades);
 
   const subjects = data?.grades?.flatMap(
     (semester: ISemesterTypes) => semester.subjects
