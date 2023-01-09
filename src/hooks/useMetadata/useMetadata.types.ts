@@ -9,6 +9,7 @@ export type IMetadataContext = {
   dateFormat: string;
   changeTheme(newTheme: IThemeTypes): void;
   changeLanguage(newLanguage: ILanguageOptions): void;
+  initializeMetadata(): void;
   colors: IColors;
   isAndroid: boolean;
   isIOS: boolean;

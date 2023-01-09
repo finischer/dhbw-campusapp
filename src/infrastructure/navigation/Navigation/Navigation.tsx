@@ -12,7 +12,6 @@ import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector
 import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 import Icon from "../../../components/Icon";
-import useAsyncStorage from "../../../hooks/useAsyncStorage";
 
 const Tab = createMaterialBottomTabNavigator();
 

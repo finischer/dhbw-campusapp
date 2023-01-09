@@ -1,4 +1,4 @@
-import i18 from "i18next";
+import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import de from "../../constants/translations/de";
 import en from "../../constants/translations/en";
@@ -9,10 +9,10 @@ const resources = {
   en,
 };
 
-i18.use(RNLanguageDetector).use(initReactI18next).init({
+i18next.use(RNLanguageDetector).use(initReactI18next).init({
   compatibilityJSON: "v3",
   resources,
   fallbackLng: "en",
 });
 
-export default i18;
+export default i18next;
