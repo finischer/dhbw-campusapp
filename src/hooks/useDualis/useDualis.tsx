@@ -57,6 +57,7 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const logout = async () => {
+    setUseDummyData(false);
     if (!args || !cookies) return false;
 
     const res = await _logout(args, cookies);
