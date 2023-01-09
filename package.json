@@ -24,6 +24,7 @@
     "expo": "~47.0.8",
     "expo-secure-store": "~12.0.0",
     "expo-status-bar": "~1.4.2",
+    "expo-updates": "~0.15.6",
     "i18next": "^22.0.6",
     "ical.js": "^1.5.0",
     "moment": "^2.29.4",
@@ -43,8 +44,7 @@
     "react-native-vector-icons": "^9.2.0",
     "react-query": "^3.39.2",
     "typescript": "^4.6.3",
-    "uuid": "^9.0.0",
-    "expo-updates": "~0.15.6"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
