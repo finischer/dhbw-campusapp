@@ -14,8 +14,8 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    SourceSansProRegular: require("./src/assets/fonts/SourceSansPro-Regular.ttf"),
-    SourceSansProBold: require("./src/assets/fonts/SourceSansPro-Bold.ttf"),
+    SourceSansProRegular: require("./assets/fonts/SourceSansPro-Regular.ttf"),
+    SourceSansProBold: require("./assets/fonts/SourceSansPro-Bold.ttf"),
   });
 
   if (!fontsLoaded) {
