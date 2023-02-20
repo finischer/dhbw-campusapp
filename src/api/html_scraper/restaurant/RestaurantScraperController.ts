@@ -1,14 +1,14 @@
-import { IRestaurantTypes } from "./types/IRestaurantTypes";
-import cheerio from "cheerio-without-node-native";
 import axios from "axios";
-import { Restaurants, RestaurantOptions } from "./types/RestaurantTypes";
-import { IMenuType } from "./types/IMenuType";
-import { IResponseTypes } from "../../types/IResponseTypes";
-import { IDayOptions } from "./types/IDayOptions";
-import moment, { lang } from "moment";
-import { IOfferListTypes } from "./types/IOfferListTypes";
+import cheerio from "cheerio-without-node-native";
+import moment from "moment";
 import { ILanguageOptions } from "../../../hooks/useMetadata/useMetadata.types";
 import { MenuIconNames } from "../../../screens/RestaurantScreen/components/MenuIcon/menuIcon.types";
+import { IResponseTypes } from "../../types/IResponseTypes";
+import { IDayOptions } from "./types/IDayOptions";
+import { IMenuType } from "./types/IMenuType";
+import { IOfferListTypes } from "./types/IOfferListTypes";
+import { IAdditivesDict, IRestaurantTypes } from "./types/IRestaurantTypes";
+import { RestaurantOptions, Restaurants } from "./types/RestaurantTypes";
 export class RestaurantScraper {
   restaurants: Restaurants;
   baseUrl: string;
@@ -100,12 +100,14 @@ export class RestaurantScraper {
       date,
       menus: [],
     };
+
     // iterate over offer
     $offer.each((_: number, parentElem: any) => {
       const menuName = $(parentElem)
         .find(".speiseplan-table-menu-headline > strong")
         .text()
         .trim();
+
       const menuDescription = $(parentElem)
         .find(".speiseplan-table-menu-content")
         .text()
@@ -138,9 +140,32 @@ export class RestaurantScraper {
       offerList.menus.push(newMenu);
     });
 
+    const additivesDict: IAdditivesDict = {};
+
+    let currCategory = "";
+    $(".speiseplan-label-content")
+      .children()
+      .each((i: number, el: any) => {
+        const elemClass = el["attribs"]["class"];
+
+        if (elemClass === "speiseplan-category") {
+          currCategory = $(el).text().replace(":", "").trim();
+          additivesDict[currCategory] = [];
+        } else {
+          const label = $(el).find("sup b").text().trim();
+          const name = $(el).clone().children().remove().end().text().trim();
+
+          additivesDict[currCategory].push({
+            label,
+            name,
+          });
+        }
+      });
+
     const restaurant: IRestaurantTypes = {
       restaurantName,
       offer: offerList,
+      additivesDict: additivesDict,
     };
 
     const response: IResponseTypes = {

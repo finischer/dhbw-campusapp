@@ -1,12 +1,12 @@
 import moment from "moment";
-import { useState, createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
+import { IFetchedRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
 import { RestaurantOptions } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
-import { IOfferListTypes } from "../../api/html_scraper/restaurant/types/IOfferListTypes";
-import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
-import { useMetadata } from "../useMetadata";
-import useAsyncStorage from "../useAsyncStorage";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
+import useAsyncStorage from "../useAsyncStorage";
+import { useMetadata } from "../useMetadata";
+import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
 
 const PREVIEW_DAYS = 5;
 
@@ -60,8 +60,12 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
     return RESTAURANTS_MAP;
   };
 
-  const fetchMenus = async () => {
-    const allMenus: IOfferListTypes[] = [];
+  const fetchRestaurant = async () => {
+    const restaurant: IFetchedRestaurantTypes = {
+      restaurantName: "",
+      offer: [],
+      additivesDict: {}
+    };
     for (let i = 0; i < PREVIEW_DAYS; i++) {
       const restaurantInfos: IResponseTypes =
         await restaurantScraper.getMenuOfRestaurant(
@@ -70,10 +74,12 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
         );
 
       if (restaurantInfos.status != 200) continue;
-      allMenus.push(restaurantInfos.data?.offer);
+      restaurant.restaurantName = restaurantInfos.data.restaurantName;
+      restaurant.offer.push(restaurantInfos.data.offer);
+      restaurant.additivesDict = restaurantInfos.data.additivesDict;
     }
 
-    return allMenus;
+    return restaurant;
   };
 
   return (
@@ -85,7 +91,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({
         changeRestaurant,
         changeDate,
         choosedDate,
-        fetchMenus,
+        fetchRestaurant,
       }}
     >
       {children}
@@ -103,3 +109,4 @@ const useRestaurant = () => {
 };
 
 export { useRestaurant, RestaurantProvider };
+

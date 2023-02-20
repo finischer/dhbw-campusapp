@@ -1,15 +1,15 @@
-import { View, Animated as RNAnimated, LayoutAnimation } from "react-native";
 import React, { useRef, useState } from "react";
-import { ALLERGENES, LABELS, OTHERS } from "./labels";
-import RegularText from "../../../../components/RegularText";
-import { ILabelTypes } from "./additivesList.types";
-import { additivesListStyles } from "./additivesList.styles";
 import { useTranslation } from "react-i18next";
+import { Animated as RNAnimated, LayoutAnimation, View } from "react-native";
+import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
 import GlobalBody from "../../../../components/GlobalBody";
+import Icon from "../../../../components/Icon";
+import RegularText from "../../../../components/RegularText";
 import TouchableOpacity from "../../../../components/TouchableOpacity";
 import { toggleAnimation } from "../../../../constants/animations";
-import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
-import Icon from "../../../../components/Icon";
+import { additivesListStyles } from "./additivesList.styles";
+import { ILabelTypes } from "./additivesList.types";
+import { ALLERGENES, LABELS, OTHERS } from "./labels";
 
 const AdditivesList = () => {
   const { t } = useTranslation("restaurantScreen");
@@ -65,13 +65,13 @@ const AdditivesList = () => {
           ))}
 
           {/* Allergens */}
-          <RegularText>{t("allergens").toUpperCase()}:</RegularText>
+          <RegularText> {t("allergens").toUpperCase()}:</RegularText>
           {ALLERGENES.map(({ label, sub }: ILabelTypes, index: number) => (
             <Item key={index} label={label} sub={sub} />
           ))}
 
           {/* Other */}
-          <RegularText>{t("others").toUpperCase()}:</RegularText>
+          <RegularText> {t("others").toUpperCase()}:</RegularText>
           {OTHERS.map(({ label, sub }: ILabelTypes, index: number) => (
             <Item key={index} label={label} sub={sub} />
           ))}

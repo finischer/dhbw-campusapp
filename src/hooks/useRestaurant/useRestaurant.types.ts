@@ -1,4 +1,4 @@
-import { IOfferListTypes } from "./../../api/html_scraper/restaurant/types/IOfferListTypes";
+import { IFetchedRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
 import { RestaurantOptions } from "./../../api/html_scraper/restaurant/types/RestaurantTypes";
 
 export type IRestaurantContext = {
@@ -8,7 +8,7 @@ export type IRestaurantContext = {
   changeRestaurant(restaurant: RestaurantOptions): void;
   changeDate(newDate: string): void;
   choosedDate: string;
-  fetchMenus(): Promise<IOfferListTypes[]>;
+  fetchRestaurant(): Promise<IFetchedRestaurantTypes>;
 };
 
 export type RestaurantsMapTypes = {

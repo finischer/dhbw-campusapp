@@ -1,17 +1,18 @@
-import { StyleSheet, View } from "react-native";
 import React from "react";
-import { IMenuListProps } from "./menuList.types";
-import MenuItem from "../MenuItem";
+import { StyleSheet, View } from "react-native";
 import { IMenuType } from "../../../../api/html_scraper/restaurant/types/IMenuType";
-import { menuListStyles } from "./menuListStyles.styles";
 import RegularText from "../../../../components/RegularText";
+import MenuItem from "../MenuItem";
+import { IMenuListProps } from "./menuList.types";
+import { menuListStyles } from "./menuListStyles.styles";
 
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import Animated from "react-native-reanimated";
+import RequestTime from "../../../../components/RequestTime";
 import { useMetadata } from "../../../../hooks/useMetadata";
 
-const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
+const MenuList: React.FC<IMenuListProps> = ({ menus, date, requestTime }) => {
   const { t } = useTranslation();
   const { dateFormat } = useMetadata();
   const dayName = moment(date).format("dddd").toLowerCase();
@@ -40,6 +41,8 @@ const MenuList: React.FC<IMenuListProps> = ({ menus, date }) => {
           <MenuItem key={index} menu={menu} index={index} />
         ))
       )}
+
+      <RequestTime requestTime={requestTime} />
     </Animated.View>
   );
 };
