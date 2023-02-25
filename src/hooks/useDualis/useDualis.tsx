@@ -6,7 +6,7 @@ import { IResponseTypes } from "../../api/types/IResponseTypes";
 import {
   DEMO_PASSWORD,
   DEMO_USERNAME,
-  dummy_grades,
+  dummy_grades
 } from "../../data/testData";
 import { IDualisContext, IDualisUser } from "./useDualis.types";
 
@@ -32,7 +32,7 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
     if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
       setUseDummyData(true);
       return true;
-    } // necessary for employees at apple to test the app before deployment
+    } // necessary for employees at apple/google to test the app before deployment
 
     const res = await _auth(username, password);
 
@@ -131,3 +131,4 @@ const useDualis = () => {
 };
 
 export { useDualis, DualisProvider };
+
