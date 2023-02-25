@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../../../constants/layout";
 
 const SUB_LINE_HEIGHT = 10;
 
@@ -17,7 +18,13 @@ export const additivesListStyles = StyleSheet.create({
     flexDirection: "row",
     marginLeft: 5,
   },
-  labelText: {},
+  additivesListSectionContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    paddingTop: SPACING.m,
+  },
+  nameText: {},
   subText: {
     fontSize: 10,
     lineHeight: SUB_LINE_HEIGHT,

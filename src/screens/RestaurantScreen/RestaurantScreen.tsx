@@ -126,7 +126,7 @@ const RestaurantScreen = () => {
         />
 
         {/* Additive List */}
-        <AdditivesList />
+        <AdditivesList additivesDict={restaurant.additivesDict} />
       </Animated.ScrollView>
     </GlobalBody>
   );

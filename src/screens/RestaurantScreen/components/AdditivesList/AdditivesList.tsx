@@ -8,20 +8,29 @@ import RegularText from "../../../../components/RegularText";
 import TouchableOpacity from "../../../../components/TouchableOpacity";
 import { toggleAnimation } from "../../../../constants/animations";
 import { additivesListStyles } from "./additivesList.styles";
-import { ILabelTypes } from "./additivesList.types";
-import { ALLERGENES, LABELS, OTHERS } from "./labels";
+import { IAdditivesListProps, ILabelTypes } from "./additivesList.types";
 
-const AdditivesList = () => {
+const AdditivesList: React.FC<IAdditivesListProps> = ({ additivesDict }) => {
   const { t } = useTranslation("restaurantScreen");
   const [isOpen, setIsOpen] = useState(false);
   const animationRef = useRef(new RNAnimated.Value(0)).current;
 
-  const Item = ({ label, sub }: ILabelTypes) => (
+  const Item = ({ label, name }: ILabelTypes) => (
     <View style={additivesListStyles.itemContainer}>
-      <RegularText style={additivesListStyles.subText}>{sub}</RegularText>
-      <RegularText style={additivesListStyles.labelText}>{label}</RegularText>
+      <RegularText style={additivesListStyles.subText}>{label}</RegularText>
+      <RegularText style={additivesListStyles.nameText}>{name}</RegularText>
     </View>
   );
+
+  const additivesListElements = Object.keys(additivesDict).map((key, index) => (
+    <View style={additivesListStyles.additivesListSectionContainer} key={index}>
+      <RegularText>{key.toUpperCase()}:</RegularText>
+      {additivesDict[key].map(({ label, name }: ILabelTypes, index: number) => (
+        <Item key={index} label={label} name={name} />
+      ))}
+    </View>
+  )
+  )
 
   const toggleOpen = () => {
     const animationConfig = {
@@ -58,23 +67,7 @@ const AdditivesList = () => {
           exiting={FadeOutUp}
           style={[additivesListStyles.container]}
         >
-          {/* Labels */}
-          <RegularText>{t("attributes").toUpperCase()}:</RegularText>
-          {LABELS.map(({ label, sub }: ILabelTypes, index: number) => (
-            <Item key={index} label={label} sub={sub} />
-          ))}
-
-          {/* Allergens */}
-          <RegularText> {t("allergens").toUpperCase()}:</RegularText>
-          {ALLERGENES.map(({ label, sub }: ILabelTypes, index: number) => (
-            <Item key={index} label={label} sub={sub} />
-          ))}
-
-          {/* Other */}
-          <RegularText> {t("others").toUpperCase()}:</RegularText>
-          {OTHERS.map(({ label, sub }: ILabelTypes, index: number) => (
-            <Item key={index} label={label} sub={sub} />
-          ))}
+          {additivesListElements}
         </Animated.View>
       )}
     </GlobalBody>
