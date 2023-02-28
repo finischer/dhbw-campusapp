@@ -1,9 +1,8 @@
 import React from "react";
-import { INavigationHeaderProps } from "./NavigationHeader.types";
-import RegularText from "../RegularText";
-import typography from "../../constants/typography";
 import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
+import RegularText from "../RegularText";
 import { navHeaderStyles } from "./NavigationHeader.styles";
+import { INavigationHeaderProps } from "./NavigationHeader.types";
 
 // TODO: add generic subtitle-layout animation
 
@@ -14,7 +13,7 @@ const NavigationHeader = ({
 }: INavigationHeaderProps) => {
   return (
     <Animated.View style={navHeaderStyles.container} layout={Layout}>
-      <RegularText variant="light" weight="bold">
+      <RegularText style={navHeaderStyles.titleText} variant="light" weight="bold">
         {title}
       </RegularText>
       {showSubTitle && (
@@ -22,7 +21,7 @@ const NavigationHeader = ({
           entering={FadeIn.duration(300)}
           exiting={FadeOut.duration(300)}
         >
-          <RegularText variant="light" style={{ fontSize: typography.small }}>
+          <RegularText variant="light" style={navHeaderStyles.subTitleText}>
             {subTitle}
           </RegularText>
         </Animated.View>

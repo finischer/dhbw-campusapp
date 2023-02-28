@@ -5,4 +5,5 @@ export type AsyncStorageEntries =
   | "cafeteria"
   | "course"
   | "icalUrl"
-  | "accessGranted";
+  | "accessGranted"
+  | "dhbwLocation";

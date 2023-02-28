@@ -34,7 +34,7 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const RestaurantScreen = () => {
   const { t } = useTranslation("restaurantScreen");
-  const { language } = useMetadata();
+  const { language, dhbwLocation } = useMetadata();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { restaurantName, formattedRestaurantName, fetchRestaurant } =
     useRestaurant();
@@ -50,7 +50,7 @@ const RestaurantScreen = () => {
     isFetching,
     isError,
     refetch: handleFechMenus,
-  } = useQuery(["cafeteria-menus", restaurantName, language], fetchRestaurant, {
+  } = useQuery(["cafeteria-menus", restaurantName, dhbwLocation, language], fetchRestaurant, {
     onSuccess: (restaurant: IFetchedRestaurantTypes) => {
       setHeaderSubtitle(false);
       setRestaurant((oldState) => ({

@@ -5,9 +5,11 @@ export type IThemeTypes = "light" | "dark" | "system";
 export type IMetadataContext = {
   theme: IThemeTypes;
   language: ILanguageOptions;
+  dhbwLocation: DHBWLocation;
   timeFormat: string;
   dateFormat: string;
   changeTheme(newTheme: IThemeTypes): void;
+  changeDhbwLocation(newDhbwLocation: DHBWLocation): void;
   changeLanguage(newLanguage: ILanguageOptions): void;
   initializeMetadata(): void;
   colors: IColors;
@@ -16,3 +18,5 @@ export type IMetadataContext = {
 };
 
 export type ILanguageOptions = "de" | "en";
+
+export type DHBWLocation = "mannheim" | "karlsruhe";

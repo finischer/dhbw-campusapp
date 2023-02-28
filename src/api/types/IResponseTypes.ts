@@ -7,7 +7,6 @@ export type IObjectResponse = {
 export type IResponseTypes = {
   msg: string;
   status: number;
-  // data: Array<any> | IObjectResponse | undefined;
   data: any;
   requestTime?: moment.Moment;
 };

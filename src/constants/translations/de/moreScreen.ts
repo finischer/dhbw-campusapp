@@ -8,4 +8,5 @@ export default {
   studentUnionMannheim: "Studierendenwerk Mannheim",
   alertErrorMessageUrl: "Die URL kann nicht geöffnet werden",
   legalNotice: "Impressum",
+  selectLocation: "DHBW Standorte",
 };

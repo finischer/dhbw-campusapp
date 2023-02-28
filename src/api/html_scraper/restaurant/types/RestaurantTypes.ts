@@ -1,11 +1,7 @@
-export type RestaurantOptions =
-  | "mensa-am-schloss"
-  | "mensaria-metropol"
-  | "hochschule-mannheim"
-  | "cafeteria-musikhochschule"
-  | "mensaria-wohlgelegen"
-  | "mensawagon";
+import { MannheimRestaurantOptions } from "../../DHBWMannheim/types/MannheimRestaurants";
 
-export type Restaurants = {
-  [key in RestaurantOptions]: string;
+export type MannheimRestaurants = {
+  [key in MannheimRestaurantOptions]: string;
 };
+
+export type AllRestaurantsOptions = MannheimRestaurantOptions;

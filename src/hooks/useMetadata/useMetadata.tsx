@@ -1,15 +1,15 @@
-import moment from "moment";
-import { useState, createContext, useContext, useEffect } from "react";
+import i18next from "i18next";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 import { darkModeColors, lightModeColors } from "../../constants/colors";
+import useAsyncStorage from "../useAsyncStorage";
 import {
+  DHBWLocation,
   ILanguageOptions,
   IMetadataContext,
-  IThemeTypes,
+  IThemeTypes
 } from "./useMetadata.types";
-import { useTranslation } from "react-i18next";
-import useAsyncStorage from "../useAsyncStorage";
-import i18next from "i18next";
 
 const MetaDataContext = createContext<IMetadataContext | undefined>(undefined);
 
@@ -22,6 +22,7 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [theme, setTheme] = useState<IThemeTypes>("light");
   const [language, setLanguage] = useState<ILanguageOptions>("de");
+  const [dhbwLocation, setDhbwLocation] = useState<DHBWLocation>("mannheim");
   const colors = theme === "light" ? lightModeColors : darkModeColors;
   const isAndroid = Platform.OS === "android";
   const isIOS = Platform.OS === "ios";
@@ -42,6 +43,12 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 
     if (language) changeLanguage(language);
+
+    const dhbwLocation: DHBWLocation = await getDataFromAsyncStorage("dhbwLocation");
+
+    if (dhbwLocation) changeDhbwLocation(dhbwLocation);
+
+
   };
 
   const changeTheme = (newTheme: IThemeTypes) => {
@@ -60,11 +67,17 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const changeDhbwLocation = (newDhbwLocation: DHBWLocation) => {
+    setDhbwLocation(newDhbwLocation)
+    storeDataInAsyncStorage("dhbwLocation", dhbwLocation);
+  }
+
   return (
     <MetaDataContext.Provider
       value={{
         theme,
         language,
+        dhbwLocation,
         timeFormat,
         dateFormat,
         colors,
@@ -72,6 +85,7 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
         isIOS,
         changeLanguage,
         changeTheme,
+        changeDhbwLocation,
         initializeMetadata,
       }}
     >
@@ -90,3 +104,4 @@ const useMetadata = () => {
 };
 
 export { useMetadata, MetaDataProvider };
+

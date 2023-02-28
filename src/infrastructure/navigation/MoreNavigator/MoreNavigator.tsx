@@ -1,11 +1,12 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { headerConfig } from "../Navigation/config";
-import MoreScreen from "../../../screens/MoreScreen";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import NavigationHeader from "../../../components/NavigationHeader";
 import ChangeLanguageScreen from "../../../screens/ChangeLanguageScreen";
-import { useTranslation } from "react-i18next";
 import LegalNoticeScreen from "../../../screens/LegalNoticeScreen";
+import MoreScreen from "../../../screens/MoreScreen";
+import SelectLocationScreen from "../../../screens/SelectLocationScreen/SelectLocationScreen";
+import { headerConfig } from "../Navigation/config";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,16 @@ const MoreNavigator = () => {
         options={{
           headerTitle: () => (
             <NavigationHeader title={t("moreScreen:legalNotice")} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="SelectLocationScreen"
+        component={SelectLocationScreen}
+        options={{
+          headerTitle: () => (
+            <NavigationHeader title={t("moreScreen:selectLocation")} />
           ),
         }}
       />

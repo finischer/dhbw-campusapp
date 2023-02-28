@@ -1,11 +1,11 @@
-import { View, StyleSheet } from "react-native";
 import React from "react";
-import { IconNames, IRegularRowItemProps } from "./regularRowItem.types";
-import RegularText from "../RegularText";
-import { regularRowItemStyles } from "./regularRowItem.styles";
+import { StyleSheet, View } from "react-native";
 import { useMetadata } from "../../hooks/useMetadata";
-import TouchableOpacity from "../TouchableOpacity";
 import Icon from "../Icon";
+import RegularText from "../RegularText";
+import TouchableOpacity from "../TouchableOpacity";
+import { regularRowItemStyles } from "./regularRowItem.styles";
+import { IconNames, IRegularRowItemProps } from "./regularRowItem.types";
 
 const ROW_ITEM_GAP = 10;
 
@@ -22,6 +22,7 @@ const RegularRowItem = ({
   marginBottom = 0,
 }: IRegularRowItemProps) => {
   const { colors } = useMetadata();
+  const activeOpacity = onClick ? 0.7 : 1
 
   const textAndIconColor = selected ? colors.lightText : colors.secondary;
   const selectedRightIconSource = selected ? "feather" : rightIconSource;
@@ -45,7 +46,7 @@ const RegularRowItem = ({
   );
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={onClick}>
+    <TouchableOpacity activeOpacity={activeOpacity} disabled={disabled} onPress={onClick}>
       <View
         style={[
           regularRowItemStyles.container,
