@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, View } from "react-native";
+import uuid from 'react-native-uuid';
 import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
 import Icon from "../../components/Icon";
@@ -40,7 +41,8 @@ const MoreScreen = () => {
   };
 
   const handleReportBug = async () => {
-    const subject = t("common:emailSubjectBugFound");
+    const reportId = uuid.v4().slice(0, 8);
+    const subject = t("common:emailSubjectBugFound").concat(` - ${reportId}`);
     const body = t("common:emailBodyBugFound");
 
     await Linking.openURL(
@@ -146,6 +148,15 @@ const MoreScreen = () => {
           onClick={() => goTo("LegalNoticeScreen")}
         >
           {t("moreScreen:legalNotice")}
+        </RegularRowItem>
+        <RegularRowItem
+          leftIconSource="feather"
+          leftIcon="lock"
+          rightIconSource="feather"
+          rightIcon="external-link"
+          onClick={() => openExternalLink("https://github.com/finischer/dhbw-campusapp-legal-texts/blob/main/de/Datenschutzerkl%C3%A4rung.md")}
+        >
+          {t("moreScreen:privacyPolicy")}
         </RegularRowItem>
 
         {/* Theme Toggler */}

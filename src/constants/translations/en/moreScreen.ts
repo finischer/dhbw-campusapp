@@ -9,4 +9,5 @@ export default {
   alertErrorMessageUrl: "The URL cannot be opened",
   legalNotice: "Legal notice",
   selectLocation: "DHBW Locations",
+  privacyPolicy: "Privacy Policy",
 };

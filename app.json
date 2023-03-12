@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DH Mannheim CampusApp",
-    "slug": "dh-mannheim-campusapp",
+    "name": "DHBW CampusApp",
+    "slug": "dhbw-campusapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -14,14 +14,26 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
       }
     }
   }

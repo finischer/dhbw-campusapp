@@ -1,7 +1,8 @@
-import { View } from "react-native";
 import React from "react";
-import { appInfoStyles } from "./appInfo.styles";
+import { View } from "react-native";
 import RegularText from "../../../../components/RegularText";
+import { APP_VERSION } from "../../../../_app_config";
+import { appInfoStyles } from "./appInfo.styles";
 
 const AppInfo = () => {
   return (
@@ -9,7 +10,7 @@ const AppInfo = () => {
       <RegularText style={appInfoStyles.text}>
         Made by Niklas Fischer
       </RegularText>
-      <RegularText style={appInfoStyles.text}>Version 1.0.0</RegularText>
+      <RegularText style={appInfoStyles.text}>Version {APP_VERSION}</RegularText>
     </View>
   );
 };
