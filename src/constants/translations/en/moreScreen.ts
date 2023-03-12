@@ -8,4 +8,5 @@ export default {
   studentUnionMannheim: "Mannheim Student Union",
   alertErrorMessageUrl: "The URL cannot be opened",
   legalNotice: "Legal notice",
+  privacyPolicy: "Privacy Policy",
 };

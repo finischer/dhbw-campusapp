@@ -1,5 +1,5 @@
-import { ISubjectTypes } from "./../../../api/html_scraper/dualis/types/ISubjectTypes";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
+import { ISubjectTypes } from "./../../../api/html_scraper/dualis/types/ISubjectTypes";
 
 export type INavigationIcons = {
   [key: string]: FeatherIconName;

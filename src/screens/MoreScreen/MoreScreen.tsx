@@ -1,23 +1,23 @@
-import React, { useRef, useState } from "react";
-import { ScrollView, View, Linking, Alert } from "react-native";
-import GlobalBody from "../../components/GlobalBody";
-import RegularRowItem from "../../components/RegularRowItem";
-import Switch from "../../components/Switch/Switch";
-import { useMetadata } from "../../hooks/useMetadata";
-import { useLectures } from "../../hooks/useLectures";
 import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
-import { moreScreenStyles } from "./moreScreen.styles";
-import AppInfo from "./components/AppInfo";
-import Button from "../../components/Button/Button";
-import { CONTACT_MAIL } from "../../constants/common";
-import useAlert from "../../hooks/useAlert";
-import Icon from "../../components/Icon";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
-import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
+import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { Linking, ScrollView, View } from "react-native";
+import uuid from 'react-native-uuid';
+import Button from "../../components/Button/Button";
+import GlobalBody from "../../components/GlobalBody";
+import Icon from "../../components/Icon";
 import ImportCalendarDialog from "../../components/ImportCalendarDialog";
 import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
+import RegularRowItem from "../../components/RegularRowItem";
+import Switch from "../../components/Switch/Switch";
+import { CONTACT_MAIL } from "../../constants/common";
+import useAlert from "../../hooks/useAlert";
+import { useMetadata } from "../../hooks/useMetadata";
+import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
+import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
+import AppInfo from "./components/AppInfo";
+import { moreScreenStyles } from "./moreScreen.styles";
 
 const MoreScreen = () => {
   const { alert } = useAlert();
@@ -41,7 +41,8 @@ const MoreScreen = () => {
   };
 
   const handleReportBug = async () => {
-    const subject = t("common:emailSubjectBugFound");
+    const reportId = uuid.v4().slice(0, 8);
+    const subject = t("common:emailSubjectBugFound").concat(` - ${reportId}`);
     const body = t("common:emailBodyBugFound");
 
     await Linking.openURL(
@@ -138,6 +139,15 @@ const MoreScreen = () => {
           onClick={() => goTo("LegalNoticeScreen")}
         >
           {t("moreScreen:legalNotice")}
+        </RegularRowItem>
+        <RegularRowItem
+          leftIconSource="feather"
+          leftIcon="lock"
+          rightIconSource="feather"
+          rightIcon="external-link"
+          onClick={() => openExternalLink("https://github.com/finischer/dhbw-campusapp-legal-texts/blob/main/de/Datenschutzerkl%C3%A4rung.md")}
+        >
+          {t("moreScreen:privacyPolicy")}
         </RegularRowItem>
 
         {/* Theme Toggler */}

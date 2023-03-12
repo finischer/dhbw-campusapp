@@ -1,12 +1,12 @@
-import { View, ScrollView } from "react-native";
 import React from "react";
+import { ScrollView, View } from "react-native";
 import GlobalBody from "../../components/GlobalBody";
-import RegularText from "../../components/RegularText";
 import Icon from "../../components/Icon";
-import { legalNoticeScreenStyles } from "./legalNoticeScreen.styles";
+import RegularText from "../../components/RegularText";
 import Section from "../../components/Section";
 import Subsection from "../../components/Subsection";
 import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
+import { legalNoticeScreenStyles } from "./legalNoticeScreen.styles";
 
 // Row at contact section (local component). Make it to a global component if necessary
 const ContactRow = ({
@@ -50,7 +50,7 @@ const LegalNoticeScreen = () => {
           </ContactRow>
         </Section>
 
-        {/* <Section title="Haftungsausschluss - Disclaimer">
+        <Section title="Haftungsausschluss - Disclaimer">
           <Subsection title="Haftung für Inhalte" withMarginTop={false}>
             <RegularText>
               Alle Inhalte unseres Internetauftritts wurden mit größter Sorgfalt
@@ -160,7 +160,7 @@ const LegalNoticeScreen = () => {
               werden wir derartige Inhalte unverzüglich entfernen.
             </RegularText>
           </Subsection>
-        </Section> */}
+        </Section>
       </ScrollView>
     </GlobalBody>
   );

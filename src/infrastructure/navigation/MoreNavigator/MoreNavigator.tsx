@@ -1,11 +1,11 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { headerConfig } from "../Navigation/config";
-import MoreScreen from "../../../screens/MoreScreen";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import NavigationHeader from "../../../components/NavigationHeader";
 import ChangeLanguageScreen from "../../../screens/ChangeLanguageScreen";
-import { useTranslation } from "react-i18next";
 import LegalNoticeScreen from "../../../screens/LegalNoticeScreen";
+import MoreScreen from "../../../screens/MoreScreen";
+import { headerConfig } from "../Navigation/config";
 
 const Stack = createStackNavigator();
 
