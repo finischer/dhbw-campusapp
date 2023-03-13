@@ -26,6 +26,8 @@
       "buildNumber": "3"
     },
     "android": {
+      "package": "com.niklasfischer0.dhbwcampusapp",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
