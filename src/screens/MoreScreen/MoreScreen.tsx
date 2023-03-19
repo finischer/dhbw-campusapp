@@ -10,6 +10,7 @@ import Icon from "../../components/Icon";
 import ImportCalendarDialog from "../../components/ImportCalendarDialog";
 import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
 import RegularRowItem from "../../components/RegularRowItem";
+import SettingSection from "../../components/SettingSection";
 import Switch from "../../components/Switch/Switch";
 import { CONTACT_MAIL } from "../../constants/common";
 import useAlert from "../../hooks/useAlert";
@@ -75,89 +76,96 @@ const MoreScreen = () => {
     <GlobalBody noVerticalPadding>
       <ImportCalendarDialog ref={importCalendarRef} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <RegularRowItem
-          leftIconSource="feather"
-          leftIcon="message-square"
-          disabled
-        >
-          {t("moreScreen:notifications")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="feather"
-          leftIcon="map-pin"
-          rightIconSource="feather"
-          rightIcon="chevron-right"
-          onClick={() => goTo("SelectLocationScreen")}
-        >
-          {t("moreScreen:selectLocation")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="feather"
-          leftIcon="calendar"
-          onClick={handleImportCalendar}
-          rightIconSource="feather"
-          rightIcon="download"
-        >
-          {t("moreScreen:importCalendar")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="ionicons"
-          leftIcon="ios-american-football-outline"
-          onClick={() =>
-            openExternalLink(
-              "https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport"
-            )
-          }
-          rightIconSource="feather"
-          rightIcon="external-link"
-        >
-          {t("moreScreen:universitySports")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="ionicons"
-          leftIcon="ios-people-outline"
-          onClick={() => openExternalLink("https://www.stw-ma.de")}
-          rightIconSource="feather"
-          rightIcon="external-link"
-        >
-          {t("moreScreen:studentUnionMannheim")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="ionicons"
-          leftIcon="language-outline"
-          onClick={() => goTo("ChangeLanguageScreen")}
-          rightIconSource="feather"
-          rightIcon="chevron-right"
-        >
-          {t("navigation:changeLanguage")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="feather"
-          leftIcon="settings"
-          rightIconSource="feather"
-          rightIcon="chevron-right"
-          disabled
-        >
-          {t("moreScreen:settings")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="feather"
-          leftIcon="info"
-          rightIconSource="feather"
-          rightIcon="chevron-right"
-          onClick={() => goTo("LegalNoticeScreen")}
-        >
-          {t("moreScreen:legalNotice")}
-        </RegularRowItem>
-        <RegularRowItem
-          leftIconSource="feather"
-          leftIcon="lock"
-          rightIconSource="feather"
-          rightIcon="external-link"
-          onClick={() => openExternalLink("https://github.com/finischer/dhbw-campusapp-legal-texts/blob/main/de/Datenschutzerkl%C3%A4rung.md")}
-        >
-          {t("moreScreen:privacyPolicy")}
-        </RegularRowItem>
+
+        {/* General Section */}
+        <SettingSection title={t("moreScreen:sectionGeneral")}>
+          <RegularRowItem
+            leftIconSource="feather"
+            leftIcon="message-square"
+            disabled
+          >
+            {t("moreScreen:notifications")}
+          </RegularRowItem>
+
+          <RegularRowItem
+            leftIconSource="feather"
+            leftIcon="calendar"
+            onClick={handleImportCalendar}
+            rightIconSource="feather"
+            rightIcon="download"
+          >
+            {t("moreScreen:importCalendar")}
+          </RegularRowItem>
+
+          <RegularRowItem
+            leftIconSource="ionicons"
+            leftIcon="language-outline"
+            onClick={() => goTo("ChangeLanguageScreen")}
+            rightIconSource="feather"
+            rightIcon="chevron-right"
+          >
+            {t("navigation:changeLanguage")}
+          </RegularRowItem>
+        </SettingSection>
+
+        {/* University section */}
+        <SettingSection title={t("moreScreen:sectionUniversity")}>
+          <RegularRowItem
+            leftIconSource="ionicons"
+            leftIcon="ios-american-football-outline"
+            onClick={() =>
+              openExternalLink(
+                "https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport"
+              )
+            }
+            rightIconSource="feather"
+            rightIcon="external-link"
+          >
+            {t("moreScreen:universitySports")}
+          </RegularRowItem>
+          <RegularRowItem
+            leftIconSource="ionicons"
+            leftIcon="ios-people-outline"
+            onClick={() => openExternalLink("https://www.stw-ma.de")}
+            rightIconSource="feather"
+            rightIcon="external-link"
+          >
+            {t("moreScreen:studentUnionMannheim")}
+          </RegularRowItem>
+          <RegularRowItem
+            leftIconSource="feather"
+            leftIcon="map-pin"
+            rightIconSource="feather"
+            rightIcon="chevron-right"
+            disabled
+            onClick={() => goTo("SelectLocationScreen")}
+          >
+            {t("moreScreen:selectLocation")}
+          </RegularRowItem>
+        </SettingSection>
+
+        {/* Legal notices Section */}
+        <SettingSection title={t("moreScreen:sectionLegalNotices")}>
+          <RegularRowItem
+            leftIconSource="feather"
+            leftIcon="info"
+            rightIconSource="feather"
+            rightIcon="chevron-right"
+            onClick={() => goTo("LegalNoticeScreen")}
+          >
+            {t("moreScreen:legalNotice")}
+          </RegularRowItem>
+          <RegularRowItem
+            leftIconSource="feather"
+            leftIcon="lock"
+            rightIconSource="feather"
+            rightIcon="external-link"
+            onClick={() => openExternalLink("https://github.com/finischer/dhbw-campusapp-legal-texts/blob/main/de/Datenschutzerkl%C3%A4rung.md")}
+          >
+            {t("moreScreen:privacyPolicy")}
+          </RegularRowItem>
+        </SettingSection>
+
 
         {/* Theme Toggler */}
         <View style={moreScreenStyles.switchContainer}>

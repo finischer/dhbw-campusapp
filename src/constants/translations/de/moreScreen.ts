@@ -10,4 +10,7 @@ export default {
   legalNotice: "Impressum",
   selectLocation: "DHBW Standorte",
   privacyPolicy: "Datenschutzerklärung",
+  sectionGeneral: "Allgemein",
+  sectionUniversity: "Hochschule",
+  sectionLegalNotices: "Rechtliches"
 };

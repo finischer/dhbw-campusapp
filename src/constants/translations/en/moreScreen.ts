@@ -10,4 +10,7 @@ export default {
   legalNotice: "Legal notice",
   selectLocation: "DHBW Locations",
   privacyPolicy: "Privacy Policy",
+  sectionGeneral: "General",
+  sectionUniversity: "University",
+  sectionLegalNotices: "Legal Notices",
 };
