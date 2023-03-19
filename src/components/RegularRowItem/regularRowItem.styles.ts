@@ -13,7 +13,9 @@ export const regularRowItemStyles = StyleSheet.create({
   leftContainer: {
     flexDirection: "row",
   },
-  text: {},
+  text: {
+    paddingRight: 60,
+  },
   leftIconContainer: {
     paddingRight: SPACING.m,
   },

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Alert, AlertType } from "react-native";
+import { Alert, AlertType, Linking } from "react-native";
 import { useMetadata } from "../useMetadata";
 
 const useAlert = () => {
@@ -12,6 +12,17 @@ const useAlert = () => {
       userInterfaceStyle: interfaceStyle,
       cancelable: true,
     });
+  };
+
+  const openLink = async (url: string | undefined) => {
+    if (url) {
+      const canOpenUrl = await Linking.canOpenURL(url);
+      if (canOpenUrl) {
+        await Linking.openURL(url);
+      } else {
+        alert(t("common:errorOccured"), t("common:alertUrlError"));
+      }
+    }
   };
 
   const prompt = (
@@ -31,6 +42,7 @@ const useAlert = () => {
         {
           text: buttonText,
           style: "default",
+          // @ts-ignore
           onPress: handleOnPress,
         },
         {
@@ -49,7 +61,7 @@ const useAlert = () => {
     );
   };
 
-  return { alert, prompt };
+  return { alert, prompt, openLink };
 };
 
 export default useAlert;

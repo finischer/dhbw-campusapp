@@ -33,7 +33,7 @@ const RegularText: React.FC<IRegularTextTypes> = ({
   ...props
 }) => {
   const { colors, theme } = useMetadata();
-  const { alert } = useAlert();
+  const { openLink } = useAlert();
   const { t } = useTranslation();
   const textColor = variant ? _getTextColor(variant, colors) : colors.secondary;
 
@@ -49,16 +49,6 @@ const RegularText: React.FC<IRegularTextTypes> = ({
     },
   });
 
-  const openLink = async () => {
-    if (url) {
-      const canOpenUrl = await Linking.canOpenURL(url);
-      if (canOpenUrl) {
-        await Linking.openURL(url);
-      } else {
-        alert(t("common:errorOccured"), t("common:alertUrlError"));
-      }
-    }
-  };
 
   return (
     <Text
@@ -67,7 +57,7 @@ const RegularText: React.FC<IRegularTextTypes> = ({
         style,
         isLink && localRegularTextStyles.linkStyle,
       ]}
-      onPress={isLink ? openLink : undefined}
+      onPress={isLink ? () => openLink(url) : undefined}
       {...props}
     >
       {children}

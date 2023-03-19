@@ -164,6 +164,15 @@ const MoreScreen = () => {
           >
             {t("moreScreen:privacyPolicy")}
           </RegularRowItem>
+          <RegularRowItem
+            leftIconSource="feather"
+            leftIcon="award"
+            rightIconSource="feather"
+            rightIcon="chevron-right"
+            onClick={() => goTo("LicensesScreen")}
+          >
+            {t("moreScreen:licenses")}
+          </RegularRowItem>
         </SettingSection>
 
 

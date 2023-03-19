@@ -12,5 +12,6 @@ export default {
   privacyPolicy: "Datenschutzerklärung",
   sectionGeneral: "Allgemein",
   sectionUniversity: "Hochschule",
-  sectionLegalNotices: "Rechtliches"
+  sectionLegalNotices: "Rechtliches",
+  licenses: "Lizenzen",
 };

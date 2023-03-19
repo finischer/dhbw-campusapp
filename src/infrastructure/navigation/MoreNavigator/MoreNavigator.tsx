@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import NavigationHeader from "../../../components/NavigationHeader";
 import ChangeLanguageScreen from "../../../screens/ChangeLanguageScreen";
 import LegalNoticeScreen from "../../../screens/LegalNoticeScreen";
+import LicensesScreen from "../../../screens/LicensesScreen";
 import MoreScreen from "../../../screens/MoreScreen";
 import SelectLocationScreen from "../../../screens/SelectLocationScreen/SelectLocationScreen";
 import { headerConfig } from "../Navigation/config";
@@ -47,6 +48,16 @@ const MoreNavigator = () => {
         options={{
           headerTitle: () => (
             <NavigationHeader title={t("moreScreen:selectLocation")} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="LicensesScreen"
+        component={LicensesScreen}
+        options={{
+          headerTitle: () => (
+            <NavigationHeader title={t("moreScreen:licenses")} />
           ),
         }}
       />

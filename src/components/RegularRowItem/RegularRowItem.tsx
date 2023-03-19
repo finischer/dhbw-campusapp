@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import typography from "../../constants/typography";
 import { useMetadata } from "../../hooks/useMetadata";
 import Icon from "../Icon";
 import RegularText from "../RegularText";
@@ -20,6 +21,7 @@ const RegularRowItem = ({
   disabled = false,
   marginTop = ROW_ITEM_GAP,
   marginBottom = 0,
+  subtitle = undefined
 }: IRegularRowItemProps) => {
   const { colors } = useMetadata();
   const activeOpacity = onClick ? 0.7 : 1
@@ -67,11 +69,23 @@ const RegularRowItem = ({
               />
             </LocalLeftIconView>
           )}
-          <RegularText
-            style={[regularRowItemStyles.text, localRegularRowItemStyles.text]}
-          >
-            {children}
-          </RegularText>
+
+          <View style={{
+            flex: 0.94
+          }}>
+
+            <RegularText
+              style={[regularRowItemStyles.text, localRegularRowItemStyles.text]}
+              numberOfLines={subtitle ? 1 : 2}
+            >
+              {children}
+            </RegularText>
+            {subtitle &&
+              <RegularText size={typography.small} style={{ color: colors.secondaryDarker }}>
+                {subtitle}
+              </RegularText>
+            }
+          </View>
         </View>
         {selectedRightIconSource && selectedRightIconName && (
           <View style={regularRowItemStyles.rightIconContainer}>

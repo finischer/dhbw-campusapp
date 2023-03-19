@@ -63,5 +63,6 @@ export type IRegularRowItemProps = {
   disabled?: boolean;
   marginTop?: number;
   marginBottom?: number;
+  subtitle?: string | undefined;
 } & ConditonalLeftIcons &
   ConditonalRightIcons;
