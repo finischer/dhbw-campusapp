@@ -21,7 +21,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ lecture, index }) => {
 
   return (
     <Animated.View
-      entering={enteringDelayedAnimation(index)}
+      entering={enteringDelayedAnimation(index * 0.5)}
       layout={Layout}
       style={[lectureRowItemStyles.container, localRowItemStyles.container]}
     >
