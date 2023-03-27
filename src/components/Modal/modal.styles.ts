@@ -26,13 +26,6 @@ export const modalStyles = StyleSheet.create({
     alignSelf: "center",
     position: "absolute",
     bottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
     zIndex: 999,
     elevation: 6,
   },
