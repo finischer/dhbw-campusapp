@@ -19,10 +19,12 @@ import { RootStackParamList } from "../../infrastructure/navigation/Navigation/n
 import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
 import AppInfo from "./components/AppInfo";
 import { moreScreenStyles } from "./moreScreen.styles";
+import * as WebBrowser from 'expo-web-browser';
+
 
 const MoreScreen = () => {
   const { alert } = useAlert();
-  const { theme, changeTheme, isAndroid } = useMetadata();
+  const { theme, changeTheme, isAndroid, colors } = useMetadata();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
@@ -52,16 +54,12 @@ const MoreScreen = () => {
   };
 
   const openExternalLink = async (url: string) => {
-    const canOpenUrl = await Linking.canOpenURL(url);
-
-    if (!canOpenUrl) {
-      const title = t("common:errorOccured");
-      const message = t("moreScreen:alertErrorMessageUrl");
-      alert(title, message);
-      return;
-    }
-
-    await Linking.openURL(url);
+    await WebBrowser.openBrowserAsync(url, {
+      controlsColor: colors.lightText,
+      secondaryToolbarColor: colors.lightText,
+      enableBarCollapsing: true,
+      toolbarColor: colors.accent
+    });
   };
 
   const handleImportCalendar = () => {
