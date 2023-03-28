@@ -14,6 +14,7 @@ import Animated, {
   FadeOutUp,
   Layout,
 } from "react-native-reanimated";
+import { SPACING } from "../../constants/layout";
 
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 
@@ -70,7 +71,7 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
       <>
         {isFocused && <StatusBar barStyle={statusBarStyle} />}
         <GlobalBody style={modalStyles.wrapperContainer}>
-          <SafeAreaView style={{ flex: 1 }}>
+          <SafeAreaView style={{ flex: 1, paddingVertical: SPACING.xl }}>
             <View style={{ flex: 1 }}>
               {/* Header View */}
               <View style={modalStyles.headerContainer}>
