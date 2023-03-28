@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import Icon from "../../../components/Icon";
 
 export const TAB_BAR_HEIGHT = WINDOW_HEIGHT * 0.1;
-export const HEADER_HEIGHT = WINDOW_HEIGHT * 0.1;
+export const HEADER_HEIGHT = WINDOW_HEIGHT * 0.11;
 
 export const headerConfig = (): StackNavigationOptions => {
   const { colors } = useMetadata();
@@ -29,6 +29,9 @@ export const headerConfig = (): StackNavigationOptions => {
     headerTitleStyle: {
       fontFamily: typography.Bold,
       alignSelf: "center",
+    },
+    headerTitleContainerStyle: {
+      // backgroundColor: "green"
     },
     headerBackTitle,
     headerTitleAlign: "center",

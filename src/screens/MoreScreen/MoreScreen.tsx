@@ -23,7 +23,6 @@ import * as WebBrowser from 'expo-web-browser';
 
 
 const MoreScreen = () => {
-  const { alert } = useAlert();
   const { theme, changeTheme, isAndroid, colors } = useMetadata();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

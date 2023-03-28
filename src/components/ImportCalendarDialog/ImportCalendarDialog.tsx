@@ -12,7 +12,7 @@ import { useMetadata } from "../../hooks/useMetadata";
 const ImportCalendarDialog = React.forwardRef<
   IImportCalendarDialogFunctions,
   IImportCalendarDialogProps
->(({}, ref) => {
+>(({ }, ref) => {
   const { t } = useTranslation();
   const { colors } = useMetadata();
   const { changeCourseByUrl } = useLectures();
@@ -43,9 +43,10 @@ const ImportCalendarDialog = React.forwardRef<
     <Dialog.Container
       onBackdropPress={closeDialog}
       contentStyle={{
-        backgroundColor: colors.primary,
+        backgroundColor: colors.primary
       }}
       visible={showDialog}
+
     >
       <Dialog.Title
         style={{

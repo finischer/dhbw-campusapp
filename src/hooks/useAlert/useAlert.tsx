@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Alert, AlertType, Linking } from "react-native";
 import { useMetadata } from "../useMetadata";
+import * as WebBrowser from 'expo-web-browser';
 
 const useAlert = () => {
   const { t } = useTranslation();
-  const { theme } = useMetadata();
+  const { theme, colors } = useMetadata();
   const interfaceStyle = theme === "system" ? "unspecified" : theme;
 
   const alert = (title: string, message: string) => {
@@ -16,12 +17,12 @@ const useAlert = () => {
 
   const openLink = async (url: string | undefined) => {
     if (url) {
-      const canOpenUrl = await Linking.canOpenURL(url);
-      if (canOpenUrl) {
-        await Linking.openURL(url);
-      } else {
-        alert(t("common:errorOccured"), t("common:alertUrlError"));
-      }
+      await WebBrowser.openBrowserAsync(url, {
+        controlsColor: colors.lightText,
+        secondaryToolbarColor: colors.lightText,
+        enableBarCollapsing: true,
+        toolbarColor: colors.accent
+      });
     }
   };
 
