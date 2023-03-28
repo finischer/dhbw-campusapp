@@ -17,6 +17,7 @@ export const regularRowItemStyles = StyleSheet.create({
     paddingRight: 60,
   },
   leftIconContainer: {
+    justifyContent: "center",
     paddingRight: SPACING.m,
   },
   rightIconContainer: {},
