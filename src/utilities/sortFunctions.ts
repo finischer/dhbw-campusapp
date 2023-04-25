@@ -1,6 +1,3 @@
-import _ from "lodash";
-import { Type } from "typescript";
-
 type ObjectType = {
   [key: string]: any;
 };
