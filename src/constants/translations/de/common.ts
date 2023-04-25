@@ -21,4 +21,5 @@ export default {
   refreshButtonText: "Nochmal versuchen",
   alertUrlError: "Link kann nicht geöffnet werden",
   cancel: "Zurück",
+  hint: "Hinweis",
 };

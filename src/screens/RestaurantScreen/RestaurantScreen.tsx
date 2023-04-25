@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   DeviceEventEmitter,
@@ -27,13 +27,17 @@ import {
   IRenderMenuListProps,
   IRestaurantState
 } from "./restaurantScreen.types";
+import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
+import useAlert from "../../hooks/useAlert/useAlert";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle", newValue);
 };
 
 const RestaurantScreen = () => {
-  const { t } = useTranslation("restaurantScreen");
+  const { t } = useTranslation(["restaurantScreen", "common"]);
+  const { alert } = useAlert();
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage, deleteFromAsyncStorage } = useAsyncStorage()
   const { language, dhbwLocation } = useMetadata();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { restaurantName, formattedRestaurantName, fetchRestaurant } =
@@ -59,11 +63,26 @@ const RestaurantScreen = () => {
         additivesDict: restaurant.additivesDict,
         requestTime: moment(),
       }));
+      checkForFirstTime();
     },
     onError: () => {
       setHeaderSubtitle(true);
     },
   });
+
+  const checkForFirstTime = async () => {
+    // check if screen appears for the first time
+    await deleteFromAsyncStorage("restaurantScreen.alreadySeen")
+    const alreadySeenScreen = await getDataFromAsyncStorage("restaurantScreen.alreadySeen");
+
+    if (alreadySeenScreen) return
+
+    storeDataInAsyncStorage("restaurantScreen.alreadySeen", true)
+    // show alert
+    alert(t("hint", { ns: "common" }), t("swipeHintDescription"))
+
+  }
+
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y >= 33) {
