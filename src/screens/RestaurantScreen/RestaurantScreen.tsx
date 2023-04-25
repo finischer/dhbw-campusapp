@@ -72,15 +72,14 @@ const RestaurantScreen = () => {
 
   const checkForFirstTime = async () => {
     // check if screen appears for the first time
-    await deleteFromAsyncStorage("restaurantScreen.alreadySeen")
     const alreadySeenScreen = await getDataFromAsyncStorage("restaurantScreen.alreadySeen");
 
     if (alreadySeenScreen) return
 
     storeDataInAsyncStorage("restaurantScreen.alreadySeen", true)
+
     // show alert
     alert(t("hint", { ns: "common" }), t("swipeHintDescription"))
-
   }
 
 
