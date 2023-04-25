@@ -19,4 +19,5 @@ export type RootStackParamList = {
   SelectLocationScreen?: undefined;
   LicensesScreen?: undefined;
   NotificationSettingsScreen?: undefined;
+  CampusplanScreen?: undefined;
 };
