@@ -1,5 +1,5 @@
 import * as Device from "expo-device";
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 import { DeviceType } from "./device.types";
 
 export const WINDOW_HEIGHT: number = Dimensions.get("window").height;
@@ -10,3 +10,6 @@ export const DEVICE: DeviceType = {
   version: Device.osVersion,
   modelName: Device.modelName,
 };
+
+export const isAndroid = Platform.OS === "android";
+export const isIos = Platform.OS === "ios";

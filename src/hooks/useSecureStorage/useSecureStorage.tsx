@@ -6,7 +6,8 @@ const useSecureStorage = () => {
     key: SecureStoreEntries,
     value: any
   ) => {
-    await SecureStore.setItemAsync(key, JSON.stringify(value));
+    const stringValue = JSON.stringify(value);
+    await SecureStore.setItemAsync(key, stringValue);
   };
 
   const getValueFromSecureStorage = async (key: SecureStoreEntries) => {

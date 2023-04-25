@@ -18,4 +18,5 @@ export type RootStackParamList = {
   LegalNoticeScreen?: undefined;
   SelectLocationScreen?: undefined;
   LicensesScreen?: undefined;
+  NotificationSettingsScreen?: undefined;
 };

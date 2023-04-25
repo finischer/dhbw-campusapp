@@ -81,6 +81,9 @@ const MoreScreen = () => {
           <RegularRowItem
             leftIconSource="feather"
             leftIcon="message-square"
+            rightIconSource="feather"
+            rightIcon="chevron-right"
+            onClick={() => goTo("NotificationSettingsScreen")}
             disabled
           >
             {t("moreScreen:notifications")}

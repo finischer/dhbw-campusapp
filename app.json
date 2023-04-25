@@ -17,6 +17,9 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch"]
+      },
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
       "config": {
         "usesNonExemptEncryption": false

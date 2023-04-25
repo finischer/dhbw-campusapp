@@ -6,7 +6,8 @@ import ChangeLanguageScreen from "../../../screens/ChangeLanguageScreen";
 import LegalNoticeScreen from "../../../screens/LegalNoticeScreen";
 import LicensesScreen from "../../../screens/LicensesScreen";
 import MoreScreen from "../../../screens/MoreScreen";
-import SelectLocationScreen from "../../../screens/SelectLocationScreen/SelectLocationScreen";
+import NotificationSettingsScreen from "../../../screens/NotificationSettingsScreen";
+import SelectLocationScreen from "../../../screens/SelectLocationScreen";
 import { headerConfig } from "../Navigation/config";
 
 const Stack = createStackNavigator();
@@ -21,6 +22,15 @@ const MoreNavigator = () => {
         component={MoreScreen}
         options={{
           headerTitle: () => <NavigationHeader title={t("navigation:more")} />,
+        }}
+      />
+      <Stack.Screen
+        name="NotificationSettingsScreen"
+        component={NotificationSettingsScreen}
+        options={{
+          headerTitle: () => (
+            <NavigationHeader title={t("moreScreen:notifications")} />
+          ),
         }}
       />
       <Stack.Screen

@@ -1,14 +1,16 @@
-import { Text, View } from "react-native";
-import Navigation from "./src/infrastructure/navigation/Navigation";
 import { useFonts } from "@expo-google-fonts/source-sans-pro";
 import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { Text, View } from "react-native";
 
-import "./src/services/i18next/i18next.config";
-import { QueryClientProvider, QueryClient } from "react-query";
+
+import { QueryClient, QueryClientProvider } from "react-query";
 import { DualisProvider } from "./src/hooks/useDualis/useDualis";
+import { LecturesProvider } from "./src/hooks/useLectures";
 import { MetaDataProvider } from "./src/hooks/useMetadata";
 import { RestaurantProvider } from "./src/hooks/useRestaurant/useRestaurant";
-import { LecturesProvider } from "./src/hooks/useLectures";
+import "./src/services/i18next/i18next.config";
+import Navigation from "./src/infrastructure/navigation/Navigation";
 
 const queryClient = new QueryClient();
 

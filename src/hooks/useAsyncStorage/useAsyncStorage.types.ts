@@ -6,4 +6,6 @@ export type AsyncStorageEntries =
   | "course"
   | "icalUrl"
   | "accessGranted"
-  | "dhbwLocation";
+  | "dhbwLocation"
+  | "notifications-allowed"
+  | "notifications-settings";

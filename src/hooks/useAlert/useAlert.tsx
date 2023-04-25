@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Alert, AlertType, Linking } from "react-native";
+import { Alert, AlertButton, AlertType } from "react-native";
 import { useMetadata } from "../useMetadata";
 import * as WebBrowser from 'expo-web-browser';
 
@@ -8,8 +8,8 @@ const useAlert = () => {
   const { theme, colors } = useMetadata();
   const interfaceStyle = theme === "system" ? "unspecified" : theme;
 
-  const alert = (title: string, message: string) => {
-    Alert.alert(title, message, [], {
+  const alert = (title: string, message: string, buttons: AlertButton[] = []) => {
+    Alert.alert(title, message, buttons, {
       userInterfaceStyle: interfaceStyle,
       cancelable: true,
     });
@@ -30,7 +30,7 @@ const useAlert = () => {
     title: string,
     message: string | undefined = undefined,
     buttonText: string = "Ok",
-    handleOnPress: ((text: string) => void) | undefined = undefined,
+    handleOnPress: ((text: string) => void) | undefined,
     type: AlertType | undefined = undefined,
     defaultValue: string | undefined = undefined,
     keyboardType: string | undefined = undefined

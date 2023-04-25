@@ -3,4 +3,5 @@ export type SecureStoreEntries =
   | "password"
   | "cookies"
   | "arguments"
-  | "ical";
+  | "ical"
+  | "expo-push-token";
