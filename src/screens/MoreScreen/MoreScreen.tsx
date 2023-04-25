@@ -13,14 +13,12 @@ import RegularRowItem from "../../components/RegularRowItem";
 import SettingSection from "../../components/SettingSection";
 import Switch from "../../components/Switch/Switch";
 import { CONTACT_MAIL } from "../../constants/common";
-import useAlert from "../../hooks/useAlert";
 import { useMetadata } from "../../hooks/useMetadata";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
 import AppInfo from "./components/AppInfo";
 import { moreScreenStyles } from "./moreScreen.styles";
 import * as WebBrowser from 'expo-web-browser';
-
 
 const MoreScreen = () => {
   const { theme, changeTheme, isAndroid, colors } = useMetadata();
@@ -47,9 +45,13 @@ const MoreScreen = () => {
     const subject = t("common:emailSubjectBugFound").concat(` - ${reportId}`);
     const body = t("common:emailBodyBugFound");
 
-    await Linking.openURL(
-      `mailto:${CONTACT_MAIL}?subject=${subject}&body=${body}`
-    );
+    const url = `mailto:${CONTACT_MAIL}?subject=${subject}&body=${body}`
+
+    if (await Linking.canOpenURL(url)) {
+      await Linking.openURL(
+        `mailto:${CONTACT_MAIL}?subject=${subject}`
+      )
+    }
   };
 
   const openExternalLink = async (url: string) => {

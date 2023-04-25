@@ -1,5 +1,5 @@
-import { APP_VERSION } from "../../../_app_config";
 import { DEVICE } from "../../device/device";
+import { version as appVersion } from "../../../../package.json";
 
 export default {
   monday: "Montag",
@@ -16,7 +16,7 @@ export default {
   german: "Deutsch",
   english: "Englisch",
   emailSubjectBugFound: "[DHBW CampusApp] Bug gefunden",
-  emailBodyBugFound: `Informationen zum Smartphone:\nHersteller: ${DEVICE.brand}\n Modell: ${DEVICE.modelName}\nSystem Version: ${DEVICE.version}\nApp Version: ${APP_VERSION}\nBeschreibung des Bugs:\n`,
+  emailBodyBugFound: `Informationen zum Smartphone:\nHersteller: ${DEVICE.brand}\n Modell: ${DEVICE.modelName}\nSystem Version: ${DEVICE.version}\nApp Version: ${appVersion}\nBeschreibung des Bugs:\n`,
   errorOccured: "Es ist ein Fehler aufgetreten",
   refreshButtonText: "Nochmal versuchen",
   alertUrlError: "Link kann nicht geöffnet werden",
