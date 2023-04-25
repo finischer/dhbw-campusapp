@@ -96,7 +96,7 @@ const SubjectRowItem = ({
 
         {/* Details Button */}
         <View style={subjectRowStyles.detailsButtonContainer}>
-          <Icon source="feather" name="chevron-right" size={24} />
+          <Icon source="feather" name="chevron-right" size={24} onClick={openSubjectDetails} />
         </View>
       </Animated.View>
     </TouchableOpacity>
