@@ -16,12 +16,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "5"
+      "buildNumber": "6"
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
