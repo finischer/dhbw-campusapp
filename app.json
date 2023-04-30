@@ -17,14 +17,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
-      },
+      "infoPlist": {},
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
