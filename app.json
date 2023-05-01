@@ -16,15 +16,17 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
-      "buildNumber": "7"
+      "buildNumber": "8"
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
