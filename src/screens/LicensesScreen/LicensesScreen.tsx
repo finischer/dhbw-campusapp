@@ -29,7 +29,7 @@ const LicensesScreen = () => {
     });
 
     return (
-        <GlobalBody>
+        <GlobalBody noVerticalPadding>
             <FlatList
                 data={sortArrayByKey(finalLicenses, "libraryName" as keyof FinaleLicenseType) as FinaleLicenseType[]}
                 renderItem={({ item, index }: { item: FinaleLicenseType, index: number }) => (
