@@ -2,6 +2,7 @@
   "expo": {
     "name": "DHBW CampusApp",
     "slug": "dhbw-campusapp",
+    "owner": "niklasfischer0",
     "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,15 +13,13 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
-      "config": {
-        "usesNonExemptEncryption": false
-      },
       "buildNumber": "7"
     },
     "android": {
@@ -35,6 +34,9 @@
       "eas": {
         "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
