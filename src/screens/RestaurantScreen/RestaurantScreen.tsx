@@ -63,12 +63,15 @@ const RestaurantScreen = () => {
         additivesDict: restaurant.additivesDict,
         requestTime: moment(),
       }));
-      checkForFirstTime();
     },
     onError: () => {
       setHeaderSubtitle(true);
     },
   });
+
+  useEffect(() => {
+    checkForFirstTime();
+  }, [])
 
   const checkForFirstTime = async () => {
     // check if screen appears for the first time
