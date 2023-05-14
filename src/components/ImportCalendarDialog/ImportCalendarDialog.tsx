@@ -51,7 +51,7 @@ const ImportCalendarDialog = React.forwardRef<
 
       }}
       visible={showDialog}
-      blurComponentIOS={<View></View>} // prevents weird bug, where backgroundColor is not registered on iOS
+      blurComponentIOS={<View />} // prevents weird bug, where backgroundColor is not registered on iOS
     >
       <Dialog.Title
         style={{
