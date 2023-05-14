@@ -16,12 +16,13 @@ const ImportCalendarDialog = React.forwardRef<
   IImportCalendarDialogProps
 >(({ }, ref) => {
   const { t } = useTranslation();
-  const { colors, theme, isAndroid } = useMetadata();
+  const { colors, theme, isAndroid, isIOS } = useMetadata();
   const { changeCourseByUrl } = useLectures();
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [inputText, setInputText] = useState<string>("");
 
   const inputTextColor = isAndroid ? colors.secondary : colors.darkText;
+  const placeholderTextColor = colors.secondaryDarker
 
   // add local functions, so that you can use these functions in other components
   useImperativeHandle(ref, () => ({
@@ -68,12 +69,16 @@ const ImportCalendarDialog = React.forwardRef<
         {t("moreScreen:importCalendarPromptMessage")}
       </Dialog.Description>
       <Dialog.Input
+        wrapperStyle={{
+          backgroundColor: isIOS ? colors.primaryDarker : ""
+        }}
         style={{
-          color: inputTextColor,
+          color: colors.secondary,
         }}
         selectionColor={colors.accent}
         onChangeText={(newText: string) => setInputText(newText)}
         placeholder={INPUT_PLACEHOLDER}
+        placeholderTextColor={placeholderTextColor}
       />
       <Dialog.Button
         style={{

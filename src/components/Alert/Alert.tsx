@@ -1,9 +1,10 @@
-import React, { useImperativeHandle, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Dialog from "react-native-dialog";
 import { useMetadata } from '../../hooks/useMetadata';
 import { alertStyles } from './alert.styles';
 import { IAlertFunctions, IAlertProps } from './alert.types';
+import { StatusBar } from 'expo-status-bar';
 
 
 const Alert = React.forwardRef<
@@ -51,7 +52,7 @@ const Alert = React.forwardRef<
 
     return (
         <Dialog.Container
-
+            blurStyle={{ backgroundColor: "green" }}
             onBackdropPress={closeAlert}
             visible={visible}
             contentStyle={[alertStyles.container, localAlertStyles.container]}
@@ -63,6 +64,7 @@ const Alert = React.forwardRef<
             </Dialog.Description>
             {buttonElements}
         </Dialog.Container>
+
     )
 })
 

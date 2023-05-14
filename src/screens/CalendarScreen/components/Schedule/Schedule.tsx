@@ -72,6 +72,7 @@ const Schedule: React.FC<IScheduleProps> = ({ lectures, localLectures, ...props 
         )}
         {...props}
       />
+
     </>
   );
 };
