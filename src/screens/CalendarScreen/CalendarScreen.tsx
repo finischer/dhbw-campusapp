@@ -43,7 +43,11 @@ const CalendarScreen = () => {
   const fetchSchedule = async () => {
     const { data: lectures, requestTime }: IResponseTypes = await getSchedule();
     const localLectures = await getDataFromAsyncStorage("lectures"); // save the old state of lectures
-    storeDataInAsyncStorage("lectures", lectures) // store the new lectures in localStorage
+
+    // only if lectures exist -> don't save null or undefined in localStorage
+    if (lectures) {
+      storeDataInAsyncStorage("lectures", lectures) // store the new lectures in localStorage
+    }
     return { lectures, localLectures, requestTime };
   };
 
