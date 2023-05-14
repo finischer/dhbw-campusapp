@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SectionList } from "react-native";
 import { LectureType } from "../../../../api/lectures/lectures.types";
 import useAlert from "../../../../hooks/useAlert";
@@ -8,20 +8,25 @@ import LectureRowItem from "../LectureRowItem";
 import { scheduleStyles } from "./schedule.styles";
 import { IScheduleProps } from "./schedule.types";
 import { useTranslation } from "react-i18next";
+import Alert from "../../../../components/Alert/Alert";
+import { IAlertFunctions } from "../../../../components/Alert/alert.types";
+import { DialogButtonProps } from "react-native-dialog/lib/Button";
 
 const Schedule: React.FC<IScheduleProps> = ({ lectures, localLectures, ...props }) => {
   const { t } = useTranslation("calendarScreen");
 
   const { alert } = useAlert()
+  const alertRef = useRef<IAlertFunctions | null>(null)
   const [showAlert, setShowAlert] = useState(false)
+  const alertButtons: DialogButtonProps[] = [{
+    label: "Ok",
+    onPress: () => alertRef.current?.closeAlert()
+  }]
 
   useEffect(() => {
     if (showAlert) {
       // TODO: Display Button which says to not show this message again
-      alert(
-        t("alertScheduleChangesTitle"),
-        t("alertScheduleChangesMessage")
-      )
+      alertRef.current?.openAlert()
     }
   }, [showAlert])
 
@@ -45,24 +50,32 @@ const Schedule: React.FC<IScheduleProps> = ({ lectures, localLectures, ...props 
   }
 
   return (
-    <SectionList
-      contentContainerStyle={scheduleStyles.container}
-      stickySectionHeadersEnabled
-      sections={lectures}
-      keyExtractor={(item: LectureType) => item.uid}
-      renderItem={({ item, index }) => (
-        <LectureRowItem
-          alertScheduleChanges={alertScheduleChanges}
-          localLecture={getLocalLectureById(item.uid)}
-          lecture={item}
-          index={index}
-        />
-      )}
-      renderSectionHeader={({ section: { title, index } }) => (
-        <DateHeader title={title} index={index} />
-      )}
-      {...props}
-    />
+    <>
+      <Alert
+        ref={alertRef}
+        title={t("alertScheduleChangesTitle")}
+        description={t("alertScheduleChangesMessage")}
+        buttons={alertButtons}
+      />
+      <SectionList
+        contentContainerStyle={scheduleStyles.container}
+        stickySectionHeadersEnabled
+        sections={lectures}
+        keyExtractor={(item: LectureType) => item.uid}
+        renderItem={({ item, index }) => (
+          <LectureRowItem
+            alertScheduleChanges={alertScheduleChanges}
+            localLecture={getLocalLectureById(item.uid)}
+            lecture={item}
+            index={index}
+          />
+        )}
+        renderSectionHeader={({ section: { title, index } }) => (
+          <DateHeader title={title} index={index} />
+        )}
+        {...props}
+      />
+    </>
   );
 };
 

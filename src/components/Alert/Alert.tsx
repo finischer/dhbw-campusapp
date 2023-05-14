@@ -4,6 +4,7 @@ import Dialog from "react-native-dialog";
 import { IAlertFunctions, IAlertProps } from './alert.types';
 import { alertStyles } from './alert.styles';
 import { useMetadata } from '../../hooks/useMetadata';
+import DialogSwitch from 'react-native-dialog/lib/Switch';
 
 
 const Alert = React.forwardRef<
@@ -51,7 +52,7 @@ const Alert = React.forwardRef<
 
     return (
         <Dialog.Container
-            useNativeDriver
+
             onBackdropPress={closeAlert}
             visible={visible}
             contentStyle={[alertStyles.container, localAlertStyles.container]}
