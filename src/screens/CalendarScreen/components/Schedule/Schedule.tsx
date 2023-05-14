@@ -25,10 +25,10 @@ const Schedule: React.FC<IScheduleProps> = ({ lectures, localLectures, ...props 
     }
   }, [showAlert])
 
-  // TODO: Substitute dummy lectures to real lectures before go to production
+  // FOR TESTING ONLY: Replace localLectures by dummyLectures
   const getLocalLectureById = (uid: string) => {
-    for (let i = 0; i < dummyLectures.length; i++) {
-      const data = dummyLectures[i].data
+    for (let i = 0; i < localLectures.length; i++) {
+      const data = localLectures[i].data
 
       for (let j = 0; j < data.length; j++) {
         if (data[j].uid === uid) {

@@ -22,4 +22,7 @@ export default {
   alertUrlError: "Link cannot be opened",
   cancel: "Cancel",
   hint: "Hint",
+  before: "Before",
+  current: "Current",
+  maintenanceHintDesign: "Design is still being worked on 🛠️",
 };

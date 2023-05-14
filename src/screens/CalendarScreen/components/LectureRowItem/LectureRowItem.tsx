@@ -16,12 +16,13 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
 
-const LECTURE_TIME_FORMAT = "HH:mm";
+export const LECTURE_TIME_FORMAT = "HH:mm";
 
 // TODO: make a modal when click on a lecture to show the difference between the old and the new lecture information 
 
 const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, localLecture, lecture, index }) => {
   const [lectureChanged, setLectureChanged] = useState(false);
+  const [keyChanges, setKeyChanges] = useState<Array<keyof LectureType>>([]) // keys where the values has changed -> to identify what has been changed
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { colors, timeFormat } = useMetadata();
   const textVariant: IRegularTextVariants = lectureChanged ? "dark" : undefined
@@ -44,8 +45,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
         if (value !== localLecture[_key]) {
           alertScheduleChanges() // show alert which says that there are changes in the schedule
           setLectureChanged(true)
-          break; // only break to see is there any difference. Remove break when we want to know all differences
-
+          setKeyChanges(oldState => [...oldState, _key])
           // TODO: send a push notification with the new information
         }
       }
@@ -66,22 +66,9 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
   //   return uid
   // }
 
-  const createLectureInfoString = (lecture: LectureType | null) => {
-    if (!lecture) return "Lecture Error"
-
-    const str = `
-      Titel: ${lecture.lecture}
-      Start: ${lecture.startTime} ${lecture.startDate}
-      Ende: ${lecture.endTime} ${lecture.endDate}
-      Raum: ${lecture.location}
-    `
-
-    return str;
-
-  }
 
   const showLecturesChanges = () => {
-    navigation.navigate("LectureInformationScreen", { oldLecture: localLecture, newLecture: lecture });
+    navigation.navigate("LectureInformationScreen", { oldLecture: localLecture, newLecture: lecture, keyChanges });
   }
 
   return (

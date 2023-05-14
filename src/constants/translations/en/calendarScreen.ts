@@ -9,4 +9,5 @@ export default {
   alertScheduleChangesTitle: "Changes in the lecture schedule!",
   alertScheduleChangesMessage:
     "You may have noticed that some lectures have changed. To learn more, simply click on the appropriately marked lecture and check out the details.",
+  lectureInformationTitle: "Lecture Changes",
 };
