@@ -1,10 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useImperativeHandle, useState } from 'react'
+import React, { useImperativeHandle, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Dialog from "react-native-dialog";
-import { IAlertFunctions, IAlertProps } from './alert.types';
-import { alertStyles } from './alert.styles';
 import { useMetadata } from '../../hooks/useMetadata';
-import DialogSwitch from 'react-native-dialog/lib/Switch';
+import { alertStyles } from './alert.styles';
+import { IAlertFunctions, IAlertProps } from './alert.types';
 
 
 const Alert = React.forwardRef<
