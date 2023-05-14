@@ -12,6 +12,8 @@ const Colors = {
   green600: "#43b643",
   green500: "#60b643",
   white: "#eff1f2",
+  yellow500: "#FFD95A",
+  yellow600: "#FFC107",
 };
 
 const darkModeColors: IColors = {
@@ -26,6 +28,7 @@ const darkModeColors: IColors = {
   lightText: Colors.white,
   darkText: Colors.gray700,
   error: Colors.red600,
+  danger: Colors.yellow500,
 };
 
 const lightModeColors: IColors = {
@@ -40,6 +43,7 @@ const lightModeColors: IColors = {
   lightText: Colors.white,
   darkText: Colors.gray700,
   error: Colors.red600,
+  danger: Colors.yellow600,
 };
 
 export { darkModeColors, lightModeColors };

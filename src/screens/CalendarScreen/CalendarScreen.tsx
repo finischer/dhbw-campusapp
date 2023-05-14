@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
-import { OrganizedLectures } from "../../api/lectures/lectures.types";
+import { LectureType, OrganizedLectures } from "../../api/lectures/lectures.types";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
@@ -24,10 +24,55 @@ import { calendarScreenStyles } from "./calendarScreen.styles";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
 import ErrorView from "../../components/ErrorView";
 import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
+import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
 };
+
+// function compareLectures(lectures1: OrganizedLectures[], lectures2: OrganizedLectures[]) {
+//   // Initialize an empty array to store the differences
+//   const differences = [];
+
+//   // Loop through each lecture in the first array
+//   for (const lecture1 of lectures1) {
+//     // Find the corresponding lecture in the second array by comparing uids
+//     const lecture2 = lectures2.find((l) => l.data.some((d) => d.uid === lecture1.data[0].uid));
+
+//     // If no corresponding lecture is found, add the entire lecture1 object to the differences array
+//     if (!lecture2) {
+//       differences.push(lecture1);
+//       continue;
+//     }
+
+//     // Otherwise, loop through each data object in the lecture1 data array
+//     for (const data1 of lecture1.data) {
+//       // Find the corresponding data object in the lecture2 data array by comparing uids
+//       const data2 = lecture2.data.find((d) => d.uid === data1.uid);
+
+//       // If no corresponding data object is found, add the entire lecture1 object to the differences array
+//       if (!data2) {
+//         differences.push(lecture1);
+//         break;
+//       }
+
+//       // Otherwise, check if the two data objects are equal
+//       if (!isEqual(data1, data2)) {
+//         differences.push(lecture1);
+//         break;
+//       }
+//     }
+//   }
+
+//   console.log("Differences: ", JSON.stringify(differences, null, 4))
+//   // Return the differences array
+//   return differences;
+// }
+
+// // Helper function to compare two objects for equality
+// function isEqual(obj1: LectureType, obj2: LectureType) {
+//   return JSON.stringify(obj1) === JSON.stringify(obj2);
+// }
 
 const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
@@ -35,12 +80,15 @@ const CalendarScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [searchString, setSearchString] = useState<string>("");
   const { importCalendar } = moreScreenFunctions();
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage()
 
   const loaderText = t("loadingLectures");
 
   const fetchSchedule = async () => {
     const { data: lectures, requestTime }: IResponseTypes = await getSchedule();
-    return { lectures, requestTime };
+    const localLectures = await getDataFromAsyncStorage("lectures"); // save the old state of lectures
+    storeDataInAsyncStorage("lectures", lectures) // store the new lectures in localStorage
+    return { lectures, localLectures, requestTime };
   };
 
   const {
@@ -130,6 +178,7 @@ const CalendarScreen = () => {
       <Schedule
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
+        localLectures={data.localLectures}
         lectures={filterLectures(
           searchString,
           data?.lectures as OrganizedLectures[]
