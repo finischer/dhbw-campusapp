@@ -22,4 +22,6 @@ export default {
   alertUrlError: "Link kann nicht geöffnet werden",
   cancel: "Zurück",
   hint: "Hinweis",
+  openingHours: "Öffnungszeiten",
+  adress: "Adresse",
 };

@@ -7,10 +7,12 @@ import TouchableOpacity from '../../components/TouchableOpacity/TouchableOpacity
 import typography from '../../constants/typography/typography'
 import { useMetadata } from '../../hooks/useMetadata'
 import { campusplanScreenStyles } from './campusplanScreen.styles'
+import { useTranslation } from "react-i18next"
 
 const blurhash = "LJM@fjs.D%%M%Mt7IVof~pofbHM{"
 
 const CampusplanScreen = () => {
+    const { t } = useTranslation("common")
     const { colors } = useMetadata();
 
     const localStyles = {
@@ -36,7 +38,7 @@ const CampusplanScreen = () => {
                 <View style={campusplanScreenStyles.infoContainer}>
                     {/* Adress View */}
                     <View style={campusplanScreenStyles.infoSection}>
-                        <RegularText weight='bold' size={typography.h2}>Adresse</RegularText>
+                        <RegularText weight='bold' size={typography.h2}>{t("adress")}</RegularText>
                         <TouchableOpacity>
                             <RegularText underline>Duale Hochschule Baden-Württemberg Mannheim</RegularText>
                             <RegularText underline>Coblitzallee 1-9</RegularText>
@@ -46,7 +48,7 @@ const CampusplanScreen = () => {
 
                     {/* Opening hours View */}
                     <View style={campusplanScreenStyles.infoSection}>
-                        <RegularText weight='bold' size={typography.h2}>Öffnungszeiten</RegularText>
+                        <RegularText weight='bold' size={typography.h2}>{t("openingHours")}</RegularText>
                         <View style={campusplanScreenStyles.openingHoursSection}>
                             <View>
                                 <RegularText weight='bold'>Gebäudeteile A, B, und C</RegularText>
