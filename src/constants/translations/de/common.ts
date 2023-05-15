@@ -25,4 +25,10 @@ export default {
   before: "Vorher",
   current: "Aktuell",
   maintenanceHintDesign: "Am Design wird noch gearbeitet 🛠️",
+  lecture: "Vorlesung",
+  startDate: "Startdatum",
+  startTime: "Startzeit",
+  endDate: "Enddatum",
+  endTime: "Endzeit",
+  location: "Ort",
 };
