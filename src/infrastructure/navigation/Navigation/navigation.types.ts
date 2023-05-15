@@ -31,4 +31,5 @@ export type RootStackParamList = {
   LicensesScreen?: undefined;
   NotificationSettingsScreen?: undefined;
   LectureInformationScreen?: LectureInformationScreenProps | undefined;
+  CampusplanScreen?: undefined;
 };
