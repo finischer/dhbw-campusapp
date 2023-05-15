@@ -78,7 +78,7 @@ const MoreNavigator = () => {
         component={CampusplanScreen}
         options={{
           headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:campusplan")} />
+            <NavigationHeader title={t("moreScreen:campusplan")} subTitle="Coblitzallee" showSubTitle />
           ),
         }}
       />

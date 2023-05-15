@@ -1,10 +1,14 @@
+import { Image } from "expo-image"
 import React from 'react'
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import GlobalBody from '../../components/GlobalBody/GlobalBody'
 import RegularText from '../../components/RegularText/RegularText'
-import { Image } from 'expo-image'
-import { campusplanScreenStyles } from './campusplanScreen.styles'
+import TouchableOpacity from '../../components/TouchableOpacity/TouchableOpacity'
+import typography from '../../constants/typography/typography'
 import { useMetadata } from '../../hooks/useMetadata'
+import { campusplanScreenStyles } from './campusplanScreen.styles'
+
+const blurhash = "LJM@fjs.D%%M%Mt7IVof~pofbHM{"
 
 const CampusplanScreen = () => {
     const { colors } = useMetadata();
@@ -17,16 +21,52 @@ const CampusplanScreen = () => {
 
     return (
         <GlobalBody>
-            <Image
-                style={[campusplanScreenStyles.image, localStyles.image]}
-                source={require("../../../assets/images/campus-plan-coblitzallee.png")}
-                contentFit="contain"
-                contentPosition="top center"
-                transition={1000}
-            />
-            <View style={campusplanScreenStyles.infoContainer}>
-                <RegularText>Das ist der Campusplan für die DHBW Mannheim</RegularText>
-            </View>
+            <ScrollView>
+
+                {/* Campusplan */}
+                <Image
+                    style={[campusplanScreenStyles.image, localStyles.image]}
+                    placeholder={blurhash}
+                    source={require("../../../assets/images/campus-plan-coblitzallee.png")}
+                    contentFit="contain"
+                    contentPosition="top center"
+                />
+
+                {/* General information about Campus */}
+                <View style={campusplanScreenStyles.infoContainer}>
+                    {/* Adress View */}
+                    <View style={campusplanScreenStyles.infoSection}>
+                        <RegularText weight='bold' size={typography.h2}>Adresse</RegularText>
+                        <TouchableOpacity>
+                            <RegularText underline>Duale Hochschule Baden-Württemberg Mannheim</RegularText>
+                            <RegularText underline>Coblitzallee 1-9</RegularText>
+                            <RegularText underline>68163 Mannheim</RegularText>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* Opening hours View */}
+                    <View style={campusplanScreenStyles.infoSection}>
+                        <RegularText weight='bold' size={typography.h2}>Öffnungszeiten</RegularText>
+                        <View style={campusplanScreenStyles.openingHoursSection}>
+                            <View>
+                                <RegularText weight='bold'>Gebäudeteile A, B, und C</RegularText>
+                                <RegularText size={typography.small}>Mo bis Fr: 06:30 Uhr – 20:00 Uhr</RegularText>
+                            </View>
+                            <View>
+                                <RegularText weight='bold'>Gebäude D</RegularText>
+                                <RegularText size={typography.small}>Mo bis Fr: 06:30 Uhr – 20:00 Uhr</RegularText>
+                                <RegularText size={typography.small}>Sa: 08:00 Uhr – 17:00 Uhr (ggf. nach Vorlesungsplan)</RegularText>
+                            </View>
+                            <View>
+
+                                <RegularText weight='bold'>Gebäude E</RegularText>
+                                <RegularText size={typography.small}>Mo bis Fr: 06:30 Uhr – 20:00 Uhr</RegularText>
+                            </View>
+                        </View>
+                    </View>
+
+                </View>
+            </ScrollView>
         </GlobalBody>
     )
 }
