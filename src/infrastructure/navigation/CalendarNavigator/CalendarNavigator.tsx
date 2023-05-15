@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../Navigation/navigation.types";
 import { useLectures } from "../../../hooks/useLectures";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../../constants/layout";
+import LectureInformationScreen from "../../../screens/LectureInformationScreen/LectureInformationScreen";
 
 const CalendarStack = createStackNavigator();
 
@@ -88,6 +89,10 @@ const CalendarNavigator = () => {
         <CalendarStack.Screen
           name="ChangeCourseScreen"
           component={ChangeCourseScreen}
+        />
+        <CalendarStack.Screen
+          name="LectureInformationScreen"
+          component={LectureInformationScreen}
         />
       </CalendarStack.Group>
     </CalendarStack.Navigator>

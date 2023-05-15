@@ -1,8 +1,19 @@
+import { LectureType } from "../../../api/lectures/lectures.types";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import { ISubjectTypes } from "./../../../api/html_scraper/dualis/types/ISubjectTypes";
 
 export type INavigationIcons = {
   [key: string]: FeatherIconName;
+};
+
+type LectureInformationScreenProps = {
+  oldLecture: LectureType | null;
+  newLecture: LectureType;
+  keyChanges: Array<keyof LectureType>;
+};
+
+export type ParamList = {
+  LectureDetails: LectureInformationScreenProps;
 };
 
 export type RootStackParamList = {
@@ -19,4 +30,5 @@ export type RootStackParamList = {
   SelectLocationScreen?: undefined;
   LicensesScreen?: undefined;
   NotificationSettingsScreen?: undefined;
+  LectureInformationScreen?: LectureInformationScreenProps | undefined;
 };
