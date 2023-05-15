@@ -108,7 +108,7 @@ const MoreScreen = () => {
         {/* University section */}
         <SettingSection title={t("moreScreen:sectionUniversity")}>
           <RegularRowItem
-            leftIconSource="ionicons"
+            leftIconSource="feather"
             leftIcon="map"
             onClick={() =>
               goTo("CampusplanScreen")
@@ -132,8 +132,8 @@ const MoreScreen = () => {
             {t("moreScreen:universitySports")}
           </RegularRowItem>
           <RegularRowItem
-            leftIconSource="ionicons"
-            leftIcon="ios-people-outline"
+            leftIconSource="feather"
+            leftIcon="users"
             onClick={() => openExternalLink("https://www.stw-ma.de")}
             rightIconSource="feather"
             rightIcon="external-link"
