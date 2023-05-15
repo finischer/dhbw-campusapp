@@ -12,18 +12,18 @@ export const lectureRowItemStyles = StyleSheet.create({
     paddingRight: SPACING.md,
   },
   column1: {
-    flex: 1,
+    flex: 2,
     flexDirection: "column",
     alignItems: "center",
     paddingLeft: SPACING.m,
   },
   column2: {
-    flex: 3,
+    flex: 5,
     flexDirection: "row",
     paddingHorizontal: SPACING.m,
   },
   column3: {
-    flex: 1,
+    flex: 2,
     flexDirection: "row",
     justifyContent: "flex-end",
   },
