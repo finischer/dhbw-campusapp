@@ -1,6 +1,6 @@
 import { Image } from "expo-image"
 import React from 'react'
-import { ScrollView, View } from "react-native"
+import { Platform, ScrollView, View } from "react-native"
 import GlobalBody from '../../components/GlobalBody/GlobalBody'
 import RegularText from '../../components/RegularText/RegularText'
 import TouchableOpacity from '../../components/TouchableOpacity/TouchableOpacity'
@@ -8,6 +8,7 @@ import typography from '../../constants/typography/typography'
 import { useMetadata } from '../../hooks/useMetadata'
 import { campusplanScreenStyles } from './campusplanScreen.styles'
 import { useTranslation } from "react-i18next"
+import * as Linking from 'expo-linking';
 
 const blurhash = "LJM@fjs.D%%M%Mt7IVof~pofbHM{"
 
@@ -19,6 +20,18 @@ const CampusplanScreen = () => {
         image: {
             backgroundColor: colors.primaryDarker
         }
+    }
+
+    const openNavigator = async () => {
+        const fullAddress = encodeURIComponent("Duale Hochschule Baden-Württemberg Mannheim");
+        const url = Platform.select({
+            ios: `maps:0,0?q=${fullAddress}`,
+            android: `geo:0,0?q=${fullAddress}`,
+        });
+
+        if (!url) return // TODO: Handle error with an alert
+
+        Linking.openURL(url);
     }
 
     return (
@@ -39,7 +52,7 @@ const CampusplanScreen = () => {
                     {/* Adress View */}
                     <View style={campusplanScreenStyles.infoSection}>
                         <RegularText weight='bold' size={typography.h2}>{t("adress")}</RegularText>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={openNavigator}>
                             <RegularText underline>Duale Hochschule Baden-Württemberg Mannheim</RegularText>
                             <RegularText underline>Coblitzallee 1-9</RegularText>
                             <RegularText underline>68163 Mannheim</RegularText>

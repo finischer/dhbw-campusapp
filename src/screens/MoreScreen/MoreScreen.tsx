@@ -15,7 +15,6 @@ import Switch from "../../components/Switch/Switch";
 import { CONTACT_MAIL } from "../../constants/common";
 import { useMetadata } from "../../hooks/useMetadata";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
-import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
 import AppInfo from "./components/AppInfo";
 import { moreScreenStyles } from "./moreScreen.styles";
 import * as WebBrowser from 'expo-web-browser';
@@ -25,7 +24,6 @@ const MoreScreen = () => {
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
-  const { importCalendar } = moreScreenFunctions();
   const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
   const toggleTheme = () => {
@@ -45,12 +43,10 @@ const MoreScreen = () => {
     const subject = t("common:emailSubjectBugFound").concat(` - ${reportId}`);
     const body = t("common:emailBodyBugFound");
 
-    const url = `mailto:${CONTACT_MAIL}?subject=${subject}&body=${body}`
+    const url = `mailto:${CONTACT_MAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 
     if (await Linking.canOpenURL(url)) {
-      await Linking.openURL(
-        `mailto:${CONTACT_MAIL}?subject=${subject}`
-      )
+      await Linking.openURL(url)
     }
   };
 
@@ -68,7 +64,6 @@ const MoreScreen = () => {
       return importCalendarRef.current?.openDialog();
     }
 
-    importCalendar();
   };
 
   return (
