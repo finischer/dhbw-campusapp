@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -5,16 +7,12 @@ import Animated, { Layout } from "react-native-reanimated";
 import { LectureType } from "../../../../api/lectures/lectures.types";
 import RegularText from "../../../../components/RegularText";
 import { IRegularTextVariants } from "../../../../components/RegularText/regularText.types";
+import TouchableOpacity from "../../../../components/TouchableOpacity/TouchableOpacity";
 import { enteringDelayedAnimation } from "../../../../constants/animations";
 import { useMetadata } from "../../../../hooks/useMetadata";
+import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
 import { lectureRowItemStyles } from "./lectureRow.styles";
 import { ILectureRowItemProps } from "./lectureRowItem.types";
-import TouchableOpacity from "../../../../components/TouchableOpacity/TouchableOpacity";
-import useAlert from "../../../../hooks/useAlert/useAlert";
-import Modal from "../../../../components/Modal/Modal";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
 
 export const LECTURE_TIME_FORMAT = "HH:mm";
 

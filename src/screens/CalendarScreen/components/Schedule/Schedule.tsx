@@ -5,7 +5,6 @@ import { DialogButtonProps } from "react-native-dialog/lib/Button";
 import { LectureType } from "../../../../api/lectures/lectures.types";
 import Alert from "../../../../components/Alert/Alert";
 import { IAlertFunctions } from "../../../../components/Alert/alert.types";
-import { dummyLectures } from "../../testData";
 import DateHeader from "../DateHeader";
 import LectureRowItem from "../LectureRowItem";
 import { scheduleStyles } from "./schedule.styles";
