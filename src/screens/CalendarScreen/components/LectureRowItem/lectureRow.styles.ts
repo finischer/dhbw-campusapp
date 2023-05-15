@@ -10,6 +10,7 @@ export const lectureRowItemStyles = StyleSheet.create({
     borderRadius: SIZES.borderRadius,
     paddingVertical: SPACING.md,
     paddingRight: SPACING.md,
+    position: "relative",
   },
   column1: {
     flex: 2,

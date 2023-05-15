@@ -5,4 +5,5 @@ import {
 } from "./../../../../api/lectures/lectures.types";
 export type IScheduleProps = Partial<SectionListProps<LectureType>> & {
   lectures: OrganizedLectures[];
+  localLectures: OrganizedLectures[];
 };
