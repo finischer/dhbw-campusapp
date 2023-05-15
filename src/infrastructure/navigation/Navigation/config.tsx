@@ -30,10 +30,11 @@ export const headerConfig = (): StackNavigationOptions => {
     headerTitleStyle: {
       fontFamily: typography.Bold,
       alignSelf: "center",
+
     },
     headerTitleContainerStyle: {
       // backgroundColor: "green",
-      marginBottom: isAndroid ? SPACING.m : undefined
+      marginBottom: isAndroid ? SPACING.m : undefined,
     },
     headerBackTitle,
     headerTitleAlign: "center",

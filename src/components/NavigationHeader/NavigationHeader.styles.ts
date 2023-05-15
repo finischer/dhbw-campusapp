@@ -10,6 +10,7 @@ export const navHeaderStyles = StyleSheet.create({
   },
   titleText: { textAlign: "center" },
   subTitleText: {
+    textAlign: "center",
     fontSize: typography.small,
   },
 });
