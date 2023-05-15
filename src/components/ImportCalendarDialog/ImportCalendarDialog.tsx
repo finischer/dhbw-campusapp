@@ -9,15 +9,20 @@ import {
 } from "./importCalendarDialog.types";
 import { useMetadata } from "../../hooks/useMetadata";
 
+const INPUT_PLACEHOLDER = "https://myicallink.com"
+
 const ImportCalendarDialog = React.forwardRef<
   IImportCalendarDialogFunctions,
   IImportCalendarDialogProps
 >(({ }, ref) => {
   const { t } = useTranslation();
-  const { colors } = useMetadata();
+  const { colors, theme, isAndroid, isIOS } = useMetadata();
   const { changeCourseByUrl } = useLectures();
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [inputText, setInputText] = useState<string>("");
+
+  const inputTextColor = isAndroid ? colors.secondary : colors.darkText;
+  const placeholderTextColor = colors.secondaryDarker
 
   // add local functions, so that you can use these functions in other components
   useImperativeHandle(ref, () => ({
@@ -43,10 +48,11 @@ const ImportCalendarDialog = React.forwardRef<
     <Dialog.Container
       onBackdropPress={closeDialog}
       contentStyle={{
-        backgroundColor: colors.primary
+        backgroundColor: colors.primary,
+
       }}
       visible={showDialog}
-
+      blurComponentIOS={<View />} // prevents weird bug, where backgroundColor is not registered on iOS
     >
       <Dialog.Title
         style={{
@@ -63,11 +69,16 @@ const ImportCalendarDialog = React.forwardRef<
         {t("moreScreen:importCalendarPromptMessage")}
       </Dialog.Description>
       <Dialog.Input
+        wrapperStyle={{
+          backgroundColor: isIOS ? colors.primaryDarker : ""
+        }}
         style={{
           color: colors.secondary,
         }}
         selectionColor={colors.accent}
         onChangeText={(newText: string) => setInputText(newText)}
+        placeholder={INPUT_PLACEHOLDER}
+        placeholderTextColor={placeholderTextColor}
       />
       <Dialog.Button
         style={{

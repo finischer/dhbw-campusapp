@@ -64,7 +64,7 @@ const MoreScreen = () => {
   };
 
   const handleImportCalendar = () => {
-    if (isAndroid) {
+    if (true) {
       return importCalendarRef.current?.openDialog();
     }
 

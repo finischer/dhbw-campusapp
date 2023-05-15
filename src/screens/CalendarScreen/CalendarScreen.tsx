@@ -1,29 +1,30 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
-import { OrganizedLectures } from "../../api/lectures/lectures.types";
-import { IResponseTypes } from "../../api/types/IResponseTypes";
-import Button from "../../components/Button/Button";
-import GlobalBody from "../../components/GlobalBody";
-import Loader from "../../components/Loader/Loader";
-import RegularText from "../../components/RegularText";
-import RequestTime from "../../components/RequestTime";
-import { SPACING } from "../../constants/layout";
-import { useLectures } from "../../hooks/useLectures";
-import Schedule from "./components/Schedule";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   DeviceEventEmitter,
   NativeScrollEvent,
   NativeSyntheticEvent,
   View,
 } from "react-native";
-import { calendarScreenStyles } from "./calendarScreen.styles";
-import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
+import { useQuery } from "react-query";
+import { OrganizedLectures } from "../../api/lectures/lectures.types";
+import { IResponseTypes } from "../../api/types/IResponseTypes";
+import Button from "../../components/Button/Button";
 import ErrorView from "../../components/ErrorView";
+import GlobalBody from "../../components/GlobalBody";
+import Loader from "../../components/Loader/Loader";
+import RegularText from "../../components/RegularText";
+import RequestTime from "../../components/RequestTime";
+import { SPACING } from "../../constants/layout";
+import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
+import { useLectures } from "../../hooks/useLectures";
+import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
+import { calendarScreenStyles } from "./calendarScreen.styles";
+import Schedule from "./components/Schedule";
+import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
@@ -35,12 +36,19 @@ const CalendarScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [searchString, setSearchString] = useState<string>("");
   const { importCalendar } = moreScreenFunctions();
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage()
 
   const loaderText = t("loadingLectures");
 
   const fetchSchedule = async () => {
     const { data: lectures, requestTime }: IResponseTypes = await getSchedule();
-    return { lectures, requestTime };
+    const localLectures = await getDataFromAsyncStorage("lectures"); // save the old state of lectures
+
+    // only if lectures exist -> don't save null or undefined in localStorage
+    if (lectures) {
+      storeDataInAsyncStorage("lectures", lectures) // store the new lectures in localStorage
+    }
+    return { lectures, localLectures, requestTime };
   };
 
   const {
@@ -130,6 +138,7 @@ const CalendarScreen = () => {
       <Schedule
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
+        localLectures={data.localLectures}
         lectures={filterLectures(
           searchString,
           data?.lectures as OrganizedLectures[]

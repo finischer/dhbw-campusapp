@@ -1,6 +1,6 @@
 import { TextInputProps, TextStyle } from "react-native";
 
-export type IRegularTextVariants = "light" | "dark";
+export type IRegularTextVariants = "light" | "dark" | undefined;
 
 type ConditionalLink =
   | {
@@ -14,7 +14,7 @@ type ConditionalLink =
 
 export type IRegularTextTypes = Partial<TextInputProps> &
   ConditionalLink & {
-    variant?: IRegularTextVariants | undefined;
+    variant?: IRegularTextVariants;
     accentColor?: boolean;
     weight?: TextStyle["fontWeight"];
     size?: TextStyle["fontSize"];

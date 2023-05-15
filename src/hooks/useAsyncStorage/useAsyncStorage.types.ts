@@ -9,4 +9,5 @@ export type AsyncStorageEntries =
   | "dhbwLocation"
   | "notifications-allowed"
   | "notifications-settings"
-  | "restaurantScreen.alreadySeen";
+  | "restaurantScreen.alreadySeen"
+  | "lectures";

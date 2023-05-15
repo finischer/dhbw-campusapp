@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   DeviceEventEmitter,
@@ -29,6 +29,9 @@ import {
 } from "./restaurantScreen.types";
 import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
 import useAlert from "../../hooks/useAlert/useAlert";
+import Alert from "../../components/Alert/Alert";
+import { IAlertFunctions } from "../../components/Alert/alert.types";
+import { DialogButtonProps } from "react-native-dialog/lib/Button";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle", newValue);
@@ -42,6 +45,20 @@ const RestaurantScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { restaurantName, formattedRestaurantName, fetchRestaurant } =
     useRestaurant();
+
+  const alertLocalRef = useRef<IAlertFunctions | null>(null);
+  const alertRef = useCallback((node: IAlertFunctions | null) => {
+    checkForFirstTime(node?.openAlert)
+    alertLocalRef.current = node;
+  }, []);
+
+  const alertButtons: DialogButtonProps[] = [
+    {
+      label: "Ok",
+      onPress: () => alertLocalRef.current?.closeAlert()
+    }
+  ]
+
 
   const [restaurant, setRestaurant] = useState<IRestaurantState>({
     restaurantName,
@@ -69,20 +86,17 @@ const RestaurantScreen = () => {
     },
   });
 
-  useEffect(() => {
-    checkForFirstTime();
-  }, [])
-
-  const checkForFirstTime = async () => {
+  const checkForFirstTime = async (openAlertFn: IAlertFunctions["openAlert"] | undefined) => {
     // check if screen appears for the first time
     const alreadySeenScreen = await getDataFromAsyncStorage("restaurantScreen.alreadySeen");
 
-    if (alreadySeenScreen) return
+    // if (alreadySeenScreen) return
 
     storeDataInAsyncStorage("restaurantScreen.alreadySeen", true)
 
-    // show alert
-    alert(t("hint", { ns: "common" }), t("swipeHintDescription"))
+    if (openAlertFn) {
+      openAlertFn()
+    }
   }
 
 
@@ -125,6 +139,13 @@ const RestaurantScreen = () => {
 
   return (
     <GlobalBody style={{ paddingTop: 0, paddingHorizontal: 0 }}>
+      <Alert
+        ref={alertRef}
+        title={t("hint", { ns: "common" })}
+        description={t("swipeHintDescription")}
+        buttons={alertButtons}
+
+      />
       <Animated.ScrollView
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
