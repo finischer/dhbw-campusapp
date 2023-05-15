@@ -12,6 +12,7 @@ export const campusplanScreenStyles = StyleSheet.create({
     height: 300,
     width: "100%",
     borderRadius: SIZES.borderRadius,
+    marginTop: SPACING.l,
   },
   infoSection: {
     gap: SPACING.m,

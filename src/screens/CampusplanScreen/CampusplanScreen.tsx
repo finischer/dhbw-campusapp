@@ -22,7 +22,7 @@ const CampusplanScreen = () => {
     }
 
     return (
-        <GlobalBody>
+        <GlobalBody noVerticalPadding>
             <ScrollView>
 
                 {/* Campusplan */}
