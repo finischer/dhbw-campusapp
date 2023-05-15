@@ -31,4 +31,6 @@ export default {
   endDate: "Enddatum",
   endTime: "Endzeit",
   location: "Ort",
+  openingHours: "Öffnungszeiten",
+  adress: "Adresse",
 };
