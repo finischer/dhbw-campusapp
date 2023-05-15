@@ -9,6 +9,7 @@ import MoreScreen from "../../../screens/MoreScreen";
 import NotificationSettingsScreen from "../../../screens/NotificationSettingsScreen";
 import SelectLocationScreen from "../../../screens/SelectLocationScreen";
 import { headerConfig } from "../Navigation/config";
+import CampusplanScreen from "../../../screens/CampusplanScreen";
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,16 @@ const MoreNavigator = () => {
         options={{
           headerTitle: () => (
             <NavigationHeader title={t("moreScreen:licenses")} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="CampusplanScreen"
+        component={CampusplanScreen}
+        options={{
+          headerTitle: () => (
+            <NavigationHeader title={t("moreScreen:campusplan")} subTitle="Coblitzallee" showSubTitle />
           ),
         }}
       />

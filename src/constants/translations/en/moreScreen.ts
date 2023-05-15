@@ -14,4 +14,5 @@ export default {
   sectionUniversity: "University",
   sectionLegalNotices: "Legal Notices",
   licenses: "Licenses",
+  campusplan: "Campusplan",
 };
