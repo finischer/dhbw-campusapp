@@ -15,4 +15,5 @@ export default {
   sectionLegalNotices: "Rechtliches",
   licenses: "Lizenzen",
   campusplan: "Campusplan",
+  appearance: "Darstellung",
 };

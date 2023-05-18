@@ -33,4 +33,7 @@ export default {
   location: "Location",
   openingHours: "Opening hours",
   adress: "Adress",
+  light: "Light",
+  dark: "Dark",
+  system: "System",
 };
