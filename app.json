@@ -20,11 +20,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
-      "buildNumber": "8"
+      "buildNumber": "8",
+      "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349"
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
       "versionCode": 5,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.niklasfischer0.dhbwcampusapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

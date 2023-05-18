@@ -10,4 +10,6 @@ export type AsyncStorageEntries =
   | "notifications-allowed"
   | "notifications-settings"
   | "restaurantScreen.alreadySeen"
-  | "lectures";
+  | "restaurantScreen.timesVisit"
+  | "lectures"
+  | "nextStoreReviewRequest";

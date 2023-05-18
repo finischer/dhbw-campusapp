@@ -32,6 +32,7 @@ import useAlert from "../../hooks/useAlert/useAlert";
 import Alert from "../../components/Alert/Alert";
 import { IAlertFunctions } from "../../components/Alert/alert.types";
 import { DialogButtonProps } from "react-native-dialog/lib/Button";
+import useReview from "../../hooks/useReview/useReview";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle", newValue);
@@ -39,12 +40,12 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const RestaurantScreen = () => {
   const { t } = useTranslation(["restaurantScreen", "common"]);
-  const { alert } = useAlert();
   const { storeDataInAsyncStorage, getDataFromAsyncStorage, deleteFromAsyncStorage } = useAsyncStorage()
   const { language, dhbwLocation } = useMetadata();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { restaurantName, formattedRestaurantName, fetchRestaurant } =
     useRestaurant();
+  const { requestStoreReview } = useReview()
 
   const alertLocalRef = useRef<IAlertFunctions | null>(null);
   const alertRef = useCallback((node: IAlertFunctions | null) => {
@@ -85,6 +86,10 @@ const RestaurantScreen = () => {
       setHeaderSubtitle(true);
     },
   });
+
+  useEffect(() => {
+    requestStoreReview()
+  }, [])
 
   const checkForFirstTime = async (openAlertFn: IAlertFunctions["openAlert"] | undefined) => {
     // check if screen appears for the first time
