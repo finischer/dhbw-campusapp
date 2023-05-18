@@ -90,7 +90,7 @@ const RestaurantScreen = () => {
     // check if screen appears for the first time
     const alreadySeenScreen = await getDataFromAsyncStorage("restaurantScreen.alreadySeen");
 
-    // if (alreadySeenScreen) return
+    if (alreadySeenScreen) return
 
     storeDataInAsyncStorage("restaurantScreen.alreadySeen", true)
 
