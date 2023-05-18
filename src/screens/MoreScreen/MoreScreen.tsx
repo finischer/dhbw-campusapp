@@ -1,23 +1,24 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import * as WebBrowser from 'expo-web-browser';
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, View } from "react-native";
 import uuid from 'react-native-uuid';
 import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
-import Icon from "../../components/Icon";
 import ImportCalendarDialog from "../../components/ImportCalendarDialog";
 import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
 import RegularRowItem from "../../components/RegularRowItem";
 import SettingSection from "../../components/SettingSection";
-import Switch from "../../components/Switch/Switch";
 import { CONTACT_MAIL } from "../../constants/common";
 import { useMetadata } from "../../hooks/useMetadata";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import AppInfo from "./components/AppInfo";
+import { SIZES, SPACING } from '../../constants/layout';
+import SegmentedControl from "../../components/SegmentedControl/SegmentedControl";
 import { moreScreenStyles } from "./moreScreen.styles";
-import * as WebBrowser from 'expo-web-browser';
+
 
 const MoreScreen = () => {
   const { theme, changeTheme, isAndroid, colors } = useMetadata();
@@ -26,13 +27,20 @@ const MoreScreen = () => {
   const { t } = useTranslation();
   const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
-  const toggleTheme = () => {
-    if (theme === "light") {
-      changeTheme("dark");
-    } else if (theme === "dark") {
-      changeTheme("light");
+  const segmentIndex = theme === "light" ? 0 : theme === "dark" ? 2 : 1 // light = 0, dark = 2, system = 1
+
+  const handleChangeTheme = (segmentIndex: number) => {
+    if (segmentIndex === 0) {
+      // light mode
+      changeTheme("light")
+    } else if (segmentIndex === 1) {
+      // system theme
+      changeTheme("system")
+    } else if (segmentIndex === 2) {
+      // dark mode
+      changeTheme("dark")
     }
-  };
+  }
 
   const goTo = (to: keyof RootStackParamList) => {
     navigation.navigate(to);
@@ -67,9 +75,9 @@ const MoreScreen = () => {
   };
 
   return (
-    <GlobalBody noVerticalPadding>
+    <GlobalBody noVerticalPadding >
       <ImportCalendarDialog ref={importCalendarRef} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: SPACING.md }}>
 
         {/* General Section */}
         <SettingSection title={t("moreScreen:sectionGeneral")}>
@@ -185,23 +193,27 @@ const MoreScreen = () => {
 
 
         {/* Theme Toggler */}
-        <View style={moreScreenStyles.switchContainer}>
-          <View style={moreScreenStyles.themeSwitchContainer}>
-            <Icon source="feather" clickable={false} name="sun" />
-            <Switch onChange={toggleTheme} value={theme === "dark"} />
-            <Icon source="feather" clickable={false} name="moon" />
-          </View>
-        </View>
+        <SettingSection title={t("moreScreen:appearance")} contentGap>
+          <SegmentedControl
+            values={[t("common:light"), t("common:system"), t("common:dark")]}
+            selectedIndex={segmentIndex}
+            onChange={(event: any) => {
+              handleChangeTheme(event.nativeEvent.selectedSegmentIndex)
+            }}
+          />
+        </SettingSection>
 
         {/* AppInfo Container */}
-        <AppInfo />
+        <View style={moreScreenStyles.appInfoView}>
+          <AppInfo />
 
-        {/* BugFound Button */}
-        <View>
+          {/* BugFound Button */}
           <Button variant="text" onClick={handleReportBug}>
             {t("moreScreen:reportBug")}
           </Button>
         </View>
+
+
       </ScrollView>
     </GlobalBody>
   );

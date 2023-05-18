@@ -47,7 +47,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-query": "^3.39.2",
     "typescript": "^4.9.4",
-    "expo-store-review": "~6.2.1"
+    "expo-store-review": "~6.2.1",
+    "@react-native-segmented-control/segmented-control": "2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

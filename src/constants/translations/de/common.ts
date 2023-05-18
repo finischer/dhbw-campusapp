@@ -33,4 +33,7 @@ export default {
   location: "Ort",
   openingHours: "Öffnungszeiten",
   adress: "Adresse",
+  light: "Hell",
+  dark: "Dunkel",
+  system: "System",
 };
