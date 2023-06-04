@@ -4,6 +4,7 @@ import ICAL from "ical.js";
 import moment from "moment";
 import { ICourse, LectureType, OrganizedLectures } from "./lectures.types";
 import { IResponseTypes } from "../types/IResponseTypes";
+import { isValidUrl } from "../../utilities/validationHelpers";
 
 export class LecturesController {
   baseUrl: string;
@@ -219,6 +220,11 @@ export class LecturesController {
         msg: "ical url is undefined",
         data: undefined,
       };
+    }
+
+    // check if ical url is a valid url
+    if (!isValidUrl(this.icalUrl)) {
+      throw new Error("No valid URL");
     }
 
     try {
