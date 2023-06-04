@@ -5,6 +5,9 @@ export const errorViewStyles = StyleSheet.create({
   text: {
     textAlign: "center",
   },
+  errorText: {
+    opacity: 0.3,
+  },
   retryButton: {},
   buttonsContainer: {
     marginTop: SPACING.m,
