@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   DeviceEventEmitter,
@@ -55,6 +55,7 @@ const CalendarScreen = () => {
     isLoading,
     isFetching,
     isError,
+    error,
     data,
     refetch: refetchLectures,
   } = useQuery(["lectures-schedule", course?.courseId, icalUrl], fetchSchedule);
@@ -127,7 +128,7 @@ const CalendarScreen = () => {
 
   if (data?.lectures === undefined || isError) {
     return (
-      <ErrorView centered onRetry={refetchLectures}>
+      <ErrorView centered onRetry={refetchLectures} error={error instanceof Error ? error : undefined}>
         {t("common:errorOccured")}
       </ErrorView>
     );

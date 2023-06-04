@@ -14,12 +14,16 @@ const ErrorView: React.FC<IErrorViewProps> = ({
   showSecondaryButton = false,
   onClickSecondaryButton = undefined,
   secondaryButtonText = undefined,
+  error = undefined
 }) => {
   const { t } = useTranslation("common");
 
   return (
     <GlobalBody centered={centered}>
       <RegularText style={errorViewStyles.text}>{children}</RegularText>
+      {error &&
+        <RegularText style={errorViewStyles.errorText}>Details: {error.message}</RegularText>
+      }
       <View style={errorViewStyles.buttonsContainer}>
         {onRetry && (
           <Button variant="outlined" onClick={onRetry}>
