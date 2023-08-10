@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
-      "versionCode": 8,
+      "versionCode": 9,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.niklasfischer0.dhbwcampusapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
