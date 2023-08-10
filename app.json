@@ -3,7 +3,7 @@
     "name": "DHBW CampusApp",
     "slug": "dhbw-campusapp",
     "owner": "niklasfischer0",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -39,6 +39,14 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "niklasfischer0"
+        }
+      ]
+    ]
   }
 }
