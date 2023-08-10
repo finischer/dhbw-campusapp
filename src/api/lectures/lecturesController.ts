@@ -126,7 +126,7 @@ export class LecturesController {
     let lectures: LectureType[] = vEvents.map((vEvent: any) => {
       let event = new ICAL.Event(vEvent);
 
-      const location = event.location.replace("Raum", "").trim();
+      const location = event.location?.replace("Raum", "").trim();
 
       const newEvent: LectureType = {
         uid: event.uid,
@@ -146,9 +146,14 @@ export class LecturesController {
     let rangeEnd = moment().add(rangeInDays, "days").toDate();
 
     let filteredLectures = lectures.filter((lecture: LectureType) => {
+      let startTime = lecture.startTime;
+
+      if (typeof startTime === "string") {
+        startTime = parseInt(startTime);
+      }
+
       return (
-        lecture.startTime >= rangeStart.unix() * 1000 &&
-        lecture.endDate <= rangeEnd
+        startTime >= rangeStart.unix() * 1000 && lecture.endDate <= rangeEnd
       );
     });
 
