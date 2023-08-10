@@ -1,4 +1,4 @@
-import { View, StatusBar, SafeAreaView } from "react-native";
+import { View, StatusBar, SafeAreaView, useColorScheme } from "react-native";
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { IModalFunctions, IModalProps } from "./modal.types";
 import { modalStyles } from "./modal.styles";
@@ -21,6 +21,7 @@ const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 const Modal = React.forwardRef<IModalFunctions, IModalProps>(
   ({ title, subTitle, children, withCloseButton = true }, ref) => {
     const { theme } = useMetadata();
+    const deviceColorScheme = useColorScheme()
     const [statusBarStyle, setStatusBarStyle] = useState<
       "light-content" | "dark-content"
     >("light-content");
@@ -37,9 +38,16 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
           setStatusBarStyle("dark-content");
         }, 300);
       } else if (theme === "dark") {
-        setTimeout(() => {
+        setStatusBarStyle("light-content");
+      } else {
+        // otherwise theme is system
+        if (deviceColorScheme === "dark") {
           setStatusBarStyle("light-content");
-        });
+        } else {
+          setTimeout(() => {
+            setStatusBarStyle("dark-content");
+          }, 300);
+        }
       }
     }, [isFocused, theme]);
 
