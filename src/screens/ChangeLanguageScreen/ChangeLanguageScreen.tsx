@@ -12,8 +12,6 @@ const ChangeLanguageScreen = () => {
   const { t } = useTranslation("common");
   const rightIcon: FeatherIconName = "check";
 
-  console.log("Language: ", language)
-
   const handleChangeLanguage = (newLanguage: ILanguageOptions) => {
     changeLanguage(newLanguage);
   };
