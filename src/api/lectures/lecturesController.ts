@@ -107,18 +107,17 @@ export class LecturesController {
 
     // set timezone
     let timezoneComponent = icalComponent.getFirstSubcomponent("vtimezone");
-    if (!timezoneComponent) {
-      throw new Error("No timezone component was found");
+    if (timezoneComponent) {
+      // throw new Error("No timezone component was found");
+      let timezoneId = timezoneComponent.getFirstProperty("tzid");
+      let timezone = new ICAL.Timezone({
+        component: timezoneComponent,
+        tzid: timezoneId,
+      });
+
+      // register timezone
+      ICAL.TimezoneService.register(timezoneId, timezone);
     }
-
-    let timezoneId = timezoneComponent.getFirstProperty("tzid");
-    let timezone = new ICAL.Timezone({
-      component: timezoneComponent,
-      tzid: timezoneId,
-    });
-
-    // register timezone
-    ICAL.TimezoneService.register(timezoneId, timezone);
 
     // get events
     let vEvents = icalComponent.getAllSubcomponents("vevent");
