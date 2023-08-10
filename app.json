@@ -39,6 +39,14 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "niklasfischer0"
+        }
+      ]
+    ]
   }
 }
