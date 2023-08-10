@@ -76,14 +76,12 @@ const MetaDataProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const changeLanguage = async (newLanguage: ILanguageOptions) => {
-    if (language !== newLanguage) {
-      i18next.changeLanguage(newLanguage, (err, t) => {
-        if (err)
-          return console.error("Error while loading new language: ", err);
-        setLanguage(newLanguage);
-        storeDataInAsyncStorage("language", newLanguage);
-      });
-    }
+    i18next.changeLanguage(newLanguage, (err) => {
+      if (err)
+        return console.error("Error while loading new language: ", err);
+      setLanguage(newLanguage);
+      storeDataInAsyncStorage("language", newLanguage);
+    });
   };
 
   const changeDhbwLocation = (newDhbwLocation: DHBWLocation) => {
