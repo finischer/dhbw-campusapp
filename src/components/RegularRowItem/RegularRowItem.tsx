@@ -7,8 +7,9 @@ import RegularText from "../RegularText";
 import TouchableOpacity from "../TouchableOpacity";
 import { regularRowItemStyles } from "./regularRowItem.styles";
 import { IconNames, IRegularRowItemProps } from "./regularRowItem.types";
+import { SPACING } from "../../constants/layout";
 
-const ROW_ITEM_GAP = 10;
+const DEFAULT_ROW_GAP = SPACING.m
 
 const RegularRowItem = ({
   children,
@@ -19,7 +20,7 @@ const RegularRowItem = ({
   selected = false,
   onClick = undefined,
   disabled = false,
-  marginTop = ROW_ITEM_GAP,
+  marginTop = DEFAULT_ROW_GAP,
   marginBottom = 0,
   subtitle = undefined
 }: IRegularRowItemProps) => {

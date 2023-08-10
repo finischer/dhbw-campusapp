@@ -21,7 +21,7 @@ const NavigationHeader = ({
           entering={FadeIn.duration(300)}
           exiting={FadeOut.duration(300)}
         >
-          <RegularText variant="light" style={navHeaderStyles.subTitleText}>
+          <RegularText numberOfLines={1} variant="light" style={navHeaderStyles.subTitleText}>
             {subTitle}
           </RegularText>
         </Animated.View>

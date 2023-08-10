@@ -1,18 +1,11 @@
-import { Text, StyleSheet, Linking } from "react-native";
 import React from "react";
-import { IRegularTextTypes, IRegularTextVariants } from "./regularText.types";
-import { useMetadata } from "../../hooks/useMetadata";
-import useAlert from "../../hooks/useAlert";
-import typography from "../../constants/typography";
-import { IColors } from "../../constants/colors/colors.types";
 import { useTranslation } from "react-i18next";
-import Animated, {
-  interpolateColor,
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { darkModeColors, lightModeColors } from "../../constants/colors";
+import { StyleSheet, Text } from "react-native";
+import { IColors } from "../../constants/colors/colors.types";
+import typography from "../../constants/typography";
+import useAlert from "../../hooks/useAlert";
+import { useMetadata } from "../../hooks/useMetadata";
+import { IRegularTextTypes, IRegularTextVariants } from "./regularText.types";
 
 const _getTextColor = (variant: IRegularTextVariants, colors: IColors) => {
   if (variant === "light") return colors.lightText;

@@ -6,4 +6,8 @@ export default {
   loadingLectures: "Vorlesungsplan wird geladen ...",
   noEventsScheduled: "Keine Veranstaltungen geplant",
   noMatchesFor: 'Keine Treffer für "{{searchString, string}}"',
+  alertScheduleChangesTitle: "Änderungen im Vorlesungsplan!",
+  alertScheduleChangesMessage:
+    "Du hast vielleicht bemerkt, dass sich einige Vorlesungen geändert haben. Um mehr darüber zu erfahren, klicke einfach auf die entsprechend markierte Vorlesung und sieh dir die Details an.",
+  lectureInformationTitle: "Vorlesungsänderungen",
 };

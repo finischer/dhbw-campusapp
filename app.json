@@ -3,10 +3,10 @@
     "name": "DHBW CampusApp",
     "slug": "dhbw-campusapp",
     "owner": "niklasfischer0",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
@@ -22,11 +22,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
-      "buildNumber": "8"
+      "buildNumber": "10",
+      "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349"
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
-      "versionCode": 5,
+      "versionCode": 7,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.niklasfischer0.dhbwcampusapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

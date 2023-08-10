@@ -4,6 +4,7 @@ import ICAL from "ical.js";
 import moment from "moment";
 import { ICourse, LectureType, OrganizedLectures } from "./lectures.types";
 import { IResponseTypes } from "../types/IResponseTypes";
+import { isValidUrl } from "../../utilities/validationHelpers";
 
 export class LecturesController {
   baseUrl: string;
@@ -107,7 +108,7 @@ export class LecturesController {
     // set timezone
     let timezoneComponent = icalComponent.getFirstSubcomponent("vtimezone");
     if (!timezoneComponent) {
-      return {};
+      throw new Error("No timezone component was found");
     }
 
     let timezoneId = timezoneComponent.getFirstProperty("tzid");
@@ -140,9 +141,9 @@ export class LecturesController {
       return newEvent;
     });
 
-    let range = 180; // 6 months
+    let rangeInDays = 180; // 6 months
     let rangeStart = moment();
-    let rangeEnd = moment().add(range, "days").toDate();
+    let rangeEnd = moment().add(rangeInDays, "days").toDate();
 
     let filteredLectures = lectures.filter((lecture: LectureType) => {
       return (
@@ -221,6 +222,11 @@ export class LecturesController {
       };
     }
 
+    // check if ical url is a valid url
+    if (!isValidUrl(this.icalUrl)) {
+      throw new Error("No valid URL");
+    }
+
     try {
       const response = await axios.get(this.icalUrl, {
         headers: {
@@ -251,9 +257,13 @@ export class LecturesController {
         );
       }
     } catch (err) {
+      let message = "wrong url";
+      if (err instanceof Error) message = err.message;
+      else message = String(err);
+
       return {
         status: 400,
-        msg: "wrong url",
+        msg: message,
         data: undefined,
       };
     }
