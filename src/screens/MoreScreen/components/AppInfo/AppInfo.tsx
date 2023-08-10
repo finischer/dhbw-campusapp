@@ -9,7 +9,7 @@ const AppInfo = () => {
   return (
     <View style={appInfoStyles.container}>
       <RegularText style={appInfoStyles.text}>
-        Made by Niklas Fischer
+        Made with ❤️ by Niklas Fischer
       </RegularText>
       <RegularText style={appInfoStyles.text}>Version {expo.version}</RegularText>
     </View>
