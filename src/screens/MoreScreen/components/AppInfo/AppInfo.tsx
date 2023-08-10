@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import RegularText from "../../../../components/RegularText";
 import { appInfoStyles } from "./appInfo.styles";
-import { version as appVersion } from '../../../../../package.json';
+import { expo } from '../../../../../app.json';
 
 
 const AppInfo = () => {
@@ -11,7 +11,7 @@ const AppInfo = () => {
       <RegularText style={appInfoStyles.text}>
         Made by Niklas Fischer
       </RegularText>
-      <RegularText style={appInfoStyles.text}>Version {appVersion}</RegularText>
+      <RegularText style={appInfoStyles.text}>Version {expo.version}</RegularText>
     </View>
   );
 };
