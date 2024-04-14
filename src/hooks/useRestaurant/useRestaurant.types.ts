@@ -14,7 +14,7 @@ export type IRestaurantContext = {
   changeRestaurant(restaurant: AllRestaurantNames): void;
   changeDate(newDate: string): void;
   choosedDate: string;
-  fetchRestaurant(): Promise<IFetchedRestaurantTypes>;
+  fetchRestaurant(): Promise<IFetchedRestaurantTypes | null>;
 };
 
 export type RestaurantsMapTypes = {

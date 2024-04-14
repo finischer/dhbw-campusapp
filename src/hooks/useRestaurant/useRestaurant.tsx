@@ -32,9 +32,7 @@ const RestaurantContext = createContext<IRestaurantContext | undefined>(undefine
 const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { language, dhbwLocation } = useMetadata();
   const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
-  const [restaurantScraper, setRestaurantScraper] = useState<RestaurantScraper>(
-    new DHBWMannheimRestaurantScraper(language)
-  );
+  const [restaurantScraper, setRestaurantScraper] = useState<RestaurantScraper | null>(null);
 
   const DEFAULT_RESTAURANT = Object.entries(RESTAURANTS_MAP[dhbwLocation]).at(0) as [
     AllRestaurantNames,
@@ -59,6 +57,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   useEffect(() => {
+    console.log("DHBW Location: ", dhbwLocation);
     switch (dhbwLocation) {
       case DHBWLocation.Mannheim:
         setRestaurantScraper(new DHBWMannheimRestaurantScraper(language));
@@ -83,11 +82,17 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const fetchRestaurant = useCallback(async () => {
+    if (!restaurantScraper) {
+      return null;
+    }
+
+    console.log("Fetch restaurant: ", typeof restaurantScraper);
     const restaurant: IFetchedRestaurantTypes = {
       restaurantName: "",
       offer: [],
       additivesDict: {},
     };
+
     for (let i = 0; i < PREVIEW_DAYS; i++) {
       const restaurantInfos: IResponseTypes = await restaurantScraper.getMenuOfRestaurant(
         restaurantName,
@@ -120,7 +125,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
-const useRestaurant = <T extends DHBWLocation>() => {
+const useRestaurant = () => {
   const context = useContext(RestaurantContext);
 
   if (context === undefined) {
