@@ -3,7 +3,7 @@
     "name": "DHBW CampusApp",
     "slug": "dhbw-campusapp",
     "owner": "niklasfischer0",
-    "version": "1.2.1",
+    "version": "1.3.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -16,9 +16,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
