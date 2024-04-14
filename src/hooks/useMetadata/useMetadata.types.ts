@@ -19,4 +19,9 @@ export type IMetadataContext = {
 
 export type ILanguageOptions = "de" | "en";
 
-export type DHBWLocation = "mannheim" | "karlsruhe";
+// export type DHBWLocation = "mannheim" | "karlsruhe";
+
+export enum DHBWLocation {
+  Mannheim = "mannheim",
+  Karlsruhe = "karlsruhe"
+}

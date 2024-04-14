@@ -1,29 +1,32 @@
-import { ScrollView } from "react-native";
 import React from "react";
-import Modal from "../../components/Modal";
-import { changeRestaurantStyles } from "./changeRestaurantScreen.styles";
-import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
-import { RestaurantsMapTypes } from "../../hooks/useRestaurant/useRestaurant.types";
-import RegularRowItem from "../../components/RegularRowItem";
-import { AllRestaurantsOptions } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
 import { useTranslation } from "react-i18next";
+import { ScrollView } from "react-native";
+import { AllRestaurantNames } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
+import Modal from "../../components/Modal";
+import RegularRowItem from "../../components/RegularRowItem";
+import { useMetadata } from "../../hooks/useMetadata";
+import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
+import { DHBW_NAME } from "../../utilities/mappings";
+import { changeRestaurantStyles } from "./changeRestaurantScreen.styles";
 
 const ChangeRestaurantScreen = () => {
   const { t } = useTranslation("navigation");
+  const { dhbwLocation } = useMetadata();
   const { getAllRestaurants, changeRestaurant, formattedRestaurantName } = useRestaurant();
-  const restaurantsObject: RestaurantsMapTypes = getAllRestaurants();
-  const restaurantList = Object.entries(restaurantsObject);
+  const allRestaurants = getAllRestaurants();
+
+  const restaurantList = Object.entries(allRestaurants);
 
   const modalTitle = t("changeRestaurant");
 
-  const handleChangeRestaurant = (restaurant: AllRestaurantsOptions) => {
+  const handleChangeRestaurant = (restaurant: AllRestaurantNames) => {
     changeRestaurant(restaurant);
   };
 
   return (
     <Modal
       title={modalTitle}
-      subTitle="Mannheim"
+      subTitle={DHBW_NAME[dhbwLocation]}
     >
       <ScrollView style={changeRestaurantStyles.container}>
         {restaurantList.map((restaurant: [string, string], index: number) => {
@@ -32,7 +35,7 @@ const ChangeRestaurantScreen = () => {
 
           return (
             <RegularRowItem
-              onClick={() => handleChangeRestaurant(restaurantKey as AllRestaurantsOptions)}
+              onClick={() => handleChangeRestaurant(restaurantKey as AllRestaurantNames)}
               key={index}
               selected={isSelected}
             >

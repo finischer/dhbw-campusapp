@@ -4,7 +4,7 @@ import { DHBWKarlsruheRestaurantScraper } from "../../api/html_scraper/DHBWKarls
 import { DHBWMannheimRestaurantScraper } from "../../api/html_scraper/DHBWMannheim/DHBWMannheimRestaurantScraper";
 import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
 import { IFetchedRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
-import { AllRestaurantNames, AllRestaurantsOptions } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
+import { AllRestaurantNames, AllRestaurants } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import useAsyncStorage from "../useAsyncStorage";
 import { useMetadata } from "../useMetadata";
@@ -35,13 +35,19 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [restaurantScraper, setRestaurantScraper] = useState<RestaurantScraper>(
     new DHBWMannheimRestaurantScraper(language)
   );
-  
-  const [restaurantName, setRestaurantName] = useState<AllRestaurantNames>("mensa-am-schloss");
+
+  const DEFAULT_RESTAURANT = Object.entries(RESTAURANTS_MAP[dhbwLocation]).at(0) as [
+    AllRestaurantNames,
+    string
+  ];
+
+  const [restaurantName, setRestaurantName] = useState<AllRestaurantNames>(DEFAULT_RESTAURANT[0]);
 
   const [choosedDate, setChoosedDate] = useState(moment().format("DD.MM.YYYY"));
 
-  const restaurantsAtLocation = RESTAURANTS_MAP[dhbwLocation]
-  const formattedRestaurantName = restaurantsAtLocation["mensa-am-schloss"] 
+  const restaurantsAtLocation = RESTAURANTS_MAP[dhbwLocation];
+
+  const formattedRestaurantName = DEFAULT_RESTAURANT[1];
 
   useEffect(() => {
     const initializeRestaurant = async () => {
@@ -54,16 +60,16 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   useEffect(() => {
     switch (dhbwLocation) {
-      case "mannheim":
+      case DHBWLocation.Mannheim:
         setRestaurantScraper(new DHBWMannheimRestaurantScraper(language));
         break;
-      case "karlsruhe":
+      case DHBWLocation.Karlsruhe:
         setRestaurantScraper(new DHBWKarlsruheRestaurantScraper(language));
         break;
     }
   }, [dhbwLocation]);
 
-  const changeRestaurant = (newRestaurant: AllRestaurantsOptions) => {
+  const changeRestaurant = (newRestaurant: AllRestaurantNames) => {
     setRestaurantName(newRestaurant);
     storeDataInAsyncStorage("cafeteria", newRestaurant);
   };
@@ -73,7 +79,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const getAllRestaurants = () => {
-    return RESTAURANTS_MAP;
+    return RESTAURANTS_MAP[dhbwLocation];
   };
 
   const fetchRestaurant = useCallback(async () => {
@@ -114,7 +120,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
-const useRestaurant = () => {
+const useRestaurant = <T extends DHBWLocation>() => {
   const context = useContext(RestaurantContext);
 
   if (context === undefined) {
