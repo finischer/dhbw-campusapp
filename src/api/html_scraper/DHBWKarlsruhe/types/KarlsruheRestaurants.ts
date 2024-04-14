@@ -1,1 +1,1 @@
-export type KarlsruheRestaurantOptions = "erzbergerstrasse";
+export type KarlsruheRestaurantOptions = "erzbergerstrasse" | "mensa-moltke";

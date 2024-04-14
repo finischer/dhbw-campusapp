@@ -3,11 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import moment from "moment";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  DeviceEventEmitter,
-  NativeScrollEvent,
-  NativeSyntheticEvent
-} from "react-native";
+import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import Animated from "react-native-reanimated";
 import { useQuery } from "react-query";
 import { IFetchedRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
@@ -23,10 +19,7 @@ import { RootStackParamList } from "../../infrastructure/navigation/Navigation/n
 import AdditivesList from "./components/AdditivesList";
 import MenuList from "./components/MenuList";
 import { restaurantScreenStyles } from "./restaurantScreen.styles";
-import {
-  IRenderMenuListProps,
-  IRestaurantState
-} from "./restaurantScreen.types";
+import { IRenderMenuListProps, IRestaurantState } from "./restaurantScreen.types";
 import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
 import useAlert from "../../hooks/useAlert/useAlert";
 import Alert from "../../components/Alert/Alert";
@@ -40,32 +33,30 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const RestaurantScreen = () => {
   const { t } = useTranslation(["restaurantScreen", "common"]);
-  const { storeDataInAsyncStorage, getDataFromAsyncStorage, deleteFromAsyncStorage } = useAsyncStorage()
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage, deleteFromAsyncStorage } = useAsyncStorage();
   const { language, dhbwLocation } = useMetadata();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const { restaurantName, formattedRestaurantName, fetchRestaurant } =
-    useRestaurant();
-  const { requestStoreReview } = useReview()
+  const { restaurantName, formattedRestaurantName, fetchRestaurant } = useRestaurant();
+  const { requestStoreReview } = useReview();
 
   const alertLocalRef = useRef<IAlertFunctions | null>(null);
   const alertRef = useCallback((node: IAlertFunctions | null) => {
-    checkForFirstTime(node?.openAlert)
+    checkForFirstTime(node?.openAlert);
     alertLocalRef.current = node;
   }, []);
 
   const alertButtons: DialogButtonProps[] = [
     {
       label: "Ok",
-      onPress: () => alertLocalRef.current?.closeAlert()
-    }
-  ]
-
+      onPress: () => alertLocalRef.current?.closeAlert(),
+    },
+  ];
 
   const [restaurant, setRestaurant] = useState<IRestaurantState>({
     restaurantName,
     offer: [],
     requestTime: undefined,
-    additivesDict: {}
+    additivesDict: {},
   });
 
   const {
@@ -88,22 +79,21 @@ const RestaurantScreen = () => {
   });
 
   useEffect(() => {
-    requestStoreReview()
-  }, [])
+    requestStoreReview();
+  }, []);
 
   const checkForFirstTime = async (openAlertFn: IAlertFunctions["openAlert"] | undefined) => {
     // check if screen appears for the first time
     const alreadySeenScreen = await getDataFromAsyncStorage("restaurantScreen.alreadySeen");
 
-    if (alreadySeenScreen) return
+    if (alreadySeenScreen) return;
 
-    storeDataInAsyncStorage("restaurantScreen.alreadySeen", true)
+    storeDataInAsyncStorage("restaurantScreen.alreadySeen", true);
 
     if (openAlertFn) {
-      openAlertFn()
+      openAlertFn();
     }
-  }
-
+  };
 
   const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y >= 33) {
@@ -120,7 +110,10 @@ const RestaurantScreen = () => {
   if (isFetching)
     return (
       <GlobalBody centered>
-        <Loader text={t("offerLoaderText")} size="small" />
+        <Loader
+          text={t("offerLoaderText")}
+          size="small"
+        />
       </GlobalBody>
     );
 
@@ -149,7 +142,6 @@ const RestaurantScreen = () => {
         title={t("hint", { ns: "common" })}
         description={t("swipeHintDescription")}
         buttons={alertButtons}
-
       />
       <Animated.ScrollView
         onScroll={handleOnScroll}
@@ -159,7 +151,10 @@ const RestaurantScreen = () => {
         {/* Restaurant Title View */}
         <GlobalBody style={restaurantScreenStyles.restaurantNameContainer}>
           {/* Name of Restaurant */}
-          <RegularText weight="bold" size={typography.h2}>
+          <RegularText
+            weight="bold"
+            size={typography.h2}
+          >
             {formattedRestaurantName}
           </RegularText>
         </GlobalBody>
@@ -168,7 +163,11 @@ const RestaurantScreen = () => {
         <SnapCarousel
           data={restaurant.offer}
           renderItem={({ item }: IRenderMenuListProps) => (
-            <MenuList menus={item.menus} date={item.date} requestTime={restaurant.requestTime} />
+            <MenuList
+              menus={item.menus}
+              date={item.date}
+              requestTime={restaurant.requestTime}
+            />
           )}
         />
 

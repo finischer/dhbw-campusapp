@@ -4,12 +4,14 @@ import { DHBWKarlsruheRestaurantScraper } from "../../api/html_scraper/DHBWKarls
 import { DHBWMannheimRestaurantScraper } from "../../api/html_scraper/DHBWMannheim/DHBWMannheimRestaurantScraper";
 import { RestaurantScraper } from "../../api/html_scraper/restaurant/RestaurantScraperController";
 import { IFetchedRestaurantTypes } from "../../api/html_scraper/restaurant/types/IRestaurantTypes";
-import { AllRestaurantNames, AllRestaurants } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
+import { AllRestaurantNames } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import useAsyncStorage from "../useAsyncStorage";
 import { useMetadata } from "../useMetadata";
-import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
 import { DHBWLocation } from "../useMetadata/useMetadata.types";
+import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
+
+// TODO: IMPORTANT! Currently the selection between DHBW Locations and restaurants is Buggy. It must be fixed first, before going on!
 
 const PREVIEW_DAYS = 5;
 
@@ -24,6 +26,7 @@ const RESTAURANTS_MAP: RestaurantsMapTypes = {
   },
   karlsruhe: {
     erzbergerstrasse: "Erzbergerstraße",
+    "mensa-moltke": "Mensaria Moltke",
   },
 };
 
@@ -43,9 +46,8 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [choosedDate, setChoosedDate] = useState(moment().format("DD.MM.YYYY"));
 
-  const restaurantsAtLocation = RESTAURANTS_MAP[dhbwLocation];
-
-  const formattedRestaurantName = DEFAULT_RESTAURANT[1];
+  // @ts-ignore
+  const formattedRestaurantName = RESTAURANTS_MAP[dhbwLocation][restaurantName];
 
   useEffect(() => {
     const initializeRestaurant = async () => {
@@ -57,7 +59,6 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   useEffect(() => {
-    console.log("DHBW Location: ", dhbwLocation);
     switch (dhbwLocation) {
       case DHBWLocation.Mannheim:
         setRestaurantScraper(new DHBWMannheimRestaurantScraper(language));
@@ -86,7 +87,6 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return null;
     }
 
-    console.log("Fetch restaurant: ", typeof restaurantScraper);
     const restaurant: IFetchedRestaurantTypes = {
       restaurantName: "",
       offer: [],
@@ -134,4 +134,4 @@ const useRestaurant = () => {
   return context;
 };
 
-export { useRestaurant, RestaurantProvider };
+export { RestaurantProvider, useRestaurant };

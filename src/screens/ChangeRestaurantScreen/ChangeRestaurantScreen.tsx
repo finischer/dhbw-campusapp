@@ -31,6 +31,7 @@ const ChangeRestaurantScreen = () => {
       <ScrollView style={changeRestaurantStyles.container}>
         {restaurantList.map((restaurant: [string, string], index: number) => {
           const [restaurantKey, restaurantName]: [string, string] = restaurant;
+
           const isSelected = restaurantName === formattedRestaurantName;
 
           return (

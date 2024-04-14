@@ -73,7 +73,7 @@ type TMP_Role = "student" | "guest" | "staff" | "pupils";
 
 enum PriceSelector {
   Portion = "Portion",
-  Gramm = "gr",
+  Gramm = "g",
   Kilogramm = "kg",
 }
 
@@ -92,6 +92,7 @@ export class DHBWKarlsruheRestaurantScraper extends RestaurantScraper {
     this.baseUrl = `https://www.sw-ka.de/${language}/hochschulgastronomie/speiseplan`;
     this.restaurants = {
       erzbergerstrasse: "mensa_erzberger",
+      "mensa-moltke": "mensa_moltke",
     };
     this.price_html_classes = {
       student: ".price_1",
@@ -110,7 +111,7 @@ export class DHBWKarlsruheRestaurantScraper extends RestaurantScraper {
   }
 
   extractPriceSelection(text: string) {
-    const SEARCH_KEYS = ["preis je"];
+    const SEARCH_KEYS = ["preis je", "je"];
 
     let priceSelector: string = PriceSelector.Portion; // DEFAULT
 
