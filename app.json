@@ -48,7 +48,8 @@
         {
           "username": "niklasfischer0"
         }
-      ]
+      ],
+      "expo-secure-store"
     ]
   }
 }
