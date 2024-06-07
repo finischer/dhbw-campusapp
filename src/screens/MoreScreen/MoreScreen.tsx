@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import * as WebBrowser from 'expo-web-browser';
-import React, { useRef } from "react";
+import * as WebBrowser from "expo-web-browser";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, View } from "react-native";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 import Button from "../../components/Button/Button";
 import GlobalBody from "../../components/GlobalBody";
 import ImportCalendarDialog from "../../components/ImportCalendarDialog";
@@ -15,32 +15,33 @@ import { CONTACT_MAIL } from "../../constants/common";
 import { useMetadata } from "../../hooks/useMetadata";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import AppInfo from "./components/AppInfo";
-import { SIZES, SPACING } from '../../constants/layout';
+import { SIZES, SPACING } from "../../constants/layout";
 import SegmentedControl from "../../components/SegmentedControl/SegmentedControl";
 import { moreScreenStyles } from "./moreScreen.styles";
-
+import useReview from "../../hooks/useReview";
 
 const MoreScreen = () => {
   const { theme, changeTheme, isAndroid, colors } = useMetadata();
+  const { requestStoreReview } = useReview();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
   const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
-  const segmentIndex = theme === "light" ? 0 : theme === "dark" ? 2 : 1 // light = 0, dark = 2, system = 1
+  const segmentIndex = theme === "light" ? 0 : theme === "dark" ? 2 : 1; // light = 0, dark = 2, system = 1
 
   const handleChangeTheme = (segmentIndex: number) => {
     if (segmentIndex === 0) {
       // light mode
-      changeTheme("light")
+      changeTheme("light");
     } else if (segmentIndex === 1) {
       // system theme
-      changeTheme("system")
+      changeTheme("system");
     } else if (segmentIndex === 2) {
       // dark mode
-      changeTheme("dark")
+      changeTheme("dark");
     }
-  }
+  };
 
   const goTo = (to: keyof RootStackParamList) => {
     navigation.navigate(to);
@@ -51,10 +52,12 @@ const MoreScreen = () => {
     const subject = t("common:emailSubjectBugFound").concat(` - ${reportId}`);
     const body = t("common:emailBodyBugFound");
 
-    const url = `mailto:${CONTACT_MAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const url = `mailto:${CONTACT_MAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+      body
+    )}`;
 
     if (await Linking.canOpenURL(url)) {
-      await Linking.openURL(url)
+      await Linking.openURL(url);
     }
   };
 
@@ -63,7 +66,7 @@ const MoreScreen = () => {
       controlsColor: colors.lightText,
       secondaryToolbarColor: colors.lightText,
       enableBarCollapsing: true,
-      toolbarColor: colors.accent
+      toolbarColor: colors.accent,
     });
   };
 
@@ -71,14 +74,19 @@ const MoreScreen = () => {
     if (true) {
       return importCalendarRef.current?.openDialog();
     }
-
   };
 
-  return (
-    <GlobalBody noVerticalPadding >
-      <ImportCalendarDialog ref={importCalendarRef} />
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: SPACING.md }}>
+  useEffect(() => {
+    requestStoreReview();
+  }, []);
 
+  return (
+    <GlobalBody noVerticalPadding>
+      <ImportCalendarDialog ref={importCalendarRef} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: SPACING.md }}
+      >
         {/* General Section */}
         <SettingSection title={t("moreScreen:sectionGeneral")}>
           <RegularRowItem
@@ -118,9 +126,7 @@ const MoreScreen = () => {
           <RegularRowItem
             leftIconSource="feather"
             leftIcon="map"
-            onClick={() =>
-              goTo("CampusplanScreen")
-            }
+            onClick={() => goTo("CampusplanScreen")}
             rightIconSource="feather"
             rightIcon="chevron-right"
           >
@@ -128,11 +134,9 @@ const MoreScreen = () => {
           </RegularRowItem>
           <RegularRowItem
             leftIconSource="ionicons"
-            leftIcon="ios-american-football-outline"
+            leftIcon="american-football-outline"
             onClick={() =>
-              openExternalLink(
-                "https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport"
-              )
+              openExternalLink("https://www.mannheim.dhbw.de/dual-studieren/rund-ums-studium/hochschulsport")
             }
             rightIconSource="feather"
             rightIcon="external-link"
@@ -176,7 +180,11 @@ const MoreScreen = () => {
             leftIcon="lock"
             rightIconSource="feather"
             rightIcon="external-link"
-            onClick={() => openExternalLink("https://github.com/finischer/dhbw-campusapp-legal-texts/blob/main/de/Datenschutzerkl%C3%A4rung.md")}
+            onClick={() =>
+              openExternalLink(
+                "https://github.com/finischer/dhbw-campusapp-legal-texts/blob/main/de/Datenschutzerkl%C3%A4rung.md"
+              )
+            }
           >
             {t("moreScreen:privacyPolicy")}
           </RegularRowItem>
@@ -191,14 +199,16 @@ const MoreScreen = () => {
           </RegularRowItem>
         </SettingSection>
 
-
         {/* Theme Toggler */}
-        <SettingSection title={t("moreScreen:appearance")} contentGap>
+        <SettingSection
+          title={t("moreScreen:appearance")}
+          contentGap
+        >
           <SegmentedControl
             values={[t("common:light"), t("common:system"), t("common:dark")]}
             selectedIndex={segmentIndex}
             onChange={(event: any) => {
-              handleChangeTheme(event.nativeEvent.selectedSegmentIndex)
+              handleChangeTheme(event.nativeEvent.selectedSegmentIndex);
             }}
           />
         </SettingSection>
@@ -208,12 +218,13 @@ const MoreScreen = () => {
           <AppInfo />
 
           {/* BugFound Button */}
-          <Button variant="text" onClick={handleReportBug}>
+          <Button
+            variant="text"
+            onClick={handleReportBug}
+          >
             {t("moreScreen:reportBug")}
           </Button>
         </View>
-
-
       </ScrollView>
     </GlobalBody>
   );
