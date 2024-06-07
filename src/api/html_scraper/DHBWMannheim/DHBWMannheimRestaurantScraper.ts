@@ -8,10 +8,7 @@ import { RestaurantScraper } from "../restaurant/RestaurantScraperController";
 import { IDayOptions } from "../restaurant/types/IDayOptions";
 import { IMenuType } from "../restaurant/types/IMenuType";
 import { IOfferListTypes } from "../restaurant/types/IOfferListTypes";
-import {
-    IAdditivesDict,
-    IRestaurantTypes
-} from "../restaurant/types/IRestaurantTypes";
+import { IAdditivesDict, IRestaurantTypes } from "../restaurant/types/IRestaurantTypes";
 import { MannheimRestaurants } from "../restaurant/types/RestaurantTypes";
 import { MannheimRestaurantOptions } from "./types/MannheimRestaurants";
 
@@ -20,27 +17,20 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
   baseUrl: string;
 
   constructor(language: ILanguageOptions) {
-    super()
+    super();
     const suffix = language === "de" ? "" : "en";
     this.baseUrl = `https://www.stw-ma.de/${suffix}`;
     this.restaurants = {
       "mensa-am-schloss": "menüplan_schlossmensa.html",
-      "mensaria-metropol":
-        "Essen+_+Trinken/Speisepl%C3%A4ne/Mensaria+Metropol.html",
-      "hochschule-mannheim":
-        "Essen+_+Trinken/Speisepläne/Hochschule+Mannheim.html",
-      "cafeteria-musikhochschule":
-        "Essen+_+Trinken/Speisepläne/Cafeteria+Musikhochschule.html",
-      "mensaria-wohlgelegen":
-        "Essen+_+Trinken/Speisepläne/Mensaria+Wohlgelegen.html",
+      "mensaria-metropol": "Essen+_+Trinken/Speisepl%C3%A4ne/Mensaria+Metropol.html",
+      "hochschule-mannheim": "Essen+_+Trinken/Speisepläne/Hochschule+Mannheim.html",
+      "cafeteria-musikhochschule": "Essen+_+Trinken/Speisepläne/Cafeteria+Musikhochschule.html",
+      "mensaria-wohlgelegen": "Essen+_+Trinken/Speisepläne/Mensaria+Wohlgelegen.html",
       mensawagon: "Essen+_+Trinken/Speisepläne/MensaWagon.html",
     };
   }
 
-  async getHtmlOfRestaurant(
-    restaurantKey: MannheimRestaurantOptions,
-    date: string | undefined = undefined
-  ) {
+  async getHtmlOfRestaurant(restaurantKey: MannheimRestaurantOptions, date: string | undefined = undefined) {
     const payloadDate = date || moment().format("YYYY-MM-DD");
 
     const pathToRestaurant = this.restaurants[restaurantKey];
@@ -95,10 +85,7 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
     };
   }
 
-  async getMenuOfRestaurant(
-    restaurantKey: MannheimRestaurantOptions,
-    date: string
-  ) {
+  async getMenuOfRestaurant(restaurantKey: MannheimRestaurantOptions, date: string) {
     const res = await this.getHtmlOfRestaurant(restaurantKey, date);
     if (!res.data) return res;
 
@@ -114,15 +101,9 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
 
     // iterate over offer
     $offer.each((_: number, parentElem: any) => {
-      const menuName = $(parentElem)
-        .find(".speiseplan-table-menu-headline > strong")
-        .text()
-        .trim();
+      const menuName = $(parentElem).find(".speiseplan-table-menu-headline > strong").text().trim();
 
-      const menuDescription = $(parentElem)
-        .find(".speiseplan-table-menu-content")
-        .text()
-        .trim();
+      const menuDescription = $(parentElem).find(".speiseplan-table-menu-content").text().trim();
 
       const menuIcons: Array<MenuIconNames> = [];
       $(parentElem)
@@ -135,10 +116,7 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
         });
 
       const menuPrice = $(parentElem).find(".price").text().trim();
-      const menuPriceSelection = $(parentElem)
-        .find(".customSelection")
-        .text()
-        .trim();
+      const menuPriceSelection = $(parentElem).find(".customSelection").text().trim();
 
       const newMenu: IMenuType = {
         menuName,
