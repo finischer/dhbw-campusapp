@@ -22,7 +22,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
-      "buildNumber": "13",
+      "buildNumber": "14",
       "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349"
     },
     "android": {
