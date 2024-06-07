@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as WebBrowser from "expo-web-browser";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, View } from "react-native";
 import uuid from "react-native-uuid";
@@ -18,9 +18,11 @@ import AppInfo from "./components/AppInfo";
 import { SIZES, SPACING } from "../../constants/layout";
 import SegmentedControl from "../../components/SegmentedControl/SegmentedControl";
 import { moreScreenStyles } from "./moreScreen.styles";
+import useReview from "../../hooks/useReview";
 
 const MoreScreen = () => {
   const { theme, changeTheme, isAndroid, colors } = useMetadata();
+  const { requestStoreReview } = useReview();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
@@ -73,6 +75,10 @@ const MoreScreen = () => {
       return importCalendarRef.current?.openDialog();
     }
   };
+
+  useEffect(() => {
+    requestStoreReview();
+  }, []);
 
   return (
     <GlobalBody noVerticalPadding>
