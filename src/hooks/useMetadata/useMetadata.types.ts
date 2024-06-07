@@ -17,6 +17,6 @@ export type IMetadataContext = {
   isIOS: boolean;
 };
 
-export type ILanguageOptions = "de" | "en";
+export type ILanguageOptions = "de" | "en" | "es";
 
 export type DHBWLocation = "mannheim" | "karlsruhe";

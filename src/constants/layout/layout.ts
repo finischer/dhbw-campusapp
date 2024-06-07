@@ -4,6 +4,12 @@ export const SIZES = {
   base: 4,
   padding: 20,
   borderRadius: 5,
+  s: 8,
+  sm: 12,
+  m: 16,
+  l: 24,
+  xl: 40,
+  xxl: 80,
 };
 
 export const SPACING = {
