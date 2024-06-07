@@ -48,7 +48,8 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
     "react-query": "^3.39.2",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "expo-insights": "~0.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
