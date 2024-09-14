@@ -4,4 +4,4 @@ export type MannheimRestaurantOptions =
   | "hochschule-mannheim"
   | "cafeteria-musikhochschule"
   | "mensaria-wohlgelegen"
-  | "mensawagon";
+  | "cafe33";
