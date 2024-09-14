@@ -13,3 +13,5 @@ eas.json
 licenses.json
 # macOS
 .DS_Store
+
+.html_response

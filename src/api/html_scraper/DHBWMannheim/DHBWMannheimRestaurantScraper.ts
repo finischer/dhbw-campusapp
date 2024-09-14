@@ -11,31 +11,35 @@ import { IOfferListTypes } from "../restaurant/types/IOfferListTypes";
 import { IAdditivesDict, IRestaurantTypes } from "../restaurant/types/IRestaurantTypes";
 import { MannheimRestaurants } from "../restaurant/types/RestaurantTypes";
 import { MannheimRestaurantOptions } from "./types/MannheimRestaurants";
+import { RESTAURANTS_MAP } from "../restaurant/constants";
 
 export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
-  restaurants: MannheimRestaurants;
+  restaurantsLocation: MannheimRestaurants;
   baseUrl: string;
+  menuLanguage: string;
 
   constructor(language: ILanguageOptions) {
     super();
-    const suffix = language === "de" ? "" : "en";
-    this.baseUrl = `https://www.stw-ma.de/${suffix}`;
-    this.restaurants = {
-      "mensa-am-schloss": "menüplan_schlossmensa.html",
-      "mensaria-metropol": "Essen+_+Trinken/Speisepl%C3%A4ne/Mensaria+Metropol.html",
-      "hochschule-mannheim": "Essen+_+Trinken/Speisepläne/Hochschule+Mannheim.html",
-      "cafeteria-musikhochschule": "Essen+_+Trinken/Speisepläne/Cafeteria+Musikhochschule.html",
-      "mensaria-wohlgelegen": "Essen+_+Trinken/Speisepläne/Mensaria+Wohlgelegen.html",
-      mensawagon: "Essen+_+Trinken/Speisepläne/MensaWagon.html",
+    this.menuLanguage = language === "de" ? "de" : "en";
+    this.baseUrl = `https://api.stw-ma.de/tl1/menuplan`;
+    this.restaurantsLocation = {
+      "mensa-am-schloss": "610",
+      "mensaria-metropol": "613",
+      "hochschule-mannheim": "611",
+      "cafeteria-musikhochschule": "714",
+      "mensaria-wohlgelegen": "614",
+      cafe33: "717",
     };
   }
 
   async getHtmlOfRestaurant(restaurantKey: MannheimRestaurantOptions, date: string | undefined = undefined) {
     const payloadDate = date || moment().format("YYYY-MM-DD");
 
-    const pathToRestaurant = this.restaurants[restaurantKey];
-    const url = this.baseUrl + "/" + pathToRestaurant;
-    const res = await axios.post(url, `day=${payloadDate}`);
+    const restaurantLocation = this.restaurantsLocation[restaurantKey];
+    const res = await axios.post(
+      this.baseUrl,
+      `date=${payloadDate}&location=${restaurantLocation}&lang=${this.menuLanguage}&mode=day`
+    );
 
     if (res.status !== 200) {
       return {
@@ -50,7 +54,7 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
 
   getRestaurants() {
     // returns all names of all restaurants of Mannheim
-    return this.restaurants;
+    return this.restaurantsLocation;
   }
 
   getInfoOfRestaurant(restaurant: string) {
@@ -88,9 +92,10 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
   async getMenuOfRestaurant(restaurantKey: MannheimRestaurantOptions, date: string) {
     const res = await this.getHtmlOfRestaurant(restaurantKey, date);
     if (!res.data) return res;
+    if (!res.data?.content) return { msg: "No content found", status: 404, data: undefined };
 
-    const $ = cheerio.load(res.data);
-    const restaurantName = $(".maintitle").text();
+    const $ = cheerio.load(res.data.content);
+    const restaurantName = RESTAURANTS_MAP[restaurantKey];
 
     const $offer = $(".speiseplan-table").children();
 
@@ -102,7 +107,6 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
     // iterate over offer
     $offer.each((_: number, parentElem: any) => {
       const menuName = $(parentElem).find(".speiseplan-table-menu-headline > strong").text().trim();
-
       const menuDescription = $(parentElem).find(".speiseplan-table-menu-content").text().trim();
 
       const menuIcons: Array<MenuIconNames> = [];

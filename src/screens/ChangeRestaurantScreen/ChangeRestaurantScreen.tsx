@@ -5,24 +5,26 @@ import { changeRestaurantStyles } from "./changeRestaurantScreen.styles";
 import { useRestaurant } from "../../hooks/useRestaurant/useRestaurant";
 import { RestaurantsMapTypes } from "../../hooks/useRestaurant/useRestaurant.types";
 import RegularRowItem from "../../components/RegularRowItem";
-import { RestaurantOptions } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
+import { AllRestaurantsOptions } from "../../api/html_scraper/restaurant/types/RestaurantTypes";
 import { useTranslation } from "react-i18next";
 
 const ChangeRestaurantScreen = () => {
   const { t } = useTranslation("navigation");
-  const { getAllRestaurants, changeRestaurant, formattedRestaurantName } =
-    useRestaurant();
+  const { getAllRestaurants, changeRestaurant, formattedRestaurantName } = useRestaurant();
   const restaurantsObject: RestaurantsMapTypes = getAllRestaurants();
   const restaurantList = Object.entries(restaurantsObject);
 
   const modalTitle = t("changeRestaurant");
 
-  const handleChangeRestaurant = (restaurant: RestaurantOptions) => {
+  const handleChangeRestaurant = (restaurant: AllRestaurantsOptions) => {
     changeRestaurant(restaurant);
   };
 
   return (
-    <Modal title={modalTitle} subTitle="Mannheim">
+    <Modal
+      title={modalTitle}
+      subTitle="Mannheim"
+    >
       <ScrollView style={changeRestaurantStyles.container}>
         {restaurantList.map((restaurant: [string, string], index: number) => {
           const [restaurantKey, restaurantName]: [string, string] = restaurant;
@@ -30,9 +32,7 @@ const ChangeRestaurantScreen = () => {
 
           return (
             <RegularRowItem
-              onClick={() =>
-                handleChangeRestaurant(restaurantKey as RestaurantOptions)
-              }
+              onClick={() => handleChangeRestaurant(restaurantKey as AllRestaurantsOptions)}
               key={index}
               selected={isSelected}
             >
