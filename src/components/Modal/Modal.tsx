@@ -7,13 +7,7 @@ import GlobalBody from "../GlobalBody";
 import CloseButton from "../CloseButton";
 import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  FadeOutDown,
-  FadeOutUp,
-  Layout,
-} from "react-native-reanimated";
+import Animated, { FadeInDown, FadeInUp, FadeOutDown, FadeOutUp, Layout } from "react-native-reanimated";
 import { SPACING } from "../../constants/layout";
 
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
@@ -21,16 +15,12 @@ const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 const Modal = React.forwardRef<IModalFunctions, IModalProps>(
   ({ title, subTitle, children, withCloseButton = true }, ref) => {
     const { theme } = useMetadata();
-    const deviceColorScheme = useColorScheme()
-    const [statusBarStyle, setStatusBarStyle] = useState<
-      "light-content" | "dark-content"
-    >("light-content");
+    const deviceColorScheme = useColorScheme();
+    const [statusBarStyle, setStatusBarStyle] = useState<"light-content" | "dark-content">("light-content");
     const isFocused = useIsFocused();
 
     const [showCloseButton, setShowCloseButton] = useState(withCloseButton);
-    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(
-      undefined
-    );
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(undefined);
 
     useEffect(() => {
       if (isFocused && theme === "light") {
@@ -85,16 +75,20 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
               <View style={modalStyles.headerContainer}>
                 <RegularText style={modalStyles.titleText}>{title}</RegularText>
                 {subTitle && (
-                  <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
-                    <RegularText style={modalStyles.subTitleText}>
-                      {subTitle}
-                    </RegularText>
+                  <Animated.View
+                    entering={FadeInUp}
+                    exiting={FadeOutUp}
+                  >
+                    <RegularText style={modalStyles.subTitleText}>{subTitle}</RegularText>
                   </Animated.View>
                 )}
               </View>
 
               {/* Content View */}
-              <Animated.View style={modalStyles.bodyContainer} layout={Layout}>
+              <Animated.View
+                style={modalStyles.bodyContainer}
+                layout={Layout}
+              >
                 {children}
               </Animated.View>
 
@@ -115,5 +109,7 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
     );
   }
 );
+
+Modal.displayName = "ModalComponent";
 
 export default Modal;

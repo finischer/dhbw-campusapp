@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from "@react-navigation/stack";
-import { headerConfig } from "../Navigation/config";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import LoginScreen from "../../../screens/LoginScreen";
 import DualisScreen from "../../../screens/DualisScreen";
 import LogoutButton from "../../../components/LogoutButton";
@@ -12,6 +8,7 @@ import { useMetadata } from "../../../hooks/useMetadata";
 import NavigationHeader from "../../../components/NavigationHeader";
 import useAsyncStorage from "../../../hooks/useAsyncStorage";
 import { useDualis } from "../../../hooks/useDualis";
+import { useHeaderConfig } from "../../../hooks/useHeaderConfig";
 
 const DualisStack = createStackNavigator();
 
@@ -20,7 +17,7 @@ const SCREEN_TITLE = "Dualis";
 const DualisNavigator = () => {
   const { storeDataInAsyncStorage } = useAsyncStorage();
   const [accessGranted, setAccessGranted] = useState<boolean>(false);
-  const navigationHeaderConfig = headerConfig();
+  const navigationHeaderConfig = useHeaderConfig();
   const { colors } = useMetadata();
   const { logout: logoutFromDualis } = useDualis();
 
@@ -46,12 +43,7 @@ const DualisNavigator = () => {
     );
 
   return (
-    <DualisStack.Navigator
-      screenOptions={navigationHeaderConfig}
-      defaultScreenOptions={{
-        freezeOnBlur: false,
-      }}
-    >
+    <DualisStack.Navigator screenOptions={navigationHeaderConfig}>
       <DualisStack.Group>
         <DualisStack.Screen
           name="DualisHomeScreen"

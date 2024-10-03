@@ -1,0 +1,1 @@
+export { useHeaderConfig } from "./useHeaderConfig";

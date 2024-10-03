@@ -3,8 +3,6 @@ import { IRegularRowItemProps } from "../RegularRowItem/regularRowItem.types";
 
 export interface SettingSectionProps {
   title: string;
-  children:
-    | ReactElement<IRegularRowItemProps>
-    | Array<ReactElement<IRegularRowItemProps>>;
+  children: ReactElement<IRegularRowItemProps> | ReactElement<IRegularRowItemProps>[];
   contentGap?: boolean; // gap between title and content
 }

@@ -68,9 +68,7 @@ const Input = React.forwardRef<any, IInputProps>(
     return (
       <View style={[inputStyles.inputContainer]}>
         {floatingLabel && <FloatingLabel />}
-        {leftIcon && (
-          <View style={inputStyles.leftIconContainer}>{leftIcon}</View>
-        )}
+        {leftIcon && <View style={inputStyles.leftIconContainer}>{leftIcon}</View>}
         <TextInput
           {...props}
           ref={ref}
@@ -82,12 +80,12 @@ const Input = React.forwardRef<any, IInputProps>(
           placeholderTextColor={colors.secondaryDarker}
           selectionColor={colors.accent}
         />
-        {rightIcon && (
-          <View style={inputStyles.rightIconContainer}>{rightIcon}</View>
-        )}
+        {rightIcon && <View style={inputStyles.rightIconContainer}>{rightIcon}</View>}
       </View>
     );
   }
 );
+
+Input.displayName = "InputComponent";
 
 export default Input;

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import {
   generalButtonStyle,
@@ -85,7 +85,6 @@ const Button: React.FC<IButtonTypes> = ({
   });
 
   const animatedButtonStyle = useAnimatedStyle(() => {
-    1;
     const opacity = interpolate(progress.value, [1, 0], [1, 0.3]);
 
     return {
@@ -94,7 +93,10 @@ const Button: React.FC<IButtonTypes> = ({
   });
 
   return (
-    <TouchableOpacity onPress={onClick} disabled={disabled}>
+    <TouchableOpacity
+      onPress={onClick}
+      disabled={disabled}
+    >
       <Animated.View
         style={[
           variantButtonStyle?.container,
@@ -105,9 +107,7 @@ const Button: React.FC<IButtonTypes> = ({
         ]}
       >
         {leftIcon}
-        <Text style={[variantButtonStyle?.text, generalButtonStyle.text]}>
-          {children}
-        </Text>
+        <Text style={[variantButtonStyle?.text, generalButtonStyle.text]}>{children}</Text>
         {rightIcon}
       </Animated.View>
     </TouchableOpacity>
