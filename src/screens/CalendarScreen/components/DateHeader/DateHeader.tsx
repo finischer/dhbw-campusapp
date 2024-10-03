@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { IDateHeaderProps } from "./dateHeader.types";
 import RegularText from "../../../../components/RegularText";
@@ -28,9 +28,11 @@ const DateHeader: React.FC<IDateHeaderProps> = ({ title, index }) => {
       entering={enteringDelayedAnimation(index)}
       style={[dateHeaderStyles.container, localDateHeaderStyles.container]}
     >
-      <RegularText variant="light" style={dateHeaderStyles.text}>
-        {t(`common:${dayName}`)},{" "}
-        {moment(title, TITLE_DATE_FORMAT).format(dateFormat)}
+      <RegularText
+        variant="light"
+        style={dateHeaderStyles.text}
+      >
+        {t(`common:${dayName}`)}, {moment(title, TITLE_DATE_FORMAT).format(dateFormat)}
       </RegularText>
     </Animated.View>
   );

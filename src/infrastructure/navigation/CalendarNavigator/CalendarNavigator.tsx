@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  createStackNavigator,
-  StackNavigationProp,
-  TransitionPresets,
-} from "@react-navigation/stack";
+import { createStackNavigator, StackNavigationProp, TransitionPresets } from "@react-navigation/stack";
 import { DeviceEventEmitter, View } from "react-native";
-import { headerConfig } from "../Navigation/config";
 import CalendarScreen from "../../../screens/CalendarScreen";
 import NavigationHeader from "../../../components/NavigationHeader";
 import { useTranslation } from "react-i18next";
@@ -17,10 +12,12 @@ import { RootStackParamList } from "../Navigation/navigation.types";
 import { useLectures } from "../../../hooks/useLectures";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../../constants/layout";
 import LectureInformationScreen from "../../../screens/LectureInformationScreen/LectureInformationScreen";
+import { useHeaderConfig } from "../../../hooks/useHeaderConfig";
 
 const CalendarStack = createStackNavigator();
 
 const CalendarNavigator = () => {
+  const headerConfig = useHeaderConfig();
   const { colors } = useMetadata();
   const { course } = useLectures();
   const { t } = useTranslation("navigation");
@@ -33,15 +30,10 @@ const CalendarNavigator = () => {
       setShowSubTitle(newState);
     };
 
-    DeviceEventEmitter.addListener(
-      "handleShowSubTitle-CalendarScreen",
-      handleShowSubTitle
-    );
+    DeviceEventEmitter.addListener("handleShowSubTitle-CalendarScreen", handleShowSubTitle);
 
     return () => {
-      DeviceEventEmitter.removeAllListeners(
-        "handleShowSubTitle-CalendarScreen"
-      );
+      DeviceEventEmitter.removeAllListeners("handleShowSubTitle-CalendarScreen");
     };
   }, []);
 
@@ -50,7 +42,7 @@ const CalendarNavigator = () => {
   };
 
   return (
-    <CalendarStack.Navigator screenOptions={headerConfig()}>
+    <CalendarStack.Navigator screenOptions={headerConfig}>
       <CalendarStack.Screen
         name="CalendarScreen"
         component={CalendarScreen}

@@ -3,7 +3,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import Modal from "../../components/Modal/Modal";
-import RegularText from "../../components/RegularText/RegularText";
 import { ParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import LectureInformation from "./components/LectureInformation";
 import { lectureInformationStyles } from "./lectureInformationScreen.styles";

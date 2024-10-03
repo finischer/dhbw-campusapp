@@ -6,7 +6,6 @@ import Input from "../../components/Input";
 import RegularText from "../../components/RegularText";
 import typography from "../../constants/typography";
 import { useDualis } from "../../hooks/useDualis";
-import { HEADER_HEIGHT } from "../../infrastructure/navigation/Navigation/config";
 import { loginScreenStyles } from "./loginScreen.styles";
 import { ILoginFormStateTypes, ILoginScreenProps } from "./loginScreen.types";
 import { useTranslation } from "react-i18next";
@@ -16,18 +15,14 @@ import { useMetadata } from "../../hooks/useMetadata";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import useSecureStorage from "../../hooks/useSecureStorage";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
-import { AsyncStorageEntries } from "../../hooks/useAsyncStorage/useAsyncStorage.types";
 import Icon from "../../components/Icon";
+import { HEADER_HEIGHT } from "../../infrastructure/navigation/Navigation/config";
 
 const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
   const { isIOS, colors } = useMetadata();
-  const {
-    saveValueInSecureStorage,
-    getValueFromSecureStorage,
-    removeValueFromSecureStorage,
-  } = useSecureStorage();
-  const { getDataFromAsyncStorage, storeDataInAsyncStorage } =
-    useAsyncStorage();
+  const { saveValueInSecureStorage, getValueFromSecureStorage, removeValueFromSecureStorage } =
+    useSecureStorage();
+  const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
   const [formState, setFormState] = useState<ILoginFormStateTypes>({
     email: "",
     password: "",
@@ -102,10 +97,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
     setAccessGranted(false);
   };
 
-  const handleFormChange = (
-    formStateKey: keyof ILoginFormStateTypes,
-    newText: string
-  ) => {
+  const handleFormChange = (formStateKey: keyof ILoginFormStateTypes, newText: string) => {
     setFormState((oldFormState: ILoginFormStateTypes) => ({
       ...oldFormState,
       [formStateKey]: newText,
@@ -128,8 +120,14 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
         keyboardVerticalOffset={isIOS ? HEADER_HEIGHT + 50 : 0}
       >
         {/* LoginScreen Title */}
-        <View style={loginScreenStyles.title} testID="loginScreen-title">
-          <RegularText weight="bold" size={typography.h1}>
+        <View
+          style={loginScreenStyles.title}
+          testID="loginScreen-title"
+        >
+          <RegularText
+            weight="bold"
+            size={typography.h1}
+          >
             Dualis
           </RegularText>
         </View>
@@ -162,7 +160,10 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
         {/* Login Error */}
         <View style={loginScreenStyles.errorContainer}>
           {isError && (
-            <RegularText accentColor weight="bold">
+            <RegularText
+              accentColor
+              weight="bold"
+            >
               {t("loginFailed")}
             </RegularText>
           )}
@@ -175,10 +176,7 @@ const LoginScreen = ({ setAccessGranted }: ILoginScreenProps) => {
             disableBuiltInState={true}
             fillColor={colors.accent}
             text={stayLoggedInText}
-            textStyle={[
-              loginScreenStyles.stayLoggedInButtonText,
-              { color: colors.secondary },
-            ]}
+            textStyle={[loginScreenStyles.stayLoggedInButtonText, { color: colors.secondary }]}
             onPress={toggleStayLoggedIn}
           />
         </View>

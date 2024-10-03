@@ -1,5 +1,4 @@
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
-import { ISemesterTypes } from "../../api/html_scraper/dualis/types/ISemesterTypes";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 
 export type IDualisUser = {
@@ -14,5 +13,4 @@ export type IDualisContext = {
   getSemesterInformation(): Promise<ISemesterOptionsTypes | undefined>;
   args: string | null | undefined;
   cookies: string | null | undefined;
-  user: IDualisUser;
 };

@@ -9,7 +9,7 @@ export type INavigationIcons = {
 type LectureInformationScreenProps = {
   oldLecture: LectureType | null;
   newLecture: LectureType;
-  keyChanges: Array<keyof LectureType>;
+  keyChanges: (keyof LectureType)[];
 };
 
 export type ParamList = {
