@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import useAsyncStorage from "../useAsyncStorage/useAsyncStorage";
 import * as StoreReview from "expo-store-review";
 import moment from "moment";
@@ -13,18 +12,6 @@ const useReview = () => {
     storeDataInAsyncStorage("nextStoreReviewRequest", nextRequestTime);
     return nextRequestTime;
   };
-
-  const initNextStoreRequest = async () => {
-    const nextStoreReviewRequest = await getDataFromAsyncStorage("nextStoreReviewRequest");
-    if (!nextStoreReviewRequest) {
-      // set next store review after 1 week if it is not set yet
-      refreshNextStoreReviewRequest();
-    }
-  };
-
-  useEffect(() => {
-    initNextStoreRequest();
-  }, []);
 
   // Also the Store-Review API of iOS and android handle it automatically
   // whether to show the request or not, we handle this manually
@@ -42,7 +29,8 @@ const useReview = () => {
 
     const now = moment();
     const nextStoreReviewRequest = await getDataFromAsyncStorage("nextStoreReviewRequest");
-    if (now.isAfter(nextStoreReviewRequest) && canShowRequest) {
+    console.log("Next store review request: ", nextStoreReviewRequest);
+    if ((!nextStoreReviewRequest || now.isAfter(nextStoreReviewRequest)) && canShowRequest) {
       StoreReview.requestReview();
       refreshNextStoreReviewRequest();
     }
