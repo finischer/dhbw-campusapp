@@ -8,7 +8,7 @@ import { AllRestaurantsOptions } from "../../api/html_scraper/restaurant/types/R
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import useAsyncStorage from "../useAsyncStorage";
 import { useMetadata } from "../useMetadata";
-import { IRestaurantContext, RestaurantsMapTypes } from "./useRestaurant.types";
+import { IRestaurantContext } from "./useRestaurant.types";
 import { RESTAURANTS_MAP } from "../../api/html_scraper/restaurant/constants";
 
 const PREVIEW_DAYS = 5;
@@ -73,7 +73,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         moment().add(i, "days").format("YYYY-MM-DD")
       );
 
-      if (restaurantInfos.status != 200) continue;
+      if (restaurantInfos.status !== 200) continue;
       restaurant.restaurantName = restaurantInfos.data.restaurantName;
       restaurant.offer.push(restaurantInfos.data.offer);
       restaurant.additivesDict = restaurantInfos.data.additivesDict;

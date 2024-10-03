@@ -16,14 +16,19 @@ import { ILectureRowItemProps } from "./lectureRowItem.types";
 
 export const LECTURE_TIME_FORMAT = "HH:mm";
 
-// TODO: make a modal when click on a lecture to show the difference between the old and the new lecture information 
+// TODO: make a modal when click on a lecture to show the difference between the old and the new lecture information
 
-const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, localLecture, lecture, index }) => {
+const LectureRowItem: React.FC<ILectureRowItemProps> = ({
+  alertScheduleChanges,
+  localLecture,
+  lecture,
+  index,
+}) => {
   const [lectureChanged, setLectureChanged] = useState(false);
-  const [keyChanges, setKeyChanges] = useState<Array<keyof LectureType>>([]) // keys where the values has changed -> to identify what has been changed
+  const [keyChanges, setKeyChanges] = useState<(keyof LectureType)[]>([]); // keys where the values has changed -> to identify what has been changed
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { colors, timeFormat } = useMetadata();
-  const textVariant: IRegularTextVariants = lectureChanged ? "dark" : undefined
+  const textVariant: IRegularTextVariants = lectureChanged ? "dark" : undefined;
 
   const localRowItemStyles = StyleSheet.create({
     container: {
@@ -32,8 +37,8 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
   });
 
   useEffect(() => {
-    checkForDifferences(localLecture)
-  }, [])
+    checkForDifferences(localLecture);
+  }, []);
 
   const checkForDifferences = (localLecture: LectureType | null) => {
     if (localLecture !== null) {
@@ -41,14 +46,14 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
         const _key = key as keyof LectureType;
         // check if value is different
         if (value !== localLecture[_key]) {
-          alertScheduleChanges() // show alert which says that there are changes in the schedule
-          setLectureChanged(true)
-          setKeyChanges(oldState => [...oldState, _key])
+          alertScheduleChanges(); // show alert which says that there are changes in the schedule
+          setLectureChanged(true);
+          setKeyChanges((oldState) => [...oldState, _key]);
           // TODO: send a push notification with the new information
         }
       }
     }
-  }
+  };
 
   // IDEA: formatted lecture id in case we want to display the id on the screen in the future
   // const formatLectureId = (uid: string) => {
@@ -64,13 +69,19 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
   //   return uid
   // }
 
-
   const showLecturesChanges = () => {
-    navigation.navigate("LectureInformationScreen", { oldLecture: localLecture, newLecture: lecture, keyChanges });
-  }
+    navigation.navigate("LectureInformationScreen", {
+      oldLecture: localLecture,
+      newLecture: lecture,
+      keyChanges,
+    });
+  };
 
   return (
-    <TouchableOpacity onPress={lectureChanged ? showLecturesChanges : undefined} activeOpacity={lectureChanged ? undefined : 1} >
+    <TouchableOpacity
+      onPress={lectureChanged ? showLecturesChanges : undefined}
+      activeOpacity={lectureChanged ? undefined : 1}
+    >
       <Animated.View
         entering={enteringDelayedAnimation(index * 0.5)}
         layout={Layout}
@@ -78,19 +89,22 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
       >
         {/* Time of lecture View */}
         <View style={lectureRowItemStyles.column1}>
-          <RegularText variant={textVariant} style={lectureRowItemStyles.column1text}>
+          <RegularText
+            variant={textVariant}
+            style={lectureRowItemStyles.column1text}
+          >
             {moment(lecture.startTime, LECTURE_TIME_FORMAT).format(timeFormat)}
           </RegularText>
           <RegularText
             variant={textVariant}
-            style={[
-              lectureRowItemStyles.column1text,
-              lectureRowItemStyles.column1TimeDivider,
-            ]}
+            style={[lectureRowItemStyles.column1text, lectureRowItemStyles.column1TimeDivider]}
           >
             -
           </RegularText>
-          <RegularText variant={textVariant} style={lectureRowItemStyles.column1text}>
+          <RegularText
+            variant={textVariant}
+            style={lectureRowItemStyles.column1text}
+          >
             {moment(lecture.endTime, LECTURE_TIME_FORMAT).format(timeFormat)}
           </RegularText>
         </View>
@@ -102,7 +116,10 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({ alertScheduleChanges, 
 
         {/* Location of lecture View */}
         <View style={lectureRowItemStyles.column3}>
-          <RegularText variant={textVariant} style={lectureRowItemStyles.column3text}>
+          <RegularText
+            variant={textVariant}
+            style={lectureRowItemStyles.column3text}
+          >
             {lecture.location || "-"}
           </RegularText>
         </View>

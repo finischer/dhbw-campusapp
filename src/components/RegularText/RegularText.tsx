@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, Text } from "react-native";
 import { IColors } from "../../constants/colors/colors.types";
 import typography from "../../constants/typography";
@@ -25,9 +24,8 @@ const RegularText: React.FC<IRegularTextTypes> = ({
   url = undefined,
   ...props
 }) => {
-  const { colors, theme } = useMetadata();
+  const { colors } = useMetadata();
   const { openLink } = useAlert();
-  const { t } = useTranslation();
   const textColor = variant ? _getTextColor(variant, colors) : colors.secondary;
 
   const localRegularTextStyles = StyleSheet.create({
@@ -42,14 +40,9 @@ const RegularText: React.FC<IRegularTextTypes> = ({
     },
   });
 
-
   return (
     <Text
-      style={[
-        localRegularTextStyles.textContainer,
-        style,
-        isLink && localRegularTextStyles.linkStyle,
-      ]}
+      style={[localRegularTextStyles.textContainer, style, isLink && localRegularTextStyles.linkStyle]}
       onPress={isLink ? () => openLink(url) : undefined}
       {...props}
     >

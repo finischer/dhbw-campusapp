@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import moment from "moment";
 import { IRequestTimeProps } from "./requestTime.types";
@@ -13,9 +13,7 @@ const RequestTime = ({ requestTime = moment() }: IRequestTimeProps) => {
 
   return (
     <View style={requestTimeStyles.container}>
-      <RegularText style={requestTimeStyles.text}>
-        {t("lastUpdated")}:
-      </RegularText>
+      <RegularText style={requestTimeStyles.text}>{t("lastUpdated")}:</RegularText>
       <RegularText style={requestTimeStyles.text}>
         {requestTime.format(dateFormat)}, {requestTime.format(timeFormat)}
       </RegularText>

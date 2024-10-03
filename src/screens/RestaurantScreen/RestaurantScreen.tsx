@@ -21,7 +21,6 @@ import MenuList from "./components/MenuList";
 import { restaurantScreenStyles } from "./restaurantScreen.styles";
 import { IRenderMenuListProps, IRestaurantState } from "./restaurantScreen.types";
 import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
-import useAlert from "../../hooks/useAlert/useAlert";
 import Alert from "../../components/Alert/Alert";
 import { IAlertFunctions } from "../../components/Alert/alert.types";
 import { DialogButtonProps } from "react-native-dialog/lib/Button";

@@ -4,12 +4,10 @@ import RegularRowItem from "../../components/RegularRowItem";
 import { useMetadata } from "../../hooks/useMetadata";
 import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
 import { ILanguageOptions } from "../../hooks/useMetadata/useMetadata.types";
-import { useTranslation } from "react-i18next";
 import RegularText from "../../components/RegularText";
 
 const ChangeLanguageScreen = () => {
   const { language, changeLanguage } = useMetadata();
-  const { t } = useTranslation("common");
   const rightIcon: FeatherIconName = "check";
 
   const handleChangeLanguage = (newLanguage: ILanguageOptions) => {

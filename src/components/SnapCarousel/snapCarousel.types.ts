@@ -1,6 +1,6 @@
 import { Type } from "typescript";
 
 export type SnapCarouselProps = {
-  data: Array<Type> | Type[][];
+  data: Type[] | Type[][];
   renderItem: any;
 };
