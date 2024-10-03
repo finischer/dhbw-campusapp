@@ -9,7 +9,7 @@ const useReview = () => {
 
   const refreshNextStoreReviewRequest = () => {
     const nextRequestTime = moment().add(STORE_REVIEW_REQUEST_INTERVAL_WEEKS, "weeks");
-    storeDataInAsyncStorage("nextStoreReviewRequest", nextRequestTime);
+    storeDataInAsyncStorage("nextStoreReviewRequestTime", nextRequestTime);
     return nextRequestTime;
   };
 
@@ -28,7 +28,7 @@ const useReview = () => {
     }
 
     const now = moment();
-    const nextStoreReviewRequest = await getDataFromAsyncStorage("nextStoreReviewRequest");
+    const nextStoreReviewRequest = await getDataFromAsyncStorage("nextStoreReviewRequestTime");
     console.log("Next store review request: ", nextStoreReviewRequest);
     if ((!nextStoreReviewRequest || now.isAfter(nextStoreReviewRequest)) && canShowRequest) {
       StoreReview.requestReview();
