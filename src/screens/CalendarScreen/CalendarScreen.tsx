@@ -1,13 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  DeviceEventEmitter,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  View,
-} from "react-native";
+import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { useQuery } from "react-query";
 import { OrganizedLectures } from "../../api/lectures/lectures.types";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
@@ -21,7 +16,6 @@ import { SPACING } from "../../constants/layout";
 import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
 import { useLectures } from "../../hooks/useLectures";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
-import { moreScreenFunctions } from "../../utilities/MoreScreenFunctions";
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import Schedule from "./components/Schedule";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
@@ -35,8 +29,7 @@ const CalendarScreen = () => {
   const { icalUrl, course, getSchedule } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [searchString, setSearchString] = useState<string>("");
-  const { importCalendar } = moreScreenFunctions();
-  const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage()
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
 
   const loaderText = t("loadingLectures");
 
@@ -46,7 +39,7 @@ const CalendarScreen = () => {
 
     // only if lectures exist -> don't save null or undefined in localStorage
     if (lectures) {
-      storeDataInAsyncStorage("lectures", lectures) // store the new lectures in localStorage
+      storeDataInAsyncStorage("lectures", lectures); // store the new lectures in localStorage
     }
     return { lectures, localLectures, requestTime };
   };
@@ -72,10 +65,7 @@ const CalendarScreen = () => {
     setSearchString(text);
   };
 
-  const filterLectures = (
-    searchString: string,
-    rawLectures: OrganizedLectures[]
-  ) => {
+  const filterLectures = (searchString: string, rawLectures: OrganizedLectures[]) => {
     if (searchString.length === 0 || !rawLectures) {
       return rawLectures;
     }
@@ -86,9 +76,7 @@ const CalendarScreen = () => {
     for (let i = 0; i < lectures.length; i++) {
       // do not touch original data
       let lecture = Object.assign({}, lectures[i]);
-      lecture.data = lecture.data.filter((date) =>
-        date.lecture.toLowerCase().includes(searchString)
-      );
+      lecture.data = lecture.data.filter((date) => date.lecture.toLowerCase().includes(searchString));
       lectures[i] = lecture;
     }
     return lectures.filter((lecture) => lecture.data.length !== 0);
@@ -103,9 +91,7 @@ const CalendarScreen = () => {
   if (course === undefined && icalUrl === undefined) {
     return (
       <GlobalBody centered>
-        <RegularText style={{ textAlign: "center" }}>
-          {t("onFirstUseSelectCourseText")}
-        </RegularText>
+        <RegularText style={{ textAlign: "center" }}>{t("onFirstUseSelectCourseText")}</RegularText>
 
         <Button
           variant="outlined"
@@ -128,7 +114,11 @@ const CalendarScreen = () => {
 
   if (data?.lectures === undefined || isError) {
     return (
-      <ErrorView centered onRetry={refetchLectures} error={error instanceof Error ? error : undefined}>
+      <ErrorView
+        centered
+        onRetry={refetchLectures}
+        error={error instanceof Error ? error : undefined}
+      >
         {t("common:errorOccured")}
       </ErrorView>
     );
@@ -140,10 +130,7 @@ const CalendarScreen = () => {
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
         localLectures={data.localLectures}
-        lectures={filterLectures(
-          searchString,
-          data?.lectures as OrganizedLectures[]
-        )}
+        lectures={filterLectures(searchString, data?.lectures as OrganizedLectures[])}
         ListHeaderComponent={
           <ScheduleHeader
             searchString={searchString}

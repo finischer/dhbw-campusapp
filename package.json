@@ -13,7 +13,8 @@
     "preview-build:android": "eas build --profile preview --platform android",
     "preview-build:ios": "eas build --profile preview --platform ios",
     "submit:android": "eas submit --platform android --latest",
-    "submit:ios": "eas submit --platform ios --latest"
+    "submit:ios": "eas submit --platform ios --latest",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@expo-google-fonts/source-sans-pro": "^0.2.2",
@@ -62,7 +63,9 @@
   "devDependencies": {
     "@babel/core": "^7.24.0",
     "@types/qs": "^6.9.7",
-    "@types/react-query": "^1.2.9"
+    "@types/react-query": "^1.2.9",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "^7.0.0"
   },
   "private": true
 }

@@ -7,11 +7,12 @@ import CalendarNavigator from "../CalendarNavigator";
 import MoreNavigator from "../MoreNavigator";
 import { tabBarStyle } from "./navigation.styles";
 import { useTranslation } from "react-i18next";
-import { TAB_BAR_ICON_NAMES } from "./config";
+
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 import Icon from "../../../components/Icon";
+import { TAB_BAR_ICON_NAMES } from "./config";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -32,11 +33,8 @@ const Navigation = () => {
         activeColor={colors.accent}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
-            const iconColor: string = focused
-              ? colors.accent
-              : colors.secondary;
-            const iconName: FeatherIconName =
-              TAB_BAR_ICON_NAMES[route.name as keyof INavigationIcons];
+            const iconColor: string = focused ? colors.accent : colors.secondary;
+            const iconName: FeatherIconName = TAB_BAR_ICON_NAMES[route.name as keyof INavigationIcons];
 
             return (
               <Icon

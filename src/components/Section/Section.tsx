@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { ISectionProps } from "./section.types";
 import RegularText from "../RegularText";
@@ -10,7 +10,10 @@ const Section: React.FC<ISectionProps> = ({ title = undefined, children }) => {
     <View style={sectionStyles.wrapperContainer}>
       {title && (
         <View style={sectionStyles.titleContainer}>
-          <RegularText weight="bold" size={typography.body}>
+          <RegularText
+            weight="bold"
+            size={typography.body}
+          >
             {title}
           </RegularText>
         </View>

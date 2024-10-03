@@ -2,11 +2,7 @@ type ObjectType = {
   [key: string]: any;
 };
 
-export const sortArrayByKey = (
-  arr: Array<ObjectType>,
-  key: string,
-  descending = false
-) => {
+export const sortArrayByKey = (arr: ObjectType[], key: string, descending = false) => {
   return arr.sort((a, b) => {
     const keyA = a[key];
     const keyB = b[key];

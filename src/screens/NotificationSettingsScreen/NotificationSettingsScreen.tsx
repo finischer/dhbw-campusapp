@@ -1,92 +1,92 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import GlobalBody from '../../components/GlobalBody';
-import useAlert from '../../hooks/useAlert';
-import useAsyncStorage from '../../hooks/useAsyncStorage';
-import { useMetadata } from '../../hooks/useMetadata';
-import SettingRow from '../../components/SettingRow';
-import { notificationSettingsScreenStyles } from './notificationSettingsScreen.styles';
-import { NotificationSettings } from './notificationSettingsScreen.types';
+import React, { useState } from "react";
+import GlobalBody from "../../components/GlobalBody";
+import SettingRow from "../../components/SettingRow";
+import { notificationSettingsScreenStyles } from "./notificationSettingsScreen.styles";
+import { NotificationSettings } from "./notificationSettingsScreen.types";
+import { useTranslation } from "react-i18next";
 
 const NotificationSettingsScreen = () => {
-    const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
-    const { alert } = useAlert();
-    const { t } = useTranslation();
-    const navigation = useNavigation();
-    const { colors } = useMetadata();
+  const { t } = useTranslation();
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
+    dualis: false,
+    lectures: false,
+  });
 
+  // const showAlertSetupNotifications = async () => {
+  //     alert("Ändere deine Einstellungen", "Du musst in den Einstellungen Mitteilungen für die App erlauben", [
+  //         {
+  //             text: "Zu den Einstellungen",
+  //             isPreferred: true,
+  //             onPress: () => {
+  //                 Linking.openSettings()
+  //                 navigation.goBack();
+  //             }
+  //         },
+  //         {
+  //             text: "Zurück",
+  //             style: "cancel",
+  //             onPress: () => navigation.goBack()
+  //         }
+  //     ])
+  // }
 
-    const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
-        dualis: false,
-        lectures: false
-    })
+  // const initNotificationSettings = async () => {
+  //     if (!await notificationPermissionAllowed()) {
+  //         showAlertSetupNotifications()
+  //         return
+  //     }
+  //     const storageNotificationSettings = await getDataFromAsyncStorage("notifications-settings");
 
+  //     setNotificationSettings(storageNotificationSettings)
+  // }
 
-    // const showAlertSetupNotifications = async () => {
-    //     alert("Ändere deine Einstellungen", "Du musst in den Einstellungen Mitteilungen für die App erlauben", [
-    //         {
-    //             text: "Zu den Einstellungen",
-    //             isPreferred: true,
-    //             onPress: () => {
-    //                 Linking.openSettings()
-    //                 navigation.goBack();
-    //             }
-    //         },
-    //         {
-    //             text: "Zurück",
-    //             style: "cancel",
-    //             onPress: () => navigation.goBack()
-    //         }
-    //     ])
-    // }
+  // init notification settings
+  // useEffect(() => {
+  //     initNotificationSettings();
+  // }, [])
 
+  // const notificationPermissionAllowed = async () => {
+  //     const res = await getNotificationPermission();
+  //     return res.granted
+  // }
 
-    // const initNotificationSettings = async () => {
-    //     if (!await notificationPermissionAllowed()) {
-    //         showAlertSetupNotifications()
-    //         return
-    //     }
-    //     const storageNotificationSettings = await getDataFromAsyncStorage("notifications-settings");
+  // const updateSetting = async (service: NotificationService) => {
+  //     if (!await notificationPermissionAllowed()) {
+  //         showAlertSetupNotifications()
+  //     } else {
+  //         const currentServiceSetting = notificationSettings[service]
+  //         setNotificationSettings(oldState => ({
+  //             ...oldState,
+  //             [service]: !currentServiceSetting
+  //         }))
 
-    //     setNotificationSettings(storageNotificationSettings)
-    // }
+  //         const newNotificationSettings = {
+  //             ...notificationSettings,
+  //             [service]: !currentServiceSetting
+  //         }
 
-    // init notification settings
-    // useEffect(() => {
-    //     initNotificationSettings();
-    // }, [])
+  //         storeDataInAsyncStorage("notifications-settings", newNotificationSettings)
+  //     }
+  // }
 
-    // const notificationPermissionAllowed = async () => {
-    //     const res = await getNotificationPermission();
-    //     return res.granted
-    // }
+  return (
+    <GlobalBody style={notificationSettingsScreenStyles.wrapper}>
+      <SettingRow
+        disabled
+        title={t("navigation:dualis")}
+        subtitle={t("notificationSettings:dualisDescription")}
+        onChangeSwitch={null}
+        switchValue={notificationSettings.dualis}
+      />
+      <SettingRow
+        disabled
+        title={t("navigation:lectures")}
+        subtitle={t("notificationSettings:lecturesDescription")}
+        onChangeSwitch={null}
+        switchValue={notificationSettings.lectures}
+      />
+    </GlobalBody>
+  );
+};
 
-    // const updateSetting = async (service: NotificationService) => {
-    //     if (!await notificationPermissionAllowed()) {
-    //         showAlertSetupNotifications()
-    //     } else {
-    //         const currentServiceSetting = notificationSettings[service]
-    //         setNotificationSettings(oldState => ({
-    //             ...oldState,
-    //             [service]: !currentServiceSetting
-    //         }))
-
-    //         const newNotificationSettings = {
-    //             ...notificationSettings,
-    //             [service]: !currentServiceSetting
-    //         }
-
-    //         storeDataInAsyncStorage("notifications-settings", newNotificationSettings)
-    //     }
-    // }
-
-    return (
-        <GlobalBody style={notificationSettingsScreenStyles.wrapper}>
-            <SettingRow disabled title={t("navigation:dualis")} subtitle={t("notificationSettings:dualisDescription")} onChangeSwitch={null} switchValue={notificationSettings.dualis} />
-            <SettingRow disabled title={t("navigation:lectures")} subtitle={t("notificationSettings:lecturesDescription")} onChangeSwitch={null} switchValue={notificationSettings.lectures} />
-        </GlobalBody>
-    )
-}
-
-export default NotificationSettingsScreen
+export default NotificationSettingsScreen;

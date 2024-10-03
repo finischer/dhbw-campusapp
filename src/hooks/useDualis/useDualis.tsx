@@ -3,30 +3,18 @@ import { _auth, _logout } from "../../api/dualis/dualisConnector";
 import { DualisScraperController } from "../../api/html_scraper/dualis/DualisScraperController";
 import { ISemesterOptionsTypes } from "../../api/html_scraper/dualis/types/ISemesterOptionsTypes";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
-import {
-  DEMO_PASSWORD,
-  DEMO_USERNAME,
-  dummy_grades
-} from "../../data/testData";
-import { IDualisContext, IDualisUser } from "./useDualis.types";
+import { DEMO_PASSWORD, DEMO_USERNAME, dummy_grades } from "../../data/testData";
+import { IDualisContext } from "./useDualis.types";
 
-const DualisContext = React.createContext<IDualisContext | undefined>(
-  undefined
-);
+const DualisContext = React.createContext<IDualisContext | undefined>(undefined);
 
-const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const DualisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [useDummyData, setUseDummyData] = useState(false);
   const [args, setArgs] = useState<string | null | undefined>(null);
   const [cookies, setCookies] = useState<string | null | undefined>(null);
-  const [user, setUser] = useState<IDualisUser>({
-    username: "",
-    password: "",
-  });
-
-  const [dualisScraperController, setDualisScraperController] =
-    useState<DualisScraperController | null>(null);
+  const [dualisScraperController, setDualisScraperController] = useState<DualisScraperController | null>(
+    null
+  );
 
   const login = async (username: string, password: string) => {
     if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
@@ -43,10 +31,7 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
         newCookies = res.cookies[0].split(";")[0];
         setArgs(res.args);
         setCookies(newCookies);
-        const newDualisScraperController = new DualisScraperController(
-          res.args,
-          newCookies
-        );
+        const newDualisScraperController = new DualisScraperController(res.args, newCookies);
         setDualisScraperController(newDualisScraperController);
 
         return true;
@@ -97,8 +82,7 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
   const getSemesterInformation = async () => {
     if (!dualisScraperController) return;
 
-    const semesterInformation: ISemesterOptionsTypes =
-      await dualisScraperController.getSemesterInformation();
+    const semesterInformation: ISemesterOptionsTypes = await dualisScraperController.getSemesterInformation();
 
     return semesterInformation;
   };
@@ -108,7 +92,6 @@ const DualisProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         args,
         cookies,
-        user,
         login,
         logout,
         getAllGrades,
@@ -131,4 +114,3 @@ const useDualis = () => {
 };
 
 export { useDualis, DualisProvider };
-

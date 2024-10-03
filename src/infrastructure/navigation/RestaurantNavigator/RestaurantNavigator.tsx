@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DeviceEventEmitter } from "react-native";
-import {
-  createStackNavigator,
-  StackNavigationProp,
-  TransitionPresets,
-} from "@react-navigation/stack";
+import { createStackNavigator, StackNavigationProp, TransitionPresets } from "@react-navigation/stack";
 import RestaurantScreen from "../../../screens/RestaurantScreen";
-import { headerConfig } from "../Navigation/config";
 import { useRestaurant } from "../../../hooks/useRestaurant/useRestaurant";
 import NavigationHeader from "../../../components/NavigationHeader";
 import { useTranslation } from "react-i18next";
@@ -17,10 +12,12 @@ import { RootStackParamList } from "../Navigation/navigation.types";
 import { View } from "react-native";
 import Icon from "../../../components/Icon";
 import { GLOBAL_PADDING_HORIZONTAL } from "../../../constants/layout";
+import { useHeaderConfig } from "../../../hooks/useHeaderConfig";
 
 const RestaurantStack = createStackNavigator();
 
 const RestaurantNavigator = () => {
+  const headerConfig = useHeaderConfig();
   const { t } = useTranslation("navigation");
   const { colors } = useMetadata();
   const { formattedRestaurantName } = useRestaurant();
@@ -44,7 +41,7 @@ const RestaurantNavigator = () => {
   };
 
   return (
-    <RestaurantStack.Navigator screenOptions={headerConfig()}>
+    <RestaurantStack.Navigator screenOptions={headerConfig}>
       <RestaurantStack.Group>
         <RestaurantStack.Screen
           name="RestaurantScreen"
