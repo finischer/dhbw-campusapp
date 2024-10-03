@@ -1,6 +1,18 @@
+<img src="assets/images/icon.png" alt="drawing" width="100" style="border-radius: 10px" />
+
 # DHBW CampusApp
 
 Die DHBW CampusApp ist eine mobile Anwendung, die speziell für Studierende der Dualen Hochschule Baden-Württemberg (DHBW) entwickelt wurde. Sie unterstützt Studierende dabei, ihren Studienalltag einfacher zu organisieren und bietet Zugriff auf wichtige Campus-Informationen.
+
+Die DHBW CampusApp ist eine mobile Anwendung, die speziell für Studierende der Dualen Hochschule Baden-Württemberg (DHBW) entwickelt wurde. Sie unterstützt Studierende dabei, ihren Studienalltag einfacher zu organisieren und bietet Zugriff auf wichtige Campus-Informationen.
+
+## 📲 Download
+
+Lade die App direkt aus dem entsprechenden Store herunter:
+
+[![Download on the App Store](https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/de/app/dhbw-campusapp/id6446231349)
+
+[![Get it on Google Play](https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg)](https://play.google.com/store/apps/details?id=com.niklasfischer0.dhbwcampusapp)
 
 ## 📋 Features
 
@@ -8,7 +20,6 @@ Die DHBW CampusApp ist eine mobile Anwendung, die speziell für Studierende der 
 - **Campusplan**: Übersicht und Standortanzeige der wichtigsten Einrichtungen auf dem Campus.
 - **Notensystem (Dualis)**: Abrufen von aktuellen Noten aus dem Dualis-System.
 - **Kantinenplan**: Tagesaktuelle Informationen zu den Gerichten in der Mensa.
-- **Benachrichtigungen**: Verwaltung und Anzeige von Push-Benachrichtigungen.
 - **Mehrsprachigkeit**: Unterstützung von mehreren Sprachen (Deutsch, Englisch, Spanisch).
 
 ## 🔧 Technologien
