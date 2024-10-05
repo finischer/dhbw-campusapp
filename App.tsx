@@ -21,9 +21,10 @@ export default function App() {
     SourceSansProRegular: require("./assets/fonts/SourceSansPro-Regular.ttf"),
     SourceSansProBold: require("./assets/fonts/SourceSansPro-Bold.ttf"),
   });
-  const { initializeNotificationListeners } = useNotifications();
+  const { initializeNotificationListeners, resetBadgeCount } = useNotifications();
 
   useEffect(() => {
+    resetBadgeCount();
     initializeNotificationListeners();
   }, []);
 

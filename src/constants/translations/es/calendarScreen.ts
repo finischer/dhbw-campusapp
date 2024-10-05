@@ -9,4 +9,6 @@ export default {
   alertScheduleChangesMessage:
     "Es posible que haya notado que algunas conferencias han cambiado. Para obtener más información, haga clic en la conferencia marcada y consulte los detalles",
   lectureInformationTitle: "Cambios en las clases",
+  lectureChangesNotificationTitle: "Cambios en las clases",
+  lectureChangesNotificationBody: "Hay cambios en su plan de conferencias",
 };

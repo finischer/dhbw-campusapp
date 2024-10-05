@@ -1,17 +1,15 @@
 import { useRef, useState } from "react";
 import * as Notifications from "expo-notifications";
 import { registerForPushNotificationsAsync as _registerForPushNotificationsAsync } from "../../utilities/push-notifications";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProps, RouteName } from "../../infrastructure/navigation/Navigation/navigation.types";
 import { navigate } from "../../infrastructure/navigation/Navigation/RootNavigation";
 
-type Notification = Notifications.Notification;
 type NotificationResponse = Notifications.NotificationResponse;
 
 interface UseNotificationsReturnType {
   registerForPushNotificationsAsync: () => Promise<string | null>;
   initializeNotificationListeners: () => void;
   removeNotificationListeners: () => void;
+  resetBadgeCount: () => Promise<boolean>;
   lastNotificationResponse: NotificationResponse | null;
 }
 
@@ -23,6 +21,10 @@ export const useNotifications = (): UseNotificationsReturnType => {
   // Funktion zur Registrierung für Push-Benachrichtigungen
   const registerForPushNotificationsAsync = async (): Promise<string | null> => {
     return _registerForPushNotificationsAsync();
+  };
+
+  const resetBadgeCount = async () => {
+    return await Notifications.setBadgeCountAsync(0);
   };
 
   const initializeNotificationListeners = () => {
@@ -58,6 +60,7 @@ export const useNotifications = (): UseNotificationsReturnType => {
     registerForPushNotificationsAsync,
     initializeNotificationListeners,
     lastNotificationResponse,
+    resetBadgeCount,
     removeNotificationListeners,
   };
 };

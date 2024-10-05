@@ -7,8 +7,8 @@ import { isAndroid } from "../constants/device/device";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
   }),
 });
 
@@ -19,13 +19,20 @@ Notifications.setNotificationHandler({
 export async function registerForPushNotificationsAsync(): Promise<string | null> {
   let token: string | null = null;
 
-  if (!Constants.isDevice) {
+  if (true) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
 
     // Berechtigungen anfordern, falls nicht bereits erteilt
     if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
+      const { status } = await Notifications.requestPermissionsAsync({
+        ios: {
+          allowAlert: true,
+          allowBadge: true,
+          allowSound: true,
+          allowAnnouncements: true,
+        },
+      });
       finalStatus = status;
     }
 
@@ -40,7 +47,6 @@ export async function registerForPushNotificationsAsync(): Promise<string | null
     console.log("Expo Push Token erhalten:", token);
     SecureStore.setItem("expo-push-token" as SecureStoreEntries, token);
   } else {
-    console.log("Push-Benachrichtigungen funktionieren nur auf physischen Geräten.");
   }
 
   if (isAndroid) {
@@ -62,11 +68,15 @@ export async function registerForPushNotificationsAsync(): Promise<string | null
  * @param data Optionale zusätzliche Daten, die mit der Benachrichtigung gesendet werden.
  */
 export async function sendPushNotification(title: string, body: string, data?: object): Promise<void> {
+  const currBadgeCount = await Notifications.getBadgeCountAsync();
+
   await Notifications.scheduleNotificationAsync({
     content: {
       title,
       body,
       data,
+      sound: "default",
+      badge: currBadgeCount + 1,
     },
     trigger: null, // Sofort senden
   });

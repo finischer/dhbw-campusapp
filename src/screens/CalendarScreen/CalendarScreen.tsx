@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { useQuery } from "react-query";
@@ -19,6 +19,8 @@ import { RootStackParamList } from "../../infrastructure/navigation/Navigation/n
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import Schedule from "./components/Schedule";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
+import * as Notifications from "expo-notifications";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);

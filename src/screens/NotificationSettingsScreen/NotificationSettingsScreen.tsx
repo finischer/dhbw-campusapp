@@ -6,33 +6,16 @@ import { NotificationServices, NotificationSettings } from "./notificationSettin
 import { useTranslation } from "react-i18next";
 
 // TEST
-import { View } from "react-native";
 import * as TaskManager from "expo-task-manager";
-import * as BackgroundFetch from "expo-background-fetch";
-import RegularText from "../../components/RegularText";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
 import * as Notifications from "expo-notifications";
-import { registerForPushNotificationsAsync, sendPushNotification } from "../../utilities/push-notifications";
-import Button from "../../components/Button/Button";
 import { useNotifications } from "../../hooks/useNotification/useNotification";
-
-// 2. Register the task at some point in your app by providing the same name,
-// and some configuration options for how the background fetch should behave
-// Note: This does NOT need to be in the global scope and CAN be used in your React components!
-async function registerBackgroundFetchAsync(service: NotificationServices) {
-  return BackgroundFetch.registerTaskAsync(service, {
-    minimumInterval: 60 * 15, // 15 minutes
-    stopOnTerminate: false, // android only,
-    startOnBoot: true, // android only
-  });
-}
-
-// 3. (Optional) Unregister tasks by specifying the task name
-// This will cancel any future background fetch calls that match the given name
-// Note: This does NOT need to be in the global scope and CAN be used in your React components!
-async function unregisterBackgroundFetchAsync(service: NotificationServices) {
-  return BackgroundFetch.unregisterTaskAsync(service);
-}
+import {
+  registerBackgroundFetchAsync,
+  unregisterBackgroundFetchAsync,
+} from "../../utilities/background-fetch";
+import Button from "../../components/Button/Button";
+import { sendPushNotification } from "../../utilities/push-notifications";
 
 const NotificationSettingsScreen = () => {
   const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
@@ -117,26 +100,19 @@ const NotificationSettingsScreen = () => {
         onChangeSwitch={() => updateSetting(NotificationServices.Lectures)}
         switchValue={notificationSettings.lectures}
       />
-      <View>
-        <RegularText>
-          Background fetch task name:{" "}
-          <RegularText>
-            {notificationSettings.lectures ? NotificationServices.Lectures : "Not registered yet!"}
-          </RegularText>
-        </RegularText>
 
-        <Button
-          variant="contained"
-          onClick={async () =>
-            await sendPushNotification(
-              "Kalenderaktualisierung",
-              "Es gab Änderungen in deinen Kalenderereignissen."
-            )
-          }
-        >
-          Send message
-        </Button>
-      </View>
+      {/* <Button
+        variant="contained"
+        onClick={async () => {
+          await sendPushNotification(
+            "Kalenderaktualisierung",
+            "Es gab Änderungen in deinen Kalenderereignissen.",
+            { screen: "calendar" }
+          );
+        }}
+      >
+        Send message
+      </Button> */}
     </GlobalBody>
   );
 };

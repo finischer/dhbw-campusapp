@@ -14,8 +14,13 @@ const useAsyncStorage = () => {
     await AsyncStorage.setItem(key, stringValue);
   };
   const getDataFromAsyncStorage = async (key: AsyncStorageEntries) => {
-    const value = await AsyncStorage.getItem(key);
-    return !value ? "" : JSON.parse(value);
+    const value = (await AsyncStorage.getItem(key)) ?? "";
+
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
   };
 
   const deleteFromAsyncStorage = async (key: AsyncStorageEntries) => {

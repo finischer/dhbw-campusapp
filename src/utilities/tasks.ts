@@ -7,10 +7,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { diffNestedLists } from "./diffLists";
 import { sendPushNotification } from "./push-notifications";
 import { AsyncStorageEntries } from "../hooks/useAsyncStorage/useAsyncStorage.types";
-import { RouteName } from "../infrastructure/navigation/Navigation/navigation.types";
 
 // Lectures
 TaskManager.defineTask(NotificationServices.Lectures, async () => {
+  console.log("Call taks");
+
   const courseString = await AsyncStorage.getItem("course");
   const icalUrl = (await AsyncStorage.getItem("icalUrl")) || undefined;
 
@@ -41,6 +42,10 @@ TaskManager.defineTask(NotificationServices.Lectures, async () => {
   );
 
   console.log({ added, updated, removed });
+
+  // const badgeCountKey: AsyncStorageEntries = "lecture-badge-count";
+  // const lectureBadgeCount = (await AsyncStorage.getItem(badgeCountKey)) ?? "0";
+  // await AsyncStorage.setItem(badgeCountKey, JSON.stringify(parseInt(lectureBadgeCount) + 1));
 
   if (added.length > 0 || updated.length > 0 || removed.length > 0) {
     console.log("send notification to device");
