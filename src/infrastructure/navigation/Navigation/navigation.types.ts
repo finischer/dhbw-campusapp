@@ -13,6 +13,10 @@ type LectureInformationScreenProps = {
   keyChanges: (keyof LectureType)[];
 };
 
+type CalendarScreenParams = {
+  refetchData: boolean;
+};
+
 export type ParamList = {
   LectureDetails: LectureInformationScreenProps;
 };
@@ -21,7 +25,7 @@ export type RootStackParamList = {
   SubjectDetailsScreen?: ISubjectTypes | undefined;
   DualisScreen?: undefined;
   LoginScreen?: undefined;
-  CalendarScreen?: undefined;
+  CalendarScreen?: CalendarScreenParams | undefined;
   CanteenScreen?: undefined;
   MoreScreen?: undefined;
   ChangeRestaurantScreen?: undefined;

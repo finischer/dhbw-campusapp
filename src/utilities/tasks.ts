@@ -7,11 +7,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { diffNestedLists } from "./diffLists";
 import { sendPushNotification } from "./push-notifications";
 import { AsyncStorageEntries } from "../hooks/useAsyncStorage/useAsyncStorage.types";
+import { t } from "i18next";
 
 // Lectures
 TaskManager.defineTask(NotificationServices.Lectures, async () => {
-  console.log("Call taks");
-
+  console.log("Call task");
   const courseString = await AsyncStorage.getItem("course");
   const icalUrl = (await AsyncStorage.getItem("icalUrl")) || undefined;
 
@@ -23,7 +23,9 @@ TaskManager.defineTask(NotificationServices.Lectures, async () => {
   if (res.status !== 200) {
     return BackgroundFetch.BackgroundFetchResult.Failed;
   }
-  const scheduleLocalString = await AsyncStorage.getItem("lectures" as AsyncStorageEntries);
+
+  const storageKey: AsyncStorageEntries = "lectures";
+  const scheduleLocalString = await AsyncStorage.getItem(storageKey);
   const scheduleLocal = scheduleLocalString ? (JSON.parse(scheduleLocalString) as OrganizedLectures[]) : null;
   const scheduleRemote = res.data as OrganizedLectures[];
 
@@ -48,12 +50,16 @@ TaskManager.defineTask(NotificationServices.Lectures, async () => {
   // await AsyncStorage.setItem(badgeCountKey, JSON.stringify(parseInt(lectureBadgeCount) + 1));
 
   if (added.length > 0 || updated.length > 0 || removed.length > 0) {
-    console.log("send notification to device");
-    sendPushNotification("Vorlesungsänderung", "Es gibt Änderungen in deinem Vorlesungsplan", {
-      screen: "calendar",
+    sendPushNotification({
+      title: t("calendarScreen:lectureChangesNotificationTitle"),
+      body: t("calendarScreen:lectureChangesNotificationBody"),
+      data: {
+        screen: "CalendarScreen",
+        params: { refetchData: true },
+      },
     });
     // update new lectures in async storage
-    await AsyncStorage.setItem("lectures" as AsyncStorageEntries, JSON.stringify(scheduleRemote));
+    // await AsyncStorage.setItem(storageKey, JSON.stringify(scheduleRemote));
   }
 
   return BackgroundFetch.BackgroundFetchResult.NewData;

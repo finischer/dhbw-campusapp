@@ -12,4 +12,5 @@ export type AsyncStorageEntries =
   | "restaurantScreen.alreadySeen"
   | "lectures"
   | "nextStoreReviewRequestTime"
-  | "lecture-badge-count";
+  | "lecture-badge-count"
+  | "lecture-notification-cache";

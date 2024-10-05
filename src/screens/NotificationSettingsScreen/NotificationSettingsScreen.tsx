@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import GlobalBody from "../../components/GlobalBody";
 import SettingRow from "../../components/SettingRow";
 import { notificationSettingsScreenStyles } from "./notificationSettingsScreen.styles";
@@ -14,8 +14,6 @@ import {
   registerBackgroundFetchAsync,
   unregisterBackgroundFetchAsync,
 } from "../../utilities/background-fetch";
-import Button from "../../components/Button/Button";
-import { sendPushNotification } from "../../utilities/push-notifications";
 
 const NotificationSettingsScreen = () => {
   const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();

@@ -1,20 +1,16 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import * as Notifications from "expo-notifications";
 import { registerForPushNotificationsAsync as _registerForPushNotificationsAsync } from "../../utilities/push-notifications";
 import { navigate } from "../../infrastructure/navigation/Navigation/RootNavigation";
-
-type NotificationResponse = Notifications.NotificationResponse;
 
 interface UseNotificationsReturnType {
   registerForPushNotificationsAsync: () => Promise<string | null>;
   initializeNotificationListeners: () => void;
   removeNotificationListeners: () => void;
   resetBadgeCount: () => Promise<boolean>;
-  lastNotificationResponse: NotificationResponse | null;
 }
 
 export const useNotifications = (): UseNotificationsReturnType => {
-  const [lastNotificationResponse, setLastNotificationResponse] = useState<NotificationResponse | null>(null);
   const notificationListener = useRef<Notifications.Subscription | null>(null);
   const responseListener = useRef<Notifications.Subscription | null>(null);
 
@@ -34,12 +30,13 @@ export const useNotifications = (): UseNotificationsReturnType => {
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       console.log("Benachrichtigungsantwort erhalten:", JSON.stringify(response, null, 2));
-      const screen = response.notification.request.content.data.screen;
+      const { screen, params } = response.notification.request.content.data;
 
       console.log("Screen: ", screen);
+      console.log("Params: ", params);
       if (screen) {
         console.log("Navigate to screen: ", screen);
-        navigate(screen);
+        navigate(screen, params);
       } else {
         console.log("Navigate to home");
         navigate("dualis");
@@ -59,7 +56,6 @@ export const useNotifications = (): UseNotificationsReturnType => {
   return {
     registerForPushNotificationsAsync,
     initializeNotificationListeners,
-    lastNotificationResponse,
     resetBadgeCount,
     removeNotificationListeners,
   };

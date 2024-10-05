@@ -1,4 +1,4 @@
-import { useFocusEffect, useIsFocused, useNavigation } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,8 +19,8 @@ import { RootStackParamList } from "../../infrastructure/navigation/Navigation/n
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import Schedule from "./components/Schedule";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
-import * as Notifications from "expo-notifications";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+type CalendarScreenRouteProp = RouteProp<RootStackParamList, "CalendarScreen">;
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
@@ -30,12 +30,14 @@ const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
   const { icalUrl, course, getSchedule } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   const [searchString, setSearchString] = useState<string>("");
   const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
 
   const loaderText = t("loadingLectures");
 
   const fetchSchedule = async () => {
+    console.log("Fetch schedule");
     const { data: lectures, requestTime }: IResponseTypes = await getSchedule();
     const localLectures = await getDataFromAsyncStorage("lectures"); // save the old state of lectures
 
@@ -88,6 +90,22 @@ const CalendarScreen = () => {
     <View style={calendarScreenStyles.noLecturesContainer}>
       <RegularText>{t("noEventsScheduled")}</RegularText>
     </View>
+  );
+
+  const route = useRoute<CalendarScreenRouteProp>();
+
+  // Funktion zum Refetchen der Vorlesungen
+  const refetchLecturesIfNeeded = useCallback(() => {
+    if (route.params?.refetchData) {
+      // Refetch lectures
+      refetchLectures();
+    }
+  }, [route.params, refetchLectures]);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetchLecturesIfNeeded();
+    }, [refetchLecturesIfNeeded])
   );
 
   if (course === undefined && icalUrl === undefined) {
