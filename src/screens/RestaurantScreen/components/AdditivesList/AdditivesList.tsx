@@ -23,14 +23,20 @@ const AdditivesList: React.FC<IAdditivesListProps> = ({ additivesDict }) => {
   );
 
   const additivesListElements = Object.keys(additivesDict).map((key, index) => (
-    <View style={additivesListStyles.additivesListSectionContainer} key={index}>
+    <View
+      style={additivesListStyles.additivesListSectionContainer}
+      key={index}
+    >
       <RegularText>{key.toUpperCase()}:</RegularText>
       {additivesDict[key].map(({ label, name }: ILabelTypes, index: number) => (
-        <Item key={index} label={label} name={name} />
+        <Item
+          key={index}
+          label={label}
+          name={name}
+        />
       ))}
     </View>
-  )
-  )
+  ));
 
   const toggleOpen = () => {
     const animationConfig = {
@@ -54,10 +60,13 @@ const AdditivesList: React.FC<IAdditivesListProps> = ({ additivesDict }) => {
       <TouchableOpacity onPress={toggleOpen}>
         <View style={additivesListStyles.togglerContainer}>
           <RegularText>{t("additivesSubjectToLabeling")}</RegularText>
-          <RNAnimated.View
-            style={{ transform: [{ rotateZ: chevronTransform }] }}
-          >
-            <Icon source="feather" name="chevron-down" clickable={false} />
+          <RNAnimated.View style={{ transform: [{ rotateZ: chevronTransform }] }}>
+            <Icon
+              source="feather"
+              name="chevron-down"
+              clickable={true}
+              onClick={toggleOpen}
+            />
           </RNAnimated.View>
         </View>
       </TouchableOpacity>
