@@ -41,7 +41,7 @@ const SnapCarousel = ({ data, renderItem, defaultIndex = 0 }: any) => {
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={true}
         decelerationRate="fast"
-        snapToInterval={WINDOW_WIDTH}
+        // snapToInterval={WINDOW_WIDTH}
         initialScrollIndex={defaultIndex}
         getItemLayout={(data, index) => ({ length: WINDOW_WIDTH, offset: WINDOW_WIDTH * index, index })}
         pagingEnabled
