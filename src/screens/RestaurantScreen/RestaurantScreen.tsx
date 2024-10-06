@@ -109,7 +109,7 @@ const RestaurantScreen = () => {
 
   useEffect(() => {
     const initDefaultIndex = async () => {
-      const currIdx = (await getDataFromAsyncStorage("restaurant-idx")) ?? 0;
+      const currIdx = (await getDataFromAsyncStorage("restaurant-idx")) || 0;
       setDefaultIndex(parseInt(currIdx));
     };
 
