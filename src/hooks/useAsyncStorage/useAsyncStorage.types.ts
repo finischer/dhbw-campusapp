@@ -13,4 +13,5 @@ export type AsyncStorageEntries =
   | "lectures"
   | "nextStoreReviewRequestTime"
   | "lecture-badge-count"
-  | "lecture-notification-cache";
+  | "lecture-notification-cache"
+  | "restaurant-idx";

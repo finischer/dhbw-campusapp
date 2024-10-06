@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import moment from "moment";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import Animated from "react-native-reanimated";
@@ -37,6 +37,7 @@ const RestaurantScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { restaurantName, formattedRestaurantName, fetchRestaurant } = useRestaurant();
   const { requestStoreReview } = useReview();
+  const [defaultIndex, setDefaultIndex] = useState(0);
 
   const alertLocalRef = useRef<IAlertFunctions | null>(null);
   const alertRef = useCallback((node: IAlertFunctions | null) => {
@@ -106,6 +107,15 @@ const RestaurantScreen = () => {
     navigation.navigate("ChangeRestaurantScreen");
   };
 
+  useEffect(() => {
+    const initDefaultIndex = async () => {
+      const currIdx = (await getDataFromAsyncStorage("restaurant-idx")) ?? 0;
+      setDefaultIndex(parseInt(currIdx));
+    };
+
+    initDefaultIndex();
+  }, [restaurantName]);
+
   if (isFetching)
     return (
       <GlobalBody centered>
@@ -161,6 +171,7 @@ const RestaurantScreen = () => {
         {/* MenuList View */}
         <SnapCarousel
           data={restaurant.offer}
+          defaultIndex={defaultIndex}
           renderItem={({ item }: IRenderMenuListProps) => (
             <MenuList
               menus={item.menus}
