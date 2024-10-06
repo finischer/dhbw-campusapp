@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { createStackNavigator, StackNavigationProp, TransitionPresets } from "@react-navigation/stack";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { DeviceEventEmitter } from "react-native";
 import CalendarScreen from "../../../screens/CalendarScreen";
 import NavigationHeader from "../../../components/NavigationHeader";
 import { useTranslation } from "react-i18next";
 import { useMetadata } from "../../../hooks/useMetadata";
 import ChangeCourseScreen from "../../../screens/ChangeCourseScreen";
-import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../Navigation/navigation.types";
 import { useLectures } from "../../../hooks/useLectures";
 import LectureInformationScreen from "../../../screens/LectureInformationScreen/LectureInformationScreen";
 import { useHeaderConfig } from "../../../hooks/useHeaderConfig";
@@ -19,7 +17,7 @@ const CalendarNavigator = () => {
   const { colors } = useMetadata();
   const { course } = useLectures();
   const { t } = useTranslation("navigation");
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const [showSubTitle, setShowSubTitle] = useState(false);
 
@@ -35,9 +33,9 @@ const CalendarNavigator = () => {
     };
   }, []);
 
-  const goToChangeCourseScreen = () => {
-    navigation.navigate("ChangeCourseScreen");
-  };
+  // const goToChangeCourseScreen = () => {
+  //   navigation.navigate("ChangeCourseScreen");
+  // };
 
   return (
     <CalendarStack.Navigator screenOptions={headerConfig}>
