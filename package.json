@@ -11,7 +11,9 @@
     "preinstall": "npm i npm-license-crawler -g",
     "postinstall": "npm-license-crawler -onlyDirectDependencies -json licenses.json",
     "preview-build:android": "eas build --profile preview --platform android",
+    "production-build:android": "eas build --profile production --platform android",
     "preview-build:ios": "eas build --profile preview --platform ios",
+    "production-build:ios": "eas build --profile production --platform ios",
     "submit:android": "eas submit --platform android --latest",
     "submit:ios": "eas submit --platform ios --latest",
     "lint": "eslint ."
