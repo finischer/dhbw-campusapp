@@ -1,5 +1,4 @@
-import { RouteProp, useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
@@ -32,7 +31,7 @@ const setHeaderSubtitle = (newValue: boolean) => {
 const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
   const { icalUrl, course, getSchedule } = useLectures();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
   const [searchString, setSearchString] = useState<string>("");
@@ -54,7 +53,6 @@ const CalendarScreen = () => {
 
   const {
     isLoading,
-    isFetching,
     isError,
     error,
     data,
@@ -142,7 +140,7 @@ const CalendarScreen = () => {
     );
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return (
       <GlobalBody centered>
         <ImportCalendarDialog ref={importCalendarRef} />
@@ -171,6 +169,7 @@ const CalendarScreen = () => {
     <GlobalBody>
       <ImportCalendarDialog ref={importCalendarRef} />
       <Schedule
+        handleOnRefresh={refetchLectures}
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
         localLectures={data.localLectures}
