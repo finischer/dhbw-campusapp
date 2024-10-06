@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { ReactNode } from "react";
 import RegularText from "../../../../components/RegularText/RegularText";
 import { LectureType } from "../../../../api/lectures/lectures.types";

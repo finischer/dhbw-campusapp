@@ -109,7 +109,7 @@ export class DHBWMannheimRestaurantScraper extends RestaurantScraper {
       const menuName = $(parentElem).find(".speiseplan-table-menu-headline > strong").text().trim();
       const menuDescription = $(parentElem).find(".speiseplan-table-menu-content").text().trim();
 
-      const menuIcons: Array<MenuIconNames> = [];
+      const menuIcons: MenuIconNames[] = [];
       $(parentElem)
         .find(".speiseplan-table-menu-icon")
         .find(".icon")

@@ -1,7 +1,4 @@
-import {
-  LectureType,
-  OrganizedLectures,
-} from "../../api/lectures/lectures.types";
+import { OrganizedLectures } from "../../api/lectures/lectures.types";
 
 export const dummyLectures: OrganizedLectures[] = [
   {
@@ -37,8 +34,7 @@ export const dummyLectures: OrganizedLectures[] = [
     data: [
       {
         uid: "20230109T142714Z-349309001@group-e.dhbw-mannheim.de",
-        lecture:
-          "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik II (W3WI_103)",
+        lecture: "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik II (W3WI_103)",
         startDate: "17.05.2023",
         startTime: "13:00",
         endDate: "17.05.2023",
@@ -117,8 +113,7 @@ export const dummyLectures: OrganizedLectures[] = [
     data: [
       {
         uid: "20230109T142657Z-349307001@group-e.dhbw-mannheim.de",
-        lecture:
-          "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik (W3WI_103)",
+        lecture: "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik (W3WI_103)",
         startDate: "25.05.2023",
         startTime: "13:00",
         endDate: "25.05.2023",
@@ -183,8 +178,7 @@ export const dummyLectures: OrganizedLectures[] = [
       },
       {
         uid: "20230109T142705Z-349308001@group-e.dhbw-mannheim.de",
-        lecture:
-          "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik (W3WI_103)",
+        lecture: "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik (W3WI_103)",
         startDate: "01.06.2023",
         startTime: "13:00",
         endDate: "01.06.2023",
@@ -221,8 +215,7 @@ export const dummyLectures: OrganizedLectures[] = [
       },
       {
         uid: "20230109T142614Z-349303001@group-e.dhbw-mannheim.de",
-        lecture:
-          "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik (W3WI_103)",
+        lecture: "Integrationsseminar zu ausgewählten Themen der Wirtschaftsinformatik (W3WI_103)",
         startDate: "05.06.2023",
         startTime: "13:00",
         endDate: "05.06.2023",
@@ -259,8 +252,7 @@ export const dummyLectures: OrganizedLectures[] = [
     data: [
       {
         uid: "20230110T165758Z-349520001@group-e.dhbw-mannheim.de",
-        lecture:
-          "International Business Law & International Organizations (W3WI_IBI303)",
+        lecture: "International Business Law & International Organizations (W3WI_IBI303)",
         startDate: "07.06.2023",
         startTime: "09:00",
         endDate: "07.06.2023",
@@ -325,8 +317,7 @@ export const dummyLectures: OrganizedLectures[] = [
     data: [
       {
         uid: "20230110T165801Z-349521001@group-e.dhbw-mannheim.de",
-        lecture:
-          "International Business Law & International Organizations (W3WI_IBI303)",
+        lecture: "International Business Law & International Organizations (W3WI_IBI303)",
         startDate: "14.06.2023",
         startTime: "09:00",
         endDate: "14.06.2023",
@@ -349,8 +340,7 @@ export const dummyLectures: OrganizedLectures[] = [
     data: [
       {
         uid: "20230110T165723Z-349519001@group-e.dhbw-mannheim.de",
-        lecture:
-          "International Business Law & International Organizations (W3WI_IBI303)",
+        lecture: "International Business Law & International Organizations (W3WI_IBI303)",
         startDate: "15.06.2023",
         startTime: "09:00",
         endDate: "15.06.2023",

@@ -8,16 +8,17 @@ import LicensesScreen from "../../../screens/LicensesScreen";
 import MoreScreen from "../../../screens/MoreScreen";
 import NotificationSettingsScreen from "../../../screens/NotificationSettingsScreen";
 import SelectLocationScreen from "../../../screens/SelectLocationScreen";
-import { headerConfig } from "../Navigation/config";
 import CampusplanScreen from "../../../screens/CampusplanScreen";
+import { useHeaderConfig } from "../../../hooks/useHeaderConfig";
 
 const Stack = createStackNavigator();
 
 const MoreNavigator = () => {
+  const headerConfig = useHeaderConfig();
   const { t } = useTranslation("");
 
   return (
-    <Stack.Navigator screenOptions={headerConfig()}>
+    <Stack.Navigator screenOptions={headerConfig}>
       <Stack.Screen
         name="MoreScreen"
         component={MoreScreen}
@@ -29,27 +30,21 @@ const MoreNavigator = () => {
         name="NotificationSettingsScreen"
         component={NotificationSettingsScreen}
         options={{
-          headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:notifications")} />
-          ),
+          headerTitle: () => <NavigationHeader title={t("moreScreen:notifications")} />,
         }}
       />
       <Stack.Screen
         name="ChangeLanguageScreen"
         component={ChangeLanguageScreen}
         options={{
-          headerTitle: () => (
-            <NavigationHeader title={t("navigation:changeLanguage")} />
-          ),
+          headerTitle: () => <NavigationHeader title={t("navigation:changeLanguage")} />,
         }}
       />
       <Stack.Screen
         name="LegalNoticeScreen"
         component={LegalNoticeScreen}
         options={{
-          headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:legalNotice")} />
-          ),
+          headerTitle: () => <NavigationHeader title={t("moreScreen:legalNotice")} />,
         }}
       />
 
@@ -57,9 +52,7 @@ const MoreNavigator = () => {
         name="SelectLocationScreen"
         component={SelectLocationScreen}
         options={{
-          headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:selectLocation")} />
-          ),
+          headerTitle: () => <NavigationHeader title={t("moreScreen:selectLocation")} />,
         }}
       />
 
@@ -67,9 +60,7 @@ const MoreNavigator = () => {
         name="LicensesScreen"
         component={LicensesScreen}
         options={{
-          headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:licenses")} />
-          ),
+          headerTitle: () => <NavigationHeader title={t("moreScreen:licenses")} />,
         }}
       />
 
@@ -78,7 +69,11 @@ const MoreNavigator = () => {
         component={CampusplanScreen}
         options={{
           headerTitle: () => (
-            <NavigationHeader title={t("moreScreen:campusplan")} subTitle="Coblitzallee" showSubTitle />
+            <NavigationHeader
+              title={t("moreScreen:campusplan")}
+              subTitle="Coblitzallee"
+              showSubTitle
+            />
           ),
         }}
       />

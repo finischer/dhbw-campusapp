@@ -1,4 +1,3 @@
-import moment from "moment";
 import { IExamTypes } from "./IExamTypes";
 
 // TODO: Add subjectId
@@ -13,10 +12,4 @@ export type ISubjectTypes = {
   exams: IExamTypes[];
 };
 
-export const subjectKeys = [
-  "subjectNr",
-  "subjectName",
-  "subjectGrade",
-  "subjectCredits",
-  "subjectStatus",
-];
+export const subjectKeys = ["subjectNr", "subjectName", "subjectGrade", "subjectCredits", "subjectStatus"];

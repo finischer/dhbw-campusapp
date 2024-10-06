@@ -10,10 +10,7 @@ export class LecturesController {
   baseUrl: string;
   icalUrl: string | undefined;
 
-  constructor(
-    icalUrl: string | undefined = undefined,
-    courseId: string | undefined = undefined
-  ) {
+  constructor(icalUrl: string | undefined = undefined, courseId: string | undefined = undefined) {
     this.baseUrl = "https://vorlesungsplan.dhbw-mannheim.de/ical.php";
     if (icalUrl !== undefined) {
       // own ical url --> for import calendar feature (some courses are using a google calendar for their lectures)
@@ -151,9 +148,7 @@ export class LecturesController {
         startTime = parseInt(startTime);
       }
 
-      return (
-        startTime >= rangeStart.unix() * 1000 && lecture.endDate <= rangeEnd
-      );
+      return startTime >= rangeStart.unix() * 1000 && lecture.endDate <= rangeEnd;
     });
 
     // sort by date
@@ -170,40 +165,36 @@ export class LecturesController {
     });
 
     // lectures with formatted time
-    const sortedByDateLectures: LectureType[] = filteredLectures.map(
-      (event: any) => {
-        const startDate = moment(event.startDate).format("DD.MM.YYYY");
-        const endDate = moment(event.endDate).format("DD.MM.YYYY");
-        const startTime = moment(event.startTime).format("HH:mm");
-        const endTime = moment(event.endTime).format("HH:mm");
+    const sortedByDateLectures: LectureType[] = filteredLectures.map((event: any) => {
+      const startDate = moment(event.startDate).format("DD.MM.YYYY");
+      const endDate = moment(event.endDate).format("DD.MM.YYYY");
+      const startTime = moment(event.startTime).format("HH:mm");
+      const endTime = moment(event.endTime).format("HH:mm");
 
-        return {
-          uid: event.uid,
-          lecture: event.lecture,
-          startDate: startDate,
-          startTime: startTime,
-          endDate: endDate,
-          endTime: endTime,
-          location: event.location,
-        };
-      }
-    );
+      return {
+        uid: event.uid,
+        lecture: event.lecture,
+        startDate: startDate,
+        startTime: startTime,
+        endDate: endDate,
+        endTime: endTime,
+        location: event.location,
+      };
+    });
 
     // prepare data for VisualizedList
     let organizedLectures: OrganizedLectures[] = [];
     for (var i = 0; i < sortedByDateLectures.length; i++) {
       const { startDate } = sortedByDateLectures[i];
 
-      const tmp_arr = organizedLectures.filter(
-        (item) => item.title === startDate
-      );
+      const tmp_arr = organizedLectures.filter((item) => item.title === startDate);
 
       if (tmp_arr.length !== 0) {
         continue;
       }
 
       const result = sortedByDateLectures.filter((lecture: LectureType) => {
-        return startDate == lecture.startDate;
+        return startDate.toString() === lecture.startDate.toString();
       });
 
       organizedLectures.push({
@@ -256,9 +247,7 @@ export class LecturesController {
       } else {
         // success
         const responseBody: string = await response.data;
-        lectures = await this.getLecturesFromiCalData(responseBody).then(
-          (res) => res
-        );
+        lectures = await this.getLecturesFromiCalData(responseBody).then((res) => res);
       }
     } catch (err) {
       let message = "wrong url";

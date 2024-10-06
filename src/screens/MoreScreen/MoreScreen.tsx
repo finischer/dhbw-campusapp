@@ -15,13 +15,13 @@ import { CONTACT_MAIL } from "../../constants/common";
 import { useMetadata } from "../../hooks/useMetadata";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import AppInfo from "./components/AppInfo";
-import { SIZES, SPACING } from "../../constants/layout";
+import { SPACING } from "../../constants/layout";
 import SegmentedControl from "../../components/SegmentedControl/SegmentedControl";
 import { moreScreenStyles } from "./moreScreen.styles";
 import useReview from "../../hooks/useReview";
 
 const MoreScreen = () => {
-  const { theme, changeTheme, isAndroid, colors } = useMetadata();
+  const { theme, changeTheme, colors } = useMetadata();
   const { requestStoreReview } = useReview();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

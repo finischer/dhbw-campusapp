@@ -3,99 +3,95 @@ import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Dialog from "react-native-dialog";
 import { useLectures } from "../../hooks/useLectures";
-import {
-  IImportCalendarDialogFunctions,
-  IImportCalendarDialogProps,
-} from "./importCalendarDialog.types";
+import { IImportCalendarDialogFunctions, IImportCalendarDialogProps } from "./importCalendarDialog.types";
 import { useMetadata } from "../../hooks/useMetadata";
 
-const INPUT_PLACEHOLDER = "https://myicallink.com"
+const INPUT_PLACEHOLDER = "https://myicallink.com";
 
-const ImportCalendarDialog = React.forwardRef<
-  IImportCalendarDialogFunctions,
-  IImportCalendarDialogProps
->(({ }, ref) => {
-  const { t } = useTranslation();
-  const { colors, theme, isAndroid, isIOS } = useMetadata();
-  const { changeCourseByUrl } = useLectures();
-  const [showDialog, setShowDialog] = useState<boolean>(false);
-  const [inputText, setInputText] = useState<string>("");
+const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, IImportCalendarDialogProps>(
+  (_, ref) => {
+    const { t } = useTranslation();
+    const { colors, isIOS } = useMetadata();
+    const { changeCourseByUrl } = useLectures();
+    const [showDialog, setShowDialog] = useState<boolean>(false);
+    const [inputText, setInputText] = useState<string>("");
 
-  const inputTextColor = isAndroid ? colors.secondary : colors.darkText;
-  const placeholderTextColor = colors.secondaryDarker
+    const placeholderTextColor = colors.secondaryDarker;
 
-  // add local functions, so that you can use these functions in other components
-  useImperativeHandle(ref, () => ({
-    openDialog: () => {
-      openDialog();
-    },
-  }));
+    // add local functions, so that you can use these functions in other components
+    useImperativeHandle(ref, () => ({
+      openDialog: () => {
+        openDialog();
+      },
+    }));
 
-  const openDialog = () => {
-    setShowDialog(true);
-  };
+    const openDialog = () => {
+      setShowDialog(true);
+    };
 
-  const closeDialog = () => {
-    setShowDialog(false);
-  };
+    const closeDialog = () => {
+      setShowDialog(false);
+    };
 
-  const handleImportCalendar = () => {
-    changeCourseByUrl(inputText);
-    closeDialog();
-  };
+    const handleImportCalendar = () => {
+      changeCourseByUrl(inputText);
+      closeDialog();
+    };
 
-  return (
-    <Dialog.Container
-      onBackdropPress={closeDialog}
-      contentStyle={{
-        backgroundColor: colors.primary,
-
-      }}
-      visible={showDialog}
-      blurComponentIOS={<View />} // prevents weird bug, where backgroundColor is not registered on iOS
-    >
-      <Dialog.Title
-        style={{
-          color: colors.secondary,
+    return (
+      <Dialog.Container
+        onBackdropPress={closeDialog}
+        contentStyle={{
+          backgroundColor: colors.primary,
         }}
+        visible={showDialog}
+        blurComponentIOS={<View />} // prevents weird bug, where backgroundColor is not registered on iOS
       >
-        iCal Link
-      </Dialog.Title>
-      <Dialog.Description
-        style={{
-          color: colors.secondary,
-        }}
-      >
-        {t("moreScreen:importCalendarPromptMessage")}
-      </Dialog.Description>
-      <Dialog.Input
-        wrapperStyle={{
-          backgroundColor: isIOS ? colors.primaryDarker : ""
-        }}
-        style={{
-          color: colors.secondary,
-        }}
-        selectionColor={colors.accent}
-        onChangeText={(newText: string) => setInputText(newText)}
-        placeholder={INPUT_PLACEHOLDER}
-        placeholderTextColor={placeholderTextColor}
-      />
-      <Dialog.Button
-        style={{
-          color: colors.accent,
-        }}
-        onPress={closeDialog}
-        label={t("common:cancel")}
-      />
-      <Dialog.Button
-        style={{
-          color: colors.secondary,
-        }}
-        onPress={handleImportCalendar}
-        label={t("moreScreen:importCalendar")}
-      />
-    </Dialog.Container>
-  );
-});
+        <Dialog.Title
+          style={{
+            color: colors.secondary,
+          }}
+        >
+          iCal Link
+        </Dialog.Title>
+        <Dialog.Description
+          style={{
+            color: colors.secondary,
+          }}
+        >
+          {t("moreScreen:importCalendarPromptMessage")}
+        </Dialog.Description>
+        <Dialog.Input
+          wrapperStyle={{
+            backgroundColor: isIOS ? colors.primaryDarker : "",
+          }}
+          style={{
+            color: colors.secondary,
+          }}
+          selectionColor={colors.accent}
+          onChangeText={(newText: string) => setInputText(newText)}
+          placeholder={INPUT_PLACEHOLDER}
+          placeholderTextColor={placeholderTextColor}
+        />
+        <Dialog.Button
+          style={{
+            color: colors.accent,
+          }}
+          onPress={closeDialog}
+          label={t("common:cancel")}
+        />
+        <Dialog.Button
+          style={{
+            color: colors.secondary,
+          }}
+          onPress={handleImportCalendar}
+          label={t("moreScreen:importCalendar")}
+        />
+      </Dialog.Container>
+    );
+  }
+);
+
+ImportCalendarDialog.displayName = "ImportCalendarDialogComponent";
 
 export default ImportCalendarDialog;
