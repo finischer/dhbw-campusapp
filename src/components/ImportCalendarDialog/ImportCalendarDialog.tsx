@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Dialog from "react-native-dialog";
