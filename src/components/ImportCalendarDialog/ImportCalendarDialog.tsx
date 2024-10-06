@@ -24,15 +24,6 @@ const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, II
 
     const placeholderTextColor = colors.secondaryDarker;
 
-    useEffect(() => {
-      const getCurrentIcalUrlFromCache = async () => {
-        const icalUrl = await getDataFromAsyncStorage("icalUrl");
-        setInputText(icalUrl);
-      };
-
-      getCurrentIcalUrlFromCache();
-    }, []);
-
     // add local functions, so that you can use these functions in other components
     useImperativeHandle(ref, () => ({
       openDialog: () => {
@@ -40,8 +31,11 @@ const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, II
       },
     }));
 
-    const openDialog = () => {
+    const openDialog = async () => {
       setErrorMsg("");
+      const icalUrl = await getDataFromAsyncStorage("icalUrl");
+      setInputText(icalUrl);
+
       setShowDialog(true);
     };
 
