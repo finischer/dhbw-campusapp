@@ -1,5 +1,5 @@
 export default {
-  onFirstUseSelectCourseText: "Primero debe seleccionar un curso para ver el plan de conferencias",
+  onFirstUseSelectCourseText: "Primero debe importar un calendario para que aparezca aquí",
   selectCourse: "Seleccionar curso",
   loadingCourses: "Los cursos están cargados ...",
   loadingLectures: "Se está cargando el plan de clases ...",
@@ -11,4 +11,5 @@ export default {
   lectureInformationTitle: "Cambios en las clases",
   lectureChangesNotificationTitle: "Cambios en las clases",
   lectureChangesNotificationBody: "Hay cambios en su plan de conferencias",
+  importCalendar: "Importar calendario",
 };

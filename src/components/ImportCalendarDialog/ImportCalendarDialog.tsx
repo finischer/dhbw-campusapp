@@ -1,10 +1,14 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Dialog from "react-native-dialog";
 import { useLectures } from "../../hooks/useLectures";
 import { IImportCalendarDialogFunctions, IImportCalendarDialogProps } from "./importCalendarDialog.types";
 import { useMetadata } from "../../hooks/useMetadata";
+import useAsyncStorage from "../../hooks/useAsyncStorage";
+import { isValidUrl } from "../../utilities/validationHelpers";
+import RegularText from "../RegularText";
+import { SIZES, SPACING } from "../../constants/layout";
 
 const INPUT_PLACEHOLDER = "https://myicallink.com";
 
@@ -15,8 +19,19 @@ const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, II
     const { changeCourseByUrl } = useLectures();
     const [showDialog, setShowDialog] = useState<boolean>(false);
     const [inputText, setInputText] = useState<string>("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const { getDataFromAsyncStorage } = useAsyncStorage();
 
     const placeholderTextColor = colors.secondaryDarker;
+
+    useEffect(() => {
+      const getCurrentIcalUrlFromCache = async () => {
+        const icalUrl = await getDataFromAsyncStorage("icalUrl");
+        setInputText(icalUrl);
+      };
+
+      getCurrentIcalUrlFromCache();
+    }, []);
 
     // add local functions, so that you can use these functions in other components
     useImperativeHandle(ref, () => ({
@@ -26,6 +41,7 @@ const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, II
     }));
 
     const openDialog = () => {
+      setErrorMsg("");
       setShowDialog(true);
     };
 
@@ -34,6 +50,13 @@ const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, II
     };
 
     const handleImportCalendar = () => {
+      setErrorMsg("");
+      if (!isValidUrl(inputText)) {
+        const msg = t("common:thisIsNotAValidUrl");
+        setErrorMsg(msg);
+        return;
+      }
+
       changeCourseByUrl(inputText);
       closeDialog();
     };
@@ -64,15 +87,30 @@ const ImportCalendarDialog = React.forwardRef<IImportCalendarDialogFunctions, II
         <Dialog.Input
           wrapperStyle={{
             backgroundColor: isIOS ? colors.primaryDarker : "",
+            borderWidth: errorMsg ? 1 : undefined,
+            borderColor: colors.error,
           }}
           style={{
             color: colors.secondary,
           }}
+          value={inputText}
           selectionColor={colors.accent}
           onChangeText={(newText: string) => setInputText(newText)}
           placeholder={INPUT_PLACEHOLDER}
           placeholderTextColor={placeholderTextColor}
         />
+        {errorMsg && (
+          <RegularText
+            accentColor
+            size={SIZES.sm}
+            style={{
+              marginHorizontal: "auto",
+              marginBottom: SPACING.md,
+            }}
+          >
+            {errorMsg}
+          </RegularText>
+        )}
         <Dialog.Button
           style={{
             color: colors.accent,

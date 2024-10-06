@@ -1,5 +1,5 @@
 export default {
-  onFirstUseSelectCourseText: "Du musst zuerst einen Kurs auswählen, um den Vorlesungsplan zu sehen",
+  onFirstUseSelectCourseText: "Du musst zuerst einen Kalender importieren, damit dieser hier angezeigt wird",
   selectCourse: "Kurs auswählen",
   loadingCourses: "Kurse werden geladen ...",
   loadingLectures: "Vorlesungsplan wird geladen ...",
@@ -11,4 +11,5 @@ export default {
   lectureInformationTitle: "Vorlesungsänderungen",
   lectureChangesNotificationTitle: "Vorlesungsänderung",
   lectureChangesNotificationBody: "Es gibt Änderungen in deinem Vorlesungsplan",
+  importCalendar: "Kalender importieren",
 };

@@ -1,6 +1,6 @@
 import { RouteProp, useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { useQuery } from "react-query";
@@ -19,6 +19,9 @@ import { RootStackParamList } from "../../infrastructure/navigation/Navigation/n
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import Schedule from "./components/Schedule";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
+import ImportCalendarDialog from "../../components/ImportCalendarDialog";
+import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
+import Icon from "../../components/Icon";
 
 type CalendarScreenRouteProp = RouteProp<RootStackParamList, "CalendarScreen">;
 
@@ -30,6 +33,7 @@ const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
   const { icalUrl, course, getSchedule } = useLectures();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
   const [searchString, setSearchString] = useState<string>("");
   const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
@@ -69,6 +73,10 @@ const CalendarScreen = () => {
     setSearchString(text);
   };
 
+  const handleImportCalendar = () => {
+    return importCalendarRef.current?.openDialog();
+  };
+
   const filterLectures = (searchString: string, rawLectures: OrganizedLectures[]) => {
     if (searchString.length === 0 || !rawLectures) {
       return rawLectures;
@@ -85,6 +93,22 @@ const CalendarScreen = () => {
     }
     return lectures.filter((lecture) => lecture.data.length !== 0);
   };
+
+  const CalendarImportButton = () => (
+    <Button
+      variant="contained"
+      onClick={handleImportCalendar}
+      style={{ marginTop: SPACING.xl }}
+      leftIcon={
+        <Icon
+          source="feather"
+          name="download"
+        />
+      }
+    >
+      {t("importCalendar")}
+    </Button>
+  );
 
   const NoLecturesView = () => (
     <View style={calendarScreenStyles.noLecturesContainer}>
@@ -108,18 +132,12 @@ const CalendarScreen = () => {
     }, [refetchLecturesIfNeeded])
   );
 
-  if (course === undefined && icalUrl === undefined) {
+  if (!icalUrl) {
     return (
       <GlobalBody centered>
+        <ImportCalendarDialog ref={importCalendarRef} />
         <RegularText style={{ textAlign: "center" }}>{t("onFirstUseSelectCourseText")}</RegularText>
-
-        <Button
-          variant="outlined"
-          onClick={() => navigation.navigate("ChangeCourseScreen")}
-          style={{ marginTop: SPACING.xl }}
-        >
-          {t("selectCourse")}
-        </Button>
+        <CalendarImportButton />
       </GlobalBody>
     );
   }
@@ -127,6 +145,7 @@ const CalendarScreen = () => {
   if (isLoading || isFetching) {
     return (
       <GlobalBody centered>
+        <ImportCalendarDialog ref={importCalendarRef} />
         <Loader text={loaderText} />
       </GlobalBody>
     );
@@ -134,18 +153,23 @@ const CalendarScreen = () => {
 
   if (data?.lectures === undefined || isError) {
     return (
-      <ErrorView
-        centered
-        onRetry={refetchLectures}
-        error={error instanceof Error ? error : undefined}
-      >
-        {t("common:errorOccured")}
-      </ErrorView>
+      <>
+        <ImportCalendarDialog ref={importCalendarRef} />
+        <ErrorView
+          centered
+          CustomButton={CalendarImportButton}
+          onRetry={refetchLectures}
+          error={error instanceof Error ? error : undefined}
+        >
+          {t("common:errorOccured")}
+        </ErrorView>
+      </>
     );
   }
 
   return (
     <GlobalBody>
+      <ImportCalendarDialog ref={importCalendarRef} />
       <Schedule
         onScroll={handleOnScroll}
         scrollEventThrottle={16}

@@ -19,6 +19,6 @@ export type IErrorViewProps = {
   children: React.ReactNode | React.ReactNode[];
   centered?: boolean;
   onRetry?(): any | undefined;
-  customButton?: React.FC | undefined;
+  CustomButton?: React.FC | undefined;
   error?: Error | undefined;
 } & ConditionalRenderButtons;

@@ -1,7 +1,10 @@
 import { StyleSheet } from "react-native";
+import { SPACING } from "../../constants/layout";
 
 export const generalButtonStyle = StyleSheet.create({
   container: {
+    flexDirection: "row",
+    gap: SPACING.md,
     paddingHorizontal: 25,
     borderRadius: 8,
     justifyContent: "center",

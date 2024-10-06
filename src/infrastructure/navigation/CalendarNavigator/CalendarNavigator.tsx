@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { createStackNavigator, StackNavigationProp, TransitionPresets } from "@react-navigation/stack";
-import { DeviceEventEmitter, View } from "react-native";
+import { DeviceEventEmitter } from "react-native";
 import CalendarScreen from "../../../screens/CalendarScreen";
 import NavigationHeader from "../../../components/NavigationHeader";
 import { useTranslation } from "react-i18next";
 import { useMetadata } from "../../../hooks/useMetadata";
 import ChangeCourseScreen from "../../../screens/ChangeCourseScreen";
-import Icon from "../../../components/Icon";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../Navigation/navigation.types";
 import { useLectures } from "../../../hooks/useLectures";
-import { GLOBAL_PADDING_HORIZONTAL } from "../../../constants/layout";
 import LectureInformationScreen from "../../../screens/LectureInformationScreen/LectureInformationScreen";
 import { useHeaderConfig } from "../../../hooks/useHeaderConfig";
 
@@ -54,16 +52,16 @@ const CalendarNavigator = () => {
               showSubTitle={showSubTitle}
             />
           ),
-          headerRight: () => (
-            <View style={{ marginRight: GLOBAL_PADDING_HORIZONTAL }}>
-              <Icon
-                source="feather"
-                name="edit"
-                onClick={goToChangeCourseScreen}
-                color={colors.lightText}
-              />
-            </View>
-          ),
+          // headerRight: () => (
+          //   <View style={{ marginRight: GLOBAL_PADDING_HORIZONTAL }}>
+          //     <Icon
+          //       source="feather"
+          //       name="edit"
+          //       onClick={goToChangeCourseScreen}
+          //       color={colors.lightText}
+          //     />
+          //   </View>
+          // ),
         }}
       />
 
