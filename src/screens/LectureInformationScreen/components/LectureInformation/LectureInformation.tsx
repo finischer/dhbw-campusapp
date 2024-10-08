@@ -3,11 +3,11 @@ import React, { ReactNode } from "react";
 import RegularText from "../../../../components/RegularText/RegularText";
 import { LectureType } from "../../../../api/lectures/lectures.types";
 import moment from "moment";
-import { LECTURE_TIME_FORMAT } from "../../../CalendarScreen/components/LectureRowItem/LectureRowItem";
 import { ILectureInformationProps } from "./lectureInformation.types";
 import { useMetadata } from "../../../../hooks/useMetadata";
 import { useTranslation } from "react-i18next";
 import { lectureInformationStyles } from "./lectureInformation.styles";
+import { INTERNAL_TIME_FORMAT } from "../../../../constants/common";
 
 const TIME_KEYS: (keyof LectureType)[] = ["startTime", "endTime"];
 
@@ -21,7 +21,7 @@ const LectureInformation: React.FC<ILectureInformationProps> = ({ lecture, title
     let value = lecture[key] || "-";
     // Check for time columns to show time in correct format
     if (TIME_KEYS.includes(key)) {
-      value = moment(value, LECTURE_TIME_FORMAT).format(timeFormat);
+      value = moment(value, INTERNAL_TIME_FORMAT).format(timeFormat);
     }
 
     // Check if this info was changed

@@ -5,9 +5,12 @@ import { NotificationServices } from "../screens/NotificationSettingsScreen/noti
 import { LectureType, OrganizedLectures } from "../api/lectures/lectures.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { diffNestedLists } from "./diffLists";
-import { sendPushNotification } from "./push-notifications";
+import { NotificationMessage, sendPushNotification } from "./push-notifications";
 import { AsyncStorageEntries } from "../hooks/useAsyncStorage/useAsyncStorage.types";
 import { t } from "i18next";
+import { sleep } from "./helpers";
+import moment from "moment";
+import { INTERNAL_DATE_FORMAT, INTERNAL_TIME_FORMAT } from "../constants/common";
 
 // Lectures
 TaskManager.defineTask(NotificationServices.Lectures, async () => {
@@ -49,18 +52,93 @@ TaskManager.defineTask(NotificationServices.Lectures, async () => {
   // const lectureBadgeCount = (await AsyncStorage.getItem(badgeCountKey)) ?? "0";
   // await AsyncStorage.setItem(badgeCountKey, JSON.stringify(parseInt(lectureBadgeCount) + 1));
 
-  if (added.length > 0 || updated.length > 0 || removed.length > 0) {
-    sendPushNotification({
-      title: t("calendarScreen:lectureChangesNotificationTitle"),
-      body: t("calendarScreen:lectureChangesNotificationBody"),
+  const messages: NotificationMessage[] = [];
+
+  const timeFormat = t("common:timeFormat");
+  const dateFormat = t("common:dateFormat");
+
+  added.forEach((entry) => {
+    const startDate = moment(entry.title, INTERNAL_DATE_FORMAT).format(dateFormat);
+
+    entry.data.forEach((lecture) => {
+      const newMessage: NotificationMessage = {
+        title: t("calendarScreen:lectureAddedNotificationTitle", {
+          lectureName: lecture.lecture,
+          lectureStartDate: startDate,
+          interpolation: { escapeValue: false },
+        }),
+        body: t("calendarScreen:lectureAddedNotificationBody", {
+          lectureName: lecture.lecture,
+          lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+          lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+          interpolation: { escapeValue: false },
+        }),
+      };
+      messages.push(newMessage);
+    });
+  });
+
+  removed.forEach((entry) => {
+    const startDate = moment(entry.title, INTERNAL_DATE_FORMAT).format(dateFormat);
+
+    entry.data.forEach((lecture) => {
+      const newMessage: NotificationMessage = {
+        title: t("calendarScreen:lectureRemovedNotificationTitle"),
+        body: t("calendarScreen:lectureRemovedNotificationBody", {
+          lectureName: lecture.lecture,
+          lectureStartDate: startDate,
+          lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+          lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+          interpolation: { escapeValue: false },
+        }),
+      };
+      messages.push(newMessage);
+    });
+  });
+
+  updated.forEach((entry) => {
+    const startDate = moment(entry.title, INTERNAL_DATE_FORMAT).format(dateFormat);
+
+    entry.data.forEach((lecture) => {
+      const newMessage: NotificationMessage = {
+        title: t("calendarScreen:lectureUpdatedNotificationTitle"),
+        body: t("calendarScreen:lectureUpdatedNotificationBody", {
+          lectureName: lecture.lecture,
+          lectureStartDate: startDate,
+          lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+          lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+          interpolation: { escapeValue: false },
+        }),
+      };
+      messages.push(newMessage);
+    });
+  });
+
+  // send notifications
+  messages.forEach(async (message) => {
+    const messageToSend: NotificationMessage = {
       data: {
         screen: "CalendarScreen",
         params: { refetchData: true },
       },
-    });
-    // update new lectures in async storage
-    // await AsyncStorage.setItem(storageKey, JSON.stringify(scheduleRemote));
-  }
+      ...message,
+    };
+    sendPushNotification(messageToSend);
+    await sleep(2000); // wait 2 seconds until we send the next message
+  });
+
+  // if (added.length > 0 || updated.length > 0 || removed.length > 0) {
+  //   sendPushNotification({
+  //     title: t("calendarScreen:lectureChangesNotificationTitle"),
+  //     body: t("calendarScreen:lectureChangesNotificationBody"),
+  //     data: {
+  //       screen: "CalendarScreen",
+  //       params: { refetchData: true },
+  //     },
+  //   });
+  //   // update new lectures in async storage
+  //   // await AsyncStorage.setItem(storageKey, JSON.stringify(scheduleRemote));
+  // }
 
   return BackgroundFetch.BackgroundFetchResult.NewData;
 });

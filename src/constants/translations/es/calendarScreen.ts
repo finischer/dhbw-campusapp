@@ -9,7 +9,14 @@ export default {
   alertScheduleChangesMessage:
     "Es posible que haya notado que algunas conferencias han cambiado. Para obtener más información, haga clic en la conferencia marcada y consulte los detalles",
   lectureInformationTitle: "Cambios en las clases",
-  lectureChangesNotificationTitle: "Cambios en las clases",
-  lectureChangesNotificationBody: "Hay cambios en su plan de conferencias",
+  lectureAddedNotificationTitle: '📚 Nueva conferencia: "{{lectureName}}" en {{lectureStartDate}}',
+  lectureAddedNotificationBody:
+    'La clase "{{lectureName}}" se ha añadido a su horario. Comienza a las {{lectureStartTime}} y termina a las {{lectureEndTime}}',
+  lectureRemovedNotificationTitle: "🗑️ Conferencia eliminada",
+  lectureRemovedNotificationBody:
+    'La conferencia "{{lectureName}}" el {{lectureStartDate}} de {{lectureStartTime}} a {{lectureEndTime}} ha sido eliminada de su horario',
+  lectureUpdatedNotificationTitle: "✏️ Detalles de la conferencia actualizados",
+  lectureUpdatedNotificationBody:
+    'Hay un cambio en la conferencia "{{lectureName}}" el {{lectureStartDate}}. Verifique su calendario para los horarios y salas actualizados',
   importCalendar: "Importar calendario",
 };

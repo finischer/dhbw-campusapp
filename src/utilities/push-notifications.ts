@@ -9,7 +9,7 @@ type ScreenParams = {
 // Erstelle eine Union der möglichen `screen` und `params`-Kombinationen basierend auf `ScreenParams`.
 type PushNotificationData = ScreenParams[keyof ScreenParams];
 
-type NotificationMessage = {
+export type NotificationMessage = {
   title: string | null;
   subtitle?: string | null;
   body: string | null;

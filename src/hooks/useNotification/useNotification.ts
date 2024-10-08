@@ -25,7 +25,7 @@ export const useNotifications = (): UseNotificationsReturnType => {
 
   const initializeNotificationListeners = () => {
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      console.log("Benachrichtigung erhalten:", notification);
+      // console.log("Benachrichtigung erhalten:", notification);
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
