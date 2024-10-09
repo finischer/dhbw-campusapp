@@ -13,6 +13,7 @@ import { useMetadata } from "../../../hooks/useMetadata";
 import { INavigationIcons } from "./navigation.types";
 import Icon from "../../../components/Icon";
 import { TAB_BAR_ICON_NAMES } from "./config";
+import { navigationRef } from "./RootNavigation";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -27,7 +28,7 @@ const Navigation = () => {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
         barStyle={[tabBarStyle(colors)]}
         activeColor={colors.accent}

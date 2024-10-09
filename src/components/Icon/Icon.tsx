@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Feather,
-  FontAwesome,
-  FontAwesome5,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Feather, FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import TouchableOpacity from "../TouchableOpacity";
 import { useMetadata } from "../../hooks/useMetadata";
 import { IIconProps } from "./icon.types";
@@ -26,16 +20,44 @@ const Icon = ({
   const getIcon = () => {
     switch (source) {
       case "fa5":
-        return <FontAwesome5 name={name} size={size} color={iconColor} />;
+        return (
+          <FontAwesome5
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "fa":
-        return <FontAwesome name={name} size={size} color={iconColor} />;
+        return (
+          <FontAwesome
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "feather":
-        return <Feather name={name} size={size} color={iconColor} />;
+        return (
+          <Feather
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "ionicons":
-        return <Ionicons name={name} size={size} color={iconColor} />;
+        return (
+          <Ionicons
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "mci":
         return (
-          <MaterialCommunityIcons name={name} size={size} color={iconColor} />
+          <MaterialCommunityIcons
+            name={name}
+            size={size}
+            color={iconColor}
+          />
         );
     }
   };

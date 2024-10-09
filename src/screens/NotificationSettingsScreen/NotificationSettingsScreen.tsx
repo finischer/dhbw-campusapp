@@ -1,73 +1,89 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GlobalBody from "../../components/GlobalBody";
 import SettingRow from "../../components/SettingRow";
 import { notificationSettingsScreenStyles } from "./notificationSettingsScreen.styles";
-import { NotificationSettings } from "./notificationSettingsScreen.types";
+import { NotificationServices, NotificationSettings } from "./notificationSettingsScreen.types";
 import { useTranslation } from "react-i18next";
 
+// TEST
+import * as TaskManager from "expo-task-manager";
+import useAsyncStorage from "../../hooks/useAsyncStorage";
+import * as Notifications from "expo-notifications";
+import { useNotifications } from "../../hooks/useNotification/useNotification";
+import {
+  registerBackgroundFetchAsync,
+  unregisterBackgroundFetchAsync,
+} from "../../utilities/background-fetch";
+import { Text } from "react-native";
+
 const NotificationSettingsScreen = () => {
+  const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
+  const { registerForPushNotificationsAsync } = useNotifications();
+
   const { t } = useTranslation();
+
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
     dualis: false,
     lectures: false,
   });
 
-  // const showAlertSetupNotifications = async () => {
-  //     alert("Ändere deine Einstellungen", "Du musst in den Einstellungen Mitteilungen für die App erlauben", [
-  //         {
-  //             text: "Zu den Einstellungen",
-  //             isPreferred: true,
-  //             onPress: () => {
-  //                 Linking.openSettings()
-  //                 navigation.goBack();
-  //             }
-  //         },
-  //         {
-  //             text: "Zurück",
-  //             style: "cancel",
-  //             onPress: () => navigation.goBack()
-  //         }
-  //     ])
-  // }
+  const checkStatusAsync = async (service: NotificationServices) => {
+    // const status = await BackgroundFetch.getStatusAsync();
+    const isRegistered = await TaskManager.isTaskRegisteredAsync(service);
+    setNotificationSettings(() => ({
+      ...notificationSettings,
+      [service]: isRegistered,
+    }));
+  };
 
-  // const initNotificationSettings = async () => {
-  //     if (!await notificationPermissionAllowed()) {
-  //         showAlertSetupNotifications()
-  //         return
-  //     }
-  //     const storageNotificationSettings = await getDataFromAsyncStorage("notifications-settings");
+  const toggleFetchTask = async (service: NotificationServices) => {
+    const isRegistered = await TaskManager.isTaskRegisteredAsync(service);
+    if (isRegistered) {
+      await unregisterBackgroundFetchAsync(service);
+    } else {
+      await registerBackgroundFetchAsync(service);
+    }
 
-  //     setNotificationSettings(storageNotificationSettings)
-  // }
+    checkStatusAsync(service);
+  };
 
-  // init notification settings
-  // useEffect(() => {
-  //     initNotificationSettings();
-  // }, [])
+  const initNotificationSettings = async () => {
+    const storageNotificationSettings = await getDataFromAsyncStorage("notifications-settings");
+    setNotificationSettings(storageNotificationSettings);
+  };
 
-  // const notificationPermissionAllowed = async () => {
-  //     const res = await getNotificationPermission();
-  //     return res.granted
-  // }
+  const notificationPermissionAllowed = async () => {
+    const res = await Notifications.getPermissionsAsync();
+    return res.granted;
+  };
 
-  // const updateSetting = async (service: NotificationService) => {
-  //     if (!await notificationPermissionAllowed()) {
-  //         showAlertSetupNotifications()
-  //     } else {
-  //         const currentServiceSetting = notificationSettings[service]
-  //         setNotificationSettings(oldState => ({
-  //             ...oldState,
-  //             [service]: !currentServiceSetting
-  //         }))
+  const updateSetting = async (service: NotificationServices) => {
+    if (!(await notificationPermissionAllowed())) {
+      return;
+    } else {
+      const currentServiceSetting = notificationSettings[service];
 
-  //         const newNotificationSettings = {
-  //             ...notificationSettings,
-  //             [service]: !currentServiceSetting
-  //         }
+      toggleFetchTask(service);
+      setNotificationSettings((oldState) => ({
+        ...oldState,
+        [service]: !currentServiceSetting,
+      }));
 
-  //         storeDataInAsyncStorage("notifications-settings", newNotificationSettings)
-  //     }
-  // }
+      const newNotificationSettings = {
+        ...notificationSettings,
+        [service]: !currentServiceSetting,
+      };
+
+      storeDataInAsyncStorage("notifications-settings", newNotificationSettings);
+    }
+  };
+
+  useEffect(() => {
+    initNotificationSettings();
+    registerForPushNotificationsAsync();
+    checkStatusAsync(NotificationServices.Lectures);
+    checkStatusAsync(NotificationServices.Dualis);
+  }, []);
 
   return (
     <GlobalBody style={notificationSettingsScreenStyles.wrapper}>
@@ -75,16 +91,30 @@ const NotificationSettingsScreen = () => {
         disabled
         title={t("navigation:dualis")}
         subtitle={t("notificationSettings:dualisDescription")}
-        onChangeSwitch={null}
+        onChangeSwitch={() => updateSetting(NotificationServices.Dualis)}
         switchValue={notificationSettings.dualis}
       />
       <SettingRow
-        disabled
         title={t("navigation:lectures")}
         subtitle={t("notificationSettings:lecturesDescription")}
-        onChangeSwitch={null}
+        onChangeSwitch={() => updateSetting(NotificationServices.Lectures)}
         switchValue={notificationSettings.lectures}
       />
+
+      {/* {notificationSettings.dualis ? <Text>Task is registered</Text> : <Text>Task is not registered</Text>} */}
+
+      {/* <Button
+        variant="contained"
+        onClick={async () => {
+          await sendPushNotification(
+            "Kalenderaktualisierung",
+            "Es gab Änderungen in deinen Kalenderereignissen.",
+            { screen: "calendar" }
+          );
+        }}
+      >
+        Send message
+      </Button> */}
     </GlobalBody>
   );
 };

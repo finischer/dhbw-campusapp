@@ -37,7 +37,7 @@ const ChangeLanguageScreen = () => {
       <RegularRowItem
         onClick={() => handleChangeLanguage("es")}
         selected={language === "es"}
-        leftIcon={() => <RegularText>&#58641;</RegularText>} // USA Flag
+        leftIcon={() => <RegularText>&#127466;&#127480;</RegularText>} // Spanish Flag
         rightIconSource="feather"
         rightIcon={language === "es" ? rightIcon : undefined}
       >

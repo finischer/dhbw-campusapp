@@ -1,3 +1,4 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import { LectureType } from "../../../api/lectures/lectures.types";
 import { FeatherIconName } from "../../../services/expo-vector-icons/expo-vector-icons.types";
 import { ISubjectTypes } from "./../../../api/html_scraper/dualis/types/ISubjectTypes";
@@ -12,6 +13,10 @@ type LectureInformationScreenProps = {
   keyChanges: (keyof LectureType)[];
 };
 
+type CalendarScreenParams = {
+  refetchData: boolean;
+};
+
 export type ParamList = {
   LectureDetails: LectureInformationScreenProps;
 };
@@ -20,7 +25,7 @@ export type RootStackParamList = {
   SubjectDetailsScreen?: ISubjectTypes | undefined;
   DualisScreen?: undefined;
   LoginScreen?: undefined;
-  CalendarScreen?: undefined;
+  CalendarScreen?: CalendarScreenParams | undefined;
   CanteenScreen?: undefined;
   MoreScreen?: undefined;
   ChangeRestaurantScreen?: undefined;
@@ -33,3 +38,7 @@ export type RootStackParamList = {
   LectureInformationScreen?: LectureInformationScreenProps | undefined;
   CampusplanScreen?: undefined;
 };
+
+export type RouteName = keyof RootStackParamList;
+
+export type NavigationProps = StackNavigationProp<RootStackParamList>;

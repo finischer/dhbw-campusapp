@@ -95,7 +95,6 @@ const MoreScreen = () => {
             rightIconSource="feather"
             rightIcon="chevron-right"
             onClick={() => goTo("NotificationSettingsScreen")}
-            disabled
           >
             {t("moreScreen:notifications")}
           </RegularRowItem>

@@ -29,12 +29,7 @@ const ChangeCourseScreen = () => {
     return { courseList, requestTime };
   };
 
-  const {
-    isLoading,
-    isError,
-    data,
-    refetch: refetchCourses,
-  } = useQuery("lectures-courses", fetchCourses);
+  const { isLoading, isError, data, refetch: refetchCourses } = useQuery("lectures-courses", fetchCourses);
 
   const transformString = (str: string) => {
     return str.toLowerCase().trim().replace(/\s/g, "");
@@ -44,9 +39,7 @@ const ChangeCourseScreen = () => {
     const filteredData = courses.filter((course: ICourse) => {
       const transformedCourseName = transformString(course.courseName);
       const transformedSearchString = transformString(searchString);
-      const isSearchStringInCourseName = transformedCourseName.includes(
-        transformedSearchString
-      );
+      const isSearchStringInCourseName = transformedCourseName.includes(transformedSearchString);
       if (isSearchStringInCourseName) return course;
     });
 
@@ -59,8 +52,12 @@ const ChangeCourseScreen = () => {
         subTitle={course ? course.courseName : undefined}
         ref={modalRef}
         title={modalTitle}
+        closeButtonVariant="confirm"
       >
-        <GlobalBody centered noPadding>
+        <GlobalBody
+          centered
+          noPadding
+        >
           <Loader text={t("calendarScreen:loadingCourses")} />
         </GlobalBody>
       </Modal>
@@ -74,7 +71,10 @@ const ChangeCourseScreen = () => {
         ref={modalRef}
         title={modalTitle}
       >
-        <ErrorView centered onRetry={refetchCourses}>
+        <ErrorView
+          centered
+          onRetry={refetchCourses}
+        >
           {t("common:errorOccured")}
         </ErrorView>
       </Modal>
@@ -110,9 +110,7 @@ const ChangeCourseScreen = () => {
             </RegularText>
           </View>
         }
-        renderItem={({ item: itemCourse }: { item: ICourse }) => (
-          <CourseRow course={itemCourse} />
-        )}
+        renderItem={({ item: itemCourse }: { item: ICourse }) => <CourseRow course={itemCourse} />}
         keyExtractor={(course: ICourse, index: number) => index.toString()} // TODO: check for duplicates
       />
     </Modal>

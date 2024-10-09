@@ -36,4 +36,5 @@ export default {
   light: "Claro",
   dark: "Oscuro",
   system: "Sistema",
+  thisIsNotAValidUrl: "Esta URL no es válida",
 };
