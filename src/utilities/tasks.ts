@@ -13,8 +13,9 @@ import moment from "moment";
 import { INTERNAL_DATE_FORMAT, INTERNAL_TIME_FORMAT } from "../constants/common";
 
 // Lectures
-TaskManager.defineTask(NotificationServices.Lectures, async () => {
-  console.log("Call task");
+TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
+  console.log("Call task at " + new Date().toISOString());
+  console.log("Data: ", data);
   const courseString = await AsyncStorage.getItem("course");
   const icalUrl = (await AsyncStorage.getItem("icalUrl")) || undefined;
 
@@ -140,5 +141,10 @@ TaskManager.defineTask(NotificationServices.Lectures, async () => {
   //   // await AsyncStorage.setItem(storageKey, JSON.stringify(scheduleRemote));
   // }
 
+  return BackgroundFetch.BackgroundFetchResult.NewData;
+});
+
+TaskManager.defineTask(NotificationServices.Dualis, async () => {
+  console.log("Call task at " + new Date().toISOString());
   return BackgroundFetch.BackgroundFetchResult.NewData;
 });

@@ -14,6 +14,7 @@ import {
   registerBackgroundFetchAsync,
   unregisterBackgroundFetchAsync,
 } from "../../utilities/background-fetch";
+import { Text } from "react-native";
 
 const NotificationSettingsScreen = () => {
   const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
@@ -81,15 +82,15 @@ const NotificationSettingsScreen = () => {
     initNotificationSettings();
     registerForPushNotificationsAsync();
     checkStatusAsync(NotificationServices.Lectures);
+    checkStatusAsync(NotificationServices.Dualis);
   }, []);
 
   return (
     <GlobalBody style={notificationSettingsScreenStyles.wrapper}>
       <SettingRow
-        disabled
         title={t("navigation:dualis")}
         subtitle={t("notificationSettings:dualisDescription")}
-        onChangeSwitch={null}
+        onChangeSwitch={() => updateSetting(NotificationServices.Dualis)}
         switchValue={notificationSettings.dualis}
       />
       <SettingRow
@@ -98,6 +99,8 @@ const NotificationSettingsScreen = () => {
         onChangeSwitch={() => updateSetting(NotificationServices.Lectures)}
         switchValue={notificationSettings.lectures}
       />
+
+      {notificationSettings.dualis ? <Text>Task is registered</Text> : <Text>Task is not registered</Text>}
 
       {/* <Button
         variant="contained"

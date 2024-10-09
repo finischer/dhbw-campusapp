@@ -21,6 +21,7 @@ import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
 import ImportCalendarDialog from "../../components/ImportCalendarDialog";
 import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
 import Icon from "../../components/Icon";
+import { useMetadata } from "../../hooks/useMetadata";
 
 type CalendarScreenRouteProp = RouteProp<RootStackParamList, "CalendarScreen">;
 
@@ -30,6 +31,7 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
+  const { colors } = useMetadata();
   const { icalUrl, course, getSchedule } = useLectures();
   // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
@@ -101,6 +103,9 @@ const CalendarScreen = () => {
         <Icon
           source="feather"
           name="download"
+          clickable
+          onClick={handleImportCalendar}
+          color={colors.lightText}
         />
       }
     >
