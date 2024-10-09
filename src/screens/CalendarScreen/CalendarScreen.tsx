@@ -1,6 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
+import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { useQuery } from "react-query";
@@ -19,6 +18,12 @@ import { RootStackParamList } from "../../infrastructure/navigation/Navigation/n
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import Schedule from "./components/Schedule";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
+import ImportCalendarDialog from "../../components/ImportCalendarDialog";
+import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
+import Icon from "../../components/Icon";
+import { useMetadata } from "../../hooks/useMetadata";
+
+type CalendarScreenRouteProp = RouteProp<RootStackParamList, "CalendarScreen">;
 
 const setHeaderSubtitle = (newValue: boolean) => {
   DeviceEventEmitter.emit("handleShowSubTitle-CalendarScreen", newValue);
@@ -26,14 +31,18 @@ const setHeaderSubtitle = (newValue: boolean) => {
 
 const CalendarScreen = () => {
   const { t } = useTranslation("calendarScreen");
+  const { colors } = useMetadata();
   const { icalUrl, course, getSchedule } = useLectures();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
+
   const [searchString, setSearchString] = useState<string>("");
   const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
 
   const loaderText = t("loadingLectures");
 
   const fetchSchedule = async () => {
+    console.log("Fetch schedule");
     const { data: lectures, requestTime }: IResponseTypes = await getSchedule();
     const localLectures = await getDataFromAsyncStorage("lectures"); // save the old state of lectures
 
@@ -46,7 +55,6 @@ const CalendarScreen = () => {
 
   const {
     isLoading,
-    isFetching,
     isError,
     error,
     data,
@@ -63,6 +71,10 @@ const CalendarScreen = () => {
 
   const searchForAppointment = (text: string) => {
     setSearchString(text);
+  };
+
+  const handleImportCalendar = () => {
+    return importCalendarRef.current?.openDialog();
   };
 
   const filterLectures = (searchString: string, rawLectures: OrganizedLectures[]) => {
@@ -82,31 +94,61 @@ const CalendarScreen = () => {
     return lectures.filter((lecture) => lecture.data.length !== 0);
   };
 
+  const CalendarImportButton = () => (
+    <Button
+      variant="contained"
+      onClick={handleImportCalendar}
+      style={{ marginTop: SPACING.xl }}
+      leftIcon={
+        <Icon
+          source="feather"
+          name="download"
+          clickable
+          onClick={handleImportCalendar}
+          color={colors.lightText}
+        />
+      }
+    >
+      {t("importCalendar")}
+    </Button>
+  );
+
   const NoLecturesView = () => (
     <View style={calendarScreenStyles.noLecturesContainer}>
       <RegularText>{t("noEventsScheduled")}</RegularText>
     </View>
   );
 
-  if (course === undefined && icalUrl === undefined) {
+  const route = useRoute<CalendarScreenRouteProp>();
+
+  // Funktion zum Refetchen der Vorlesungen
+  const refetchLecturesIfNeeded = useCallback(() => {
+    if (route.params?.refetchData) {
+      // Refetch lectures
+      refetchLectures();
+    }
+  }, [route.params, refetchLectures]);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetchLecturesIfNeeded();
+    }, [refetchLecturesIfNeeded])
+  );
+
+  if (!icalUrl) {
     return (
       <GlobalBody centered>
+        <ImportCalendarDialog ref={importCalendarRef} />
         <RegularText style={{ textAlign: "center" }}>{t("onFirstUseSelectCourseText")}</RegularText>
-
-        <Button
-          variant="outlined"
-          onClick={() => navigation.navigate("ChangeCourseScreen")}
-          style={{ marginTop: SPACING.xl }}
-        >
-          {t("selectCourse")}
-        </Button>
+        <CalendarImportButton />
       </GlobalBody>
     );
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return (
       <GlobalBody centered>
+        <ImportCalendarDialog ref={importCalendarRef} />
         <Loader text={loaderText} />
       </GlobalBody>
     );
@@ -114,19 +156,25 @@ const CalendarScreen = () => {
 
   if (data?.lectures === undefined || isError) {
     return (
-      <ErrorView
-        centered
-        onRetry={refetchLectures}
-        error={error instanceof Error ? error : undefined}
-      >
-        {t("common:errorOccured")}
-      </ErrorView>
+      <>
+        <ImportCalendarDialog ref={importCalendarRef} />
+        <ErrorView
+          centered
+          CustomButton={CalendarImportButton}
+          onRetry={refetchLectures}
+          error={error instanceof Error ? error : undefined}
+        >
+          {t("common:errorOccured")}
+        </ErrorView>
+      </>
     );
   }
 
   return (
     <GlobalBody>
+      <ImportCalendarDialog ref={importCalendarRef} />
       <Schedule
+        handleOnRefresh={refetchLectures}
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
         localLectures={data.localLectures}
