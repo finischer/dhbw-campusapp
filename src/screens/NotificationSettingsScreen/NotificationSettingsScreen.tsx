@@ -88,6 +88,7 @@ const NotificationSettingsScreen = () => {
   return (
     <GlobalBody style={notificationSettingsScreenStyles.wrapper}>
       <SettingRow
+        disabled
         title={t("navigation:dualis")}
         subtitle={t("notificationSettings:dualisDescription")}
         onChangeSwitch={() => updateSetting(NotificationServices.Dualis)}
@@ -100,7 +101,7 @@ const NotificationSettingsScreen = () => {
         switchValue={notificationSettings.lectures}
       />
 
-      {notificationSettings.dualis ? <Text>Task is registered</Text> : <Text>Task is not registered</Text>}
+      {/* {notificationSettings.dualis ? <Text>Task is registered</Text> : <Text>Task is not registered</Text>} */}
 
       {/* <Button
         variant="contained"
