@@ -13,7 +13,6 @@ import Navigation from "./src/infrastructure/navigation/Navigation";
 
 import "./src/utilities/tasks";
 import { useNotifications } from "./src/hooks/useNotification/useNotification";
-
 const queryClient = new QueryClient();
 
 export default function App() {

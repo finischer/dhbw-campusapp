@@ -14,7 +14,6 @@ import {
   registerBackgroundFetchAsync,
   unregisterBackgroundFetchAsync,
 } from "../../utilities/background-fetch";
-import { Text } from "react-native";
 
 const NotificationSettingsScreen = () => {
   const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
@@ -82,18 +81,20 @@ const NotificationSettingsScreen = () => {
     initNotificationSettings();
     registerForPushNotificationsAsync();
     checkStatusAsync(NotificationServices.Lectures);
-    checkStatusAsync(NotificationServices.Dualis);
+
+    // TODO: Fix bug where Taskmanager.isTaskRegisteredAsync() seems not to work with two different services
+    // checkStatusAsync(NotificationServices.Dualis);
   }, []);
 
   return (
     <GlobalBody style={notificationSettingsScreenStyles.wrapper}>
-      <SettingRow
+      {/* <SettingRow
         disabled
         title={t("navigation:dualis")}
         subtitle={t("notificationSettings:dualisDescription")}
         onChangeSwitch={() => updateSetting(NotificationServices.Dualis)}
         switchValue={notificationSettings.dualis}
-      />
+      /> */}
       <SettingRow
         title={t("navigation:lectures")}
         subtitle={t("notificationSettings:lecturesDescription")}
