@@ -19,6 +19,7 @@ import { SPACING } from "../../constants/layout";
 import SegmentedControl from "../../components/SegmentedControl/SegmentedControl";
 import { moreScreenStyles } from "./moreScreen.styles";
 import useReview from "../../hooks/useReview";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MoreScreen = () => {
   const { theme, changeTheme, colors } = useMetadata();
@@ -211,6 +212,23 @@ const MoreScreen = () => {
             }}
           />
         </SettingSection>
+
+        {/* <SettingSection
+          title="Speicher"
+          contentGap
+        >
+          <Button
+            variant="contained"
+            onClick={async () => {
+              const cacheKeys = await AsyncStorage.getAllKeys();
+              const allCacheEntries = await AsyncStorage.multiGet(cacheKeys);
+              console.log("Current cache: ", JSON.stringify(allCacheEntries, null, 2));
+              await AsyncStorage.multiRemove(cacheKeys);
+            }}
+          >
+            Cache leeren
+          </Button>
+        </SettingSection> */}
 
         {/* AppInfo Container */}
         <View style={moreScreenStyles.appInfoView}>
