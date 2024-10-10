@@ -7,7 +7,7 @@ import { NotificationServices } from "../screens/NotificationSettingsScreen/noti
 async function registerBackgroundFetchAsync(service: NotificationServices) {
   console.log("Registering background fetch task");
   return BackgroundFetch.registerTaskAsync(service, {
-    minimumInterval: 5, // 15 minutes
+    minimumInterval: 15 * 60, // 15 minutes
     stopOnTerminate: false, // android only,
     startOnBoot: true, // android only,
   });
