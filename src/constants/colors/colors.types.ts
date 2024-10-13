@@ -11,4 +11,7 @@ export type IColors = {
   error: string;
   accentDark: string;
   danger: string;
+  infoMain: string;
+  infoLight: string;
+  infoDark: string;
 };

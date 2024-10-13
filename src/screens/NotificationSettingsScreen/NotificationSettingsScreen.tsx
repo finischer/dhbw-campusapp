@@ -14,6 +14,7 @@ import {
   registerBackgroundFetchAsync,
   unregisterBackgroundFetchAsync,
 } from "../../utilities/background-fetch";
+import AlertView from "../../components/AlertView/AlertView";
 
 const NotificationSettingsScreen = () => {
   const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
@@ -95,6 +96,9 @@ const NotificationSettingsScreen = () => {
         onChangeSwitch={() => updateSetting(NotificationServices.Dualis)}
         switchValue={notificationSettings.dualis}
       /> */}
+
+      <AlertView>{t("notificationSettings:betaInfoHint")}</AlertView>
+
       <SettingRow
         title={t("navigation:lectures")}
         subtitle={t("notificationSettings:lecturesDescription")}

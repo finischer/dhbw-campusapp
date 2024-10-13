@@ -3,6 +3,7 @@ import { Feather, FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } 
 import TouchableOpacity from "../TouchableOpacity";
 import { useMetadata } from "../../hooks/useMetadata";
 import { IIconProps } from "./icon.types";
+import { StyleSheet, View } from "react-native";
 
 const Icon = ({
   name,
@@ -12,6 +13,7 @@ const Icon = ({
   activeOpacity = 0.7,
   onClick = undefined,
   clickable = true,
+  style = StyleSheet.create({}),
 }: IIconProps) => {
   const { colors } = useMetadata();
 
@@ -67,7 +69,7 @@ const Icon = ({
       activeOpacity={!clickable ? 1 : activeOpacity}
       onPress={onClick}
     >
-      {getIcon()}
+      <View style={style}>{getIcon()}</View>
     </TouchableOpacity>
   );
 };
