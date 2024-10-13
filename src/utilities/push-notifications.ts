@@ -78,8 +78,6 @@ export async function registerForPushNotificationsAsync(): Promise<string | null
 export async function sendPushNotification(message: NotificationMessage): Promise<void> {
   const { title, body, data, sound, subtitle } = message;
 
-  const currBadgeCount = await Notifications.getBadgeCountAsync();
-
   await Notifications.scheduleNotificationAsync({
     content: {
       title,
@@ -87,7 +85,6 @@ export async function sendPushNotification(message: NotificationMessage): Promis
       body,
       data,
       sound,
-      badge: currBadgeCount + 1,
     },
     trigger: null, // send immediately
   });

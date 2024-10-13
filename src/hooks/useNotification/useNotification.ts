@@ -27,6 +27,8 @@ export const useNotifications = (): UseNotificationsReturnType => {
 
   const initializeNotificationListeners = () => {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      resetBadgeCount();
+
       const { screen, params } = response.notification.request.content.data;
 
       if (screen) {

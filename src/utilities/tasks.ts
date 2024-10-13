@@ -12,7 +12,7 @@ import { sleep } from "./helpers";
 import moment from "moment";
 import { INTERNAL_DATE_FORMAT, INTERNAL_TIME_FORMAT } from "../constants/common";
 import { ActionTriggers } from "../infrastructure/navigation/Navigation/navigation.types";
-import { setBadgeCountAsync } from "expo-notifications";
+import { getBadgeCountAsync, setBadgeCountAsync } from "expo-notifications";
 
 // Lectures
 TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
@@ -120,8 +120,8 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
   });
 
   // app badge count
-  // TODO fix badge count
-  // await setBadgeCountAsync(messages.length);
+  const currBadgeCount = await getBadgeCountAsync();
+  await setBadgeCountAsync(currBadgeCount + messages.length);
 
   return BackgroundFetch.BackgroundFetchResult.NewData;
 });
