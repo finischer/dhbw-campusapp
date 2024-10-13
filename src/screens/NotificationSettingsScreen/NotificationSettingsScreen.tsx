@@ -14,7 +14,7 @@ import {
   registerBackgroundFetchAsync,
   unregisterBackgroundFetchAsync,
 } from "../../utilities/background-fetch";
-import AlertView from "../../components/AlertView/AlertView";
+import AlertView from "../../components/AlertView";
 
 const NotificationSettingsScreen = () => {
   const { getDataFromAsyncStorage, storeDataInAsyncStorage } = useAsyncStorage();
