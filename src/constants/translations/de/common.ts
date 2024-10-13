@@ -37,4 +37,5 @@ export default {
   dark: "Dunkel",
   system: "System",
   thisIsNotAValidUrl: "Das ist keine valide URL",
+  openSettings: "Einstellungen öffnen",
 };

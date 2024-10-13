@@ -10,7 +10,10 @@ import { IRegularTextVariants } from "../../../../components/RegularText/regular
 import TouchableOpacity from "../../../../components/TouchableOpacity/TouchableOpacity";
 import { enteringDelayedAnimation } from "../../../../constants/animations";
 import { useMetadata } from "../../../../hooks/useMetadata";
-import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
+import {
+  ActionTriggers,
+  RootStackParamList,
+} from "../../../../infrastructure/navigation/Navigation/navigation.types";
 import { lectureRowItemStyles } from "./lectureRow.styles";
 import { ILectureRowItemProps } from "./lectureRowItem.types";
 import { INTERNAL_TIME_FORMAT } from "../../../../constants/common";
@@ -71,6 +74,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({
       oldLecture: localLecture,
       newLecture: lecture,
       keyChanges,
+      trigger: ActionTriggers.Calendar,
     });
   };
 

@@ -3,4 +3,5 @@ import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-ic
 export type ICloseButtonProps = {
   onClick?(): void;
   iconName: FeatherIconName;
+  handleCloseManually?: boolean;
 };

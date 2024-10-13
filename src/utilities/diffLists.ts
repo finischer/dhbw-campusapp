@@ -1,94 +1,73 @@
-type DiffResult<T> = {
-  added: T[];
-  removed: T[];
-  updated: (T & { changes?: any })[];
+import { LectureType, OrganizedLectures } from "../api/lectures/lectures.types";
+
+type DiffResult = {
+  added: LectureType[];
+  removed: LectureType[];
+  updated: { oldEvent: LectureType; newEvent: LectureType; changes: any }[];
 };
 
-function diffNestedLists<T>(
-  list1: T[],
-  list2: T[],
-  idAccessor: (item: T) => any,
-  nestedKey?: keyof T,
-  nestedIdAccessor?: (item: any) => any
-): DiffResult<T> {
-  const map1 = new Map<any, T>();
-  const map2 = new Map<any, T>();
+function diffSchedules(localSchedule: OrganizedLectures[], remoteSchedule: OrganizedLectures[]): DiffResult {
+  // flat events
+  const localEvents = localSchedule.flatMap((day) => day.data);
+  const remoteEvents = remoteSchedule.flatMap((day) => day.data);
 
-  list1.forEach((item) => map1.set(idAccessor(item), item));
-  list2.forEach((item) => map2.set(idAccessor(item), item));
+  // maps with uid as key
+  const localEventMap = new Map<string, LectureType>();
+  const remoteEventMap = new Map<string, LectureType>();
 
-  const added: T[] = [];
-  const removed: T[] = [];
-  const updated: (T & { changes?: any })[] = [];
+  localEvents.forEach((event) => localEventMap.set(event.uid, event));
+  remoteEvents.forEach((event) => remoteEventMap.set(event.uid, event));
 
-  // Finde hinzugefügte Objekte
-  for (const [id, item] of map2.entries()) {
-    if (!map1.has(id)) {
-      added.push(item);
-    }
-  }
+  const added: LectureType[] = [];
+  const removed: LectureType[] = [];
+  const updated: { oldEvent: LectureType; newEvent: LectureType; changes: any }[] = [];
 
-  // Finde entfernte und aktualisierte Objekte
-  for (const [id, item1] of map1.entries()) {
-    const item2 = map2.get(id);
-    if (!item2) {
-      removed.push(item1);
+  // Added Events
+  remoteEventMap.forEach((remoteEvent, uid) => {
+    const localEvent = localEventMap.get(uid);
+    if (!localEvent) {
+      // Event ist neu
+      added.push(remoteEvent);
     } else {
-      let changes: any = {};
-
-      // Vergleiche die restlichen Eigenschaften des Objekts
-      const objChanges = diffObjects(item1, item2, [nestedKey]);
-      if (Object.keys(objChanges).length > 0) {
-        changes = { ...changes, ...objChanges };
-      }
-
-      // Wenn ein verschachtelter Schlüssel angegeben ist, vergleiche die verschachtelten Arrays
-      if (nestedKey && nestedIdAccessor) {
-        const nestedList1 = item1[nestedKey] as any[];
-        const nestedList2 = item2[nestedKey] as any[];
-
-        const nestedDiff = diffNestedLists(nestedList1, nestedList2, nestedIdAccessor);
-
-        if (nestedDiff.added.length > 0 || nestedDiff.removed.length > 0 || nestedDiff.updated.length > 0) {
-          changes[nestedKey] = nestedDiff;
-        }
-      }
-
+      // If event exists in both schedules, check for changes (updated events)
+      const changes = diffEvents(localEvent, remoteEvent);
       if (Object.keys(changes).length > 0) {
-        updated.push({ ...item2, changes });
+        updated.push({ oldEvent: localEvent, newEvent: remoteEvent, changes });
       }
     }
-  }
+  });
+
+  // Removed events
+  localEventMap.forEach((localEvent, uid) => {
+    if (!remoteEventMap.has(uid)) {
+      // Event wurde entfernt
+      removed.push(localEvent);
+    }
+  });
 
   return { added, removed, updated };
 }
 
-function diffObjects(obj1: any, obj2: any, ignoreKeys: (string | number | symbol | undefined)[] = []): any {
-  let changes: any = {};
+function diffEvents(event1: LectureType, event2: LectureType): any {
+  const changes: any = {};
 
-  const keys = new Set([...Object.keys(obj1), ...Object.keys(obj2)]);
-
-  for (const key of keys) {
-    if (ignoreKeys.includes(key)) continue;
-
-    const val1 = obj1[key];
-    const val2 = obj2[key];
-
-    if (Array.isArray(val1) && Array.isArray(val2)) {
-      if (JSON.stringify(val1) !== JSON.stringify(val2)) {
-        changes[key] = { before: val1, after: val2 };
-      }
-    } else if (typeof val1 === "object" && val1 !== null && val2 !== null && typeof val2 === "object") {
-      const nestedChanges = diffObjects(val1, val2);
-      if (Object.keys(nestedChanges).length > 0) {
-        changes[key] = nestedChanges;
-      }
-    } else if (val1 !== val2) {
-      changes[key] = { before: val1, after: val2 };
-    }
+  if (event1.lecture !== event2.lecture) {
+    changes.lecture = { before: event1.lecture, after: event2.lecture };
+  }
+  if (event1.startDate !== event2.startDate) {
+    changes.startDate = { before: event1.startDate, after: event2.startDate };
+  }
+  if (event1.startTime !== event2.startTime) {
+    changes.startTime = { before: event1.startTime, after: event2.startTime };
+  }
+  if (event1.endDate !== event2.endDate) {
+    changes.endDate = { before: event1.endDate, after: event2.endDate };
+  }
+  if (event1.endTime !== event2.endTime) {
+    changes.endTime = { before: event1.endTime, after: event2.endTime };
   }
 
   return changes;
 }
 
-export { diffNestedLists, DiffResult, diffObjects };
+export { diffSchedules, diffEvents };

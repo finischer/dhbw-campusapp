@@ -7,10 +7,16 @@ export type INavigationIcons = {
   [key: string]: FeatherIconName;
 };
 
+export enum ActionTriggers {
+  "Notification" = "Notification",
+  "Calendar" = "Calendar",
+}
+
 type LectureInformationScreenProps = {
   oldLecture: LectureType | null;
   newLecture: LectureType;
   keyChanges: (keyof LectureType)[];
+  trigger: string;
 };
 
 type CalendarScreenParams = {
