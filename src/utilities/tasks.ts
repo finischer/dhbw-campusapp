@@ -4,13 +4,15 @@ import * as BackgroundFetch from "expo-background-fetch";
 import { NotificationServices } from "../screens/NotificationSettingsScreen/notificationSettingsScreen.types";
 import { LectureType, OrganizedLectures } from "../api/lectures/lectures.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { diffNestedLists } from "./diffLists";
+import { diffSchedules } from "./diffLists";
 import { NotificationMessage, sendPushNotification } from "./push-notifications";
 import { AsyncStorageEntries } from "../hooks/useAsyncStorage/useAsyncStorage.types";
 import { t } from "i18next";
 import { sleep } from "./helpers";
 import moment from "moment";
 import { INTERNAL_DATE_FORMAT, INTERNAL_TIME_FORMAT } from "../constants/common";
+import { ActionTriggers } from "../infrastructure/navigation/Navigation/navigation.types";
+import { setBadgeCountAsync } from "expo-notifications";
 
 // Lectures
 TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
@@ -35,19 +37,7 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
 
   if (!scheduleLocal) return BackgroundFetch.BackgroundFetchResult.NoData;
 
-  const seriesIdAccessor = (item: OrganizedLectures) => item.title;
-  const lectureIdAccessor = (item: LectureType) => item.uid;
-
-  // Unterschiede ermitteln
-  const { added, updated, removed } = diffNestedLists(
-    scheduleLocal,
-    scheduleRemote,
-    seriesIdAccessor,
-    "data",
-    lectureIdAccessor
-  );
-
-  console.log({ added, updated, removed });
+  const { added, updated, removed } = diffSchedules(scheduleLocal, scheduleRemote);
 
   // const badgeCountKey: AsyncStorageEntries = "lecture-badge-count";
   // const lectureBadgeCount = (await AsyncStorage.getItem(badgeCountKey)) ?? "0";
@@ -59,87 +49,79 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
   const dateFormat = t("common:dateFormat");
 
   added.forEach((entry) => {
-    const startDate = moment(entry.title, INTERNAL_DATE_FORMAT).format(dateFormat);
+    const { lecture, startDate: startDateRaw, startTime, endTime } = entry;
+    const startDate = moment(startDateRaw, INTERNAL_DATE_FORMAT).format(dateFormat);
 
-    entry.data.forEach((lecture) => {
-      const newMessage: NotificationMessage = {
-        title: t("calendarScreen:lectureAddedNotificationTitle", {
-          lectureName: lecture.lecture,
-          lectureStartDate: startDate,
-          interpolation: { escapeValue: false },
-        }),
-        body: t("calendarScreen:lectureAddedNotificationBody", {
-          lectureName: lecture.lecture,
-          lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-          lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-          interpolation: { escapeValue: false },
-        }),
-      };
-      messages.push(newMessage);
-    });
+    const newMessage: NotificationMessage = {
+      title: t("calendarScreen:lectureAddedNotificationTitle", {
+        lectureName: lecture,
+        lectureStartDate: startDate,
+        interpolation: { escapeValue: false },
+      }),
+      body: t("calendarScreen:lectureAddedNotificationBody", {
+        lectureName: lecture,
+        lectureStartTime: moment(startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        lectureEndTime: moment(endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        interpolation: { escapeValue: false },
+      }),
+    };
+
+    messages.push(newMessage);
   });
 
-  removed.forEach((entry) => {
-    const startDate = moment(entry.title, INTERNAL_DATE_FORMAT).format(dateFormat);
+  removed.forEach((lecture) => {
+    const startDate = moment(lecture.startDate, INTERNAL_DATE_FORMAT).format(dateFormat);
 
-    entry.data.forEach((lecture) => {
-      const newMessage: NotificationMessage = {
-        title: t("calendarScreen:lectureRemovedNotificationTitle"),
-        body: t("calendarScreen:lectureRemovedNotificationBody", {
-          lectureName: lecture.lecture,
-          lectureStartDate: startDate,
-          lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-          lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-          interpolation: { escapeValue: false },
-        }),
-      };
-      messages.push(newMessage);
-    });
+    const newMessage: NotificationMessage = {
+      title: t("calendarScreen:lectureRemovedNotificationTitle"),
+      body: t("calendarScreen:lectureRemovedNotificationBody", {
+        lectureName: lecture.lecture,
+        lectureStartDate: startDate,
+        lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        interpolation: { escapeValue: false },
+      }),
+    };
+    messages.push(newMessage);
   });
 
-  updated.forEach((entry) => {
-    const startDate = moment(entry.title, INTERNAL_DATE_FORMAT).format(dateFormat);
+  updated.forEach(({ oldEvent, newEvent, changes }) => {
+    const startDate = moment(newEvent.startDate, INTERNAL_DATE_FORMAT).format(dateFormat);
 
-    entry.data.forEach((lecture) => {
-      const newMessage: NotificationMessage = {
-        title: t("calendarScreen:lectureUpdatedNotificationTitle"),
-        body: t("calendarScreen:lectureUpdatedNotificationBody", {
-          lectureName: lecture.lecture,
-          lectureStartDate: startDate,
-          lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-          lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-          interpolation: { escapeValue: false },
-        }),
-      };
-      messages.push(newMessage);
-    });
+    const newMessage: NotificationMessage = {
+      title: t("calendarScreen:lectureUpdatedNotificationTitle"),
+      body: t("calendarScreen:lectureUpdatedNotificationBody", {
+        lectureName: newEvent.lecture,
+        lectureStartDate: startDate,
+        lectureStartTime: moment(newEvent.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        lectureEndTime: moment(newEvent.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        interpolation: { escapeValue: false },
+      }),
+      data: {
+        screen: "calendar.LectureInformationScreen",
+        params: {
+          oldLecture: oldEvent,
+          newLecture: newEvent,
+          keyChanges: Object.keys(changes) as (keyof LectureType)[],
+          trigger: ActionTriggers.Notification,
+        },
+      },
+    };
+    messages.push(newMessage);
   });
 
   // send notifications
   messages.forEach(async (message) => {
     const messageToSend: NotificationMessage = {
-      data: {
-        screen: "CalendarScreen",
-        params: { refetchData: true },
-      },
       ...message,
     };
     sendPushNotification(messageToSend);
     await sleep(2000); // wait 2 seconds until we send the next message
   });
 
-  // if (added.length > 0 || updated.length > 0 || removed.length > 0) {
-  //   sendPushNotification({
-  //     title: t("calendarScreen:lectureChangesNotificationTitle"),
-  //     body: t("calendarScreen:lectureChangesNotificationBody"),
-  //     data: {
-  //       screen: "CalendarScreen",
-  //       params: { refetchData: true },
-  //     },
-  //   });
-  //   // update new lectures in async storage
-  //   // await AsyncStorage.setItem(storageKey, JSON.stringify(scheduleRemote));
-  // }
+  // app badge count
+  // TODO fix badge count
+  // await setBadgeCountAsync(messages.length);
 
   return BackgroundFetch.BackgroundFetchResult.NewData;
 });

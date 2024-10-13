@@ -9,12 +9,17 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import { StackNavigationProp } from "@react-navigation/stack";
 
-const CloseButton: React.FC<ICloseButtonProps> = ({ onClick = () => null, iconName = "x" }) => {
+const CloseButton: React.FC<ICloseButtonProps> = ({
+  onClick = () => null,
+  iconName = "x",
+  handleCloseManually = false,
+}) => {
   const { colors } = useMetadata();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const handleCloseClick = () => {
     onClick();
+    if (handleCloseManually) return;
     navigation.pop();
   };
 

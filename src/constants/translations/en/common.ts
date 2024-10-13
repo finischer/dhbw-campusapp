@@ -37,4 +37,5 @@ export default {
   dark: "Dark",
   system: "System",
   thisIsNotAValidUrl: "This is not a valid URL",
+  openSettings: "Open settings",
 };

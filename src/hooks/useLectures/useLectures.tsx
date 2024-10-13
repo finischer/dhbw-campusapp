@@ -3,17 +3,12 @@ import { ICourse } from "../../api/lectures/lectures.types";
 import { LecturesController } from "../../api/lectures/lecturesController";
 import useAsyncStorage from "../useAsyncStorage";
 import { ILecturesContext } from "./useLectures.types";
+import { isValidUrl } from "../../utilities/validationHelpers";
 
 const LecturesContext = createContext<ILecturesContext | undefined>(undefined);
 
-const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const {
-    getDataFromAsyncStorage,
-    storeDataInAsyncStorage,
-    deleteFromAsyncStorage,
-  } = useAsyncStorage();
+const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { getDataFromAsyncStorage, storeDataInAsyncStorage, deleteFromAsyncStorage } = useAsyncStorage();
 
   // ical url for own calendar imports
   const [icalUrl, setIcalUrl] = useState<string | undefined>(undefined);
@@ -54,9 +49,11 @@ const LecturesProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getSchedule = async () => {
+    if (!icalUrl || !isValidUrl(icalUrl)) return { status: 400, msg: "Invalid URL", data: null };
+
     const res = await lecturesController.getScheduleFromWeb();
 
-    if (res.status !== 200) throw new Error(res.msg)
+    if (res.status !== 200) throw new Error(res.msg);
 
     return res;
   };
