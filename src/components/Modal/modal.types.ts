@@ -5,6 +5,8 @@ export type IModalProps = {
   subTitle?: string;
   children: React.ReactNode;
   withCloseButton?: boolean;
+  onClose?: () => void;
+  handleCloseManually?: boolean;
   closeButtonVariant?: IModalCloseButtonVariants;
 };
 

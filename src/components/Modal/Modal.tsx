@@ -14,7 +14,18 @@ import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-ic
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 
 const Modal = React.forwardRef<IModalFunctions, IModalProps>(
-  ({ title, subTitle, closeButtonVariant = "close", children, withCloseButton = true }, ref) => {
+  (
+    {
+      title,
+      subTitle,
+      closeButtonVariant = "close",
+      children,
+      withCloseButton = true,
+      onClose = () => null,
+      handleCloseManually = false,
+    },
+    ref
+  ) => {
     const { theme } = useMetadata();
     const deviceColorScheme = useColorScheme();
     const [statusBarStyle, setStatusBarStyle] = useState<"light-content" | "dark-content">("light-content");
@@ -102,7 +113,11 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
                   exiting={FadeOutDown}
                   style={modalStyles.closeButtonContainer}
                 >
-                  <CloseButton iconName={closeBtnIconName} />
+                  <CloseButton
+                    onClick={onClose}
+                    iconName={closeBtnIconName}
+                    handleCloseManually={handleCloseManually}
+                  />
                 </Animated.View>
               )}
             </View>

@@ -23,6 +23,7 @@ export default function App() {
   const { initializeNotificationListeners, resetBadgeCount } = useNotifications();
 
   useEffect(() => {
+    // TODO: Fix reset badge count on app start (coming from background)
     resetBadgeCount();
     initializeNotificationListeners();
   }, []);

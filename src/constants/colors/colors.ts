@@ -14,6 +14,11 @@ const Colors = {
   white: "#eff1f2",
   yellow500: "#FFD95A",
   yellow600: "#FFC107",
+  lightBlue100: "#cce5ff",
+  lightBlue300: "#4fc3f7",
+  lightBlue400: "#03a9f4",
+  lightBlue700: "#01579b",
+  lightBlue900: "#1e3a5f",
 };
 
 const darkModeColors: IColors = {
@@ -29,6 +34,9 @@ const darkModeColors: IColors = {
   darkText: Colors.gray700,
   error: Colors.red600,
   danger: Colors.yellow500,
+  infoMain: Colors.lightBlue100,
+  infoLight: Colors.lightBlue300,
+  infoDark: Colors.lightBlue700,
 };
 
 const lightModeColors: IColors = {
@@ -44,6 +52,9 @@ const lightModeColors: IColors = {
   darkText: Colors.gray700,
   error: Colors.red600,
   danger: Colors.yellow600,
+  infoMain: Colors.lightBlue100,
+  infoLight: Colors.lightBlue700,
+  infoDark: Colors.lightBlue900,
 };
 
 export { darkModeColors, lightModeColors };

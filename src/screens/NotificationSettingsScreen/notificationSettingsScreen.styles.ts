@@ -13,4 +13,9 @@ export const notificationSettingsScreenStyles = StyleSheet.create({
     paddingVertical: SPACING.l,
   },
   settingRowTextView: {},
+  betaText: {
+    opacity: 0.3,
+    textAlign: "center",
+    marginTop: SPACING.l,
+  },
 });

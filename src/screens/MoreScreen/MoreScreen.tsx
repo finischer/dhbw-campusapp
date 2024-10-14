@@ -19,7 +19,6 @@ import { SPACING } from "../../constants/layout";
 import SegmentedControl from "../../components/SegmentedControl/SegmentedControl";
 import { moreScreenStyles } from "./moreScreen.styles";
 import useReview from "../../hooks/useReview";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MoreScreen = () => {
   const { theme, changeTheme, colors } = useMetadata();
