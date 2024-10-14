@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { View, Animated, FlatList, Dimensions, StyleSheet } from "react-native";
+import { View, Animated, Dimensions, StyleSheet } from "react-native";
 import { useMetadata } from "../../hooks/useMetadata";
 import { SPACING } from "../../constants/layout";
 
