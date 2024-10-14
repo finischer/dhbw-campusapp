@@ -9,11 +9,23 @@ import { useIsFocused } from "@react-navigation/native";
 import { useMetadata } from "../../hooks/useMetadata";
 import Animated, { FadeInDown, FadeInUp, FadeOutDown, FadeOutUp, Layout } from "react-native-reanimated";
 import { SPACING } from "../../constants/layout";
+import { FeatherIconName } from "../../services/expo-vector-icons/expo-vector-icons.types";
 
 const THRESHOLD_SHOW_CLOSE_BUTTON_MILLIESCONDS = 600;
 
 const Modal = React.forwardRef<IModalFunctions, IModalProps>(
-  ({ title, subTitle, children, withCloseButton = true }, ref) => {
+  (
+    {
+      title,
+      subTitle,
+      closeButtonVariant = "close",
+      children,
+      withCloseButton = true,
+      onClose = () => null,
+      handleCloseManually = false,
+    },
+    ref
+  ) => {
     const { theme } = useMetadata();
     const deviceColorScheme = useColorScheme();
     const [statusBarStyle, setStatusBarStyle] = useState<"light-content" | "dark-content">("light-content");
@@ -21,6 +33,8 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
 
     const [showCloseButton, setShowCloseButton] = useState(withCloseButton);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(undefined);
+
+    const closeBtnIconName: FeatherIconName = closeButtonVariant === "close" ? "x" : "check";
 
     useEffect(() => {
       if (isFocused && theme === "light") {
@@ -99,7 +113,11 @@ const Modal = React.forwardRef<IModalFunctions, IModalProps>(
                   exiting={FadeOutDown}
                   style={modalStyles.closeButtonContainer}
                 >
-                  <CloseButton />
+                  <CloseButton
+                    onClick={onClose}
+                    iconName={closeBtnIconName}
+                    handleCloseManually={handleCloseManually}
+                  />
                 </Animated.View>
               )}
             </View>

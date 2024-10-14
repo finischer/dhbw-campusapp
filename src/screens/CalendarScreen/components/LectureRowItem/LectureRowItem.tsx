@@ -10,13 +10,13 @@ import { IRegularTextVariants } from "../../../../components/RegularText/regular
 import TouchableOpacity from "../../../../components/TouchableOpacity/TouchableOpacity";
 import { enteringDelayedAnimation } from "../../../../constants/animations";
 import { useMetadata } from "../../../../hooks/useMetadata";
-import { RootStackParamList } from "../../../../infrastructure/navigation/Navigation/navigation.types";
+import {
+  ActionTriggers,
+  RootStackParamList,
+} from "../../../../infrastructure/navigation/Navigation/navigation.types";
 import { lectureRowItemStyles } from "./lectureRow.styles";
 import { ILectureRowItemProps } from "./lectureRowItem.types";
-
-export const LECTURE_TIME_FORMAT = "HH:mm";
-
-// TODO: make a modal when click on a lecture to show the difference between the old and the new lecture information
+import { INTERNAL_TIME_FORMAT } from "../../../../constants/common";
 
 const LectureRowItem: React.FC<ILectureRowItemProps> = ({
   alertScheduleChanges,
@@ -74,6 +74,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({
       oldLecture: localLecture,
       newLecture: lecture,
       keyChanges,
+      trigger: ActionTriggers.Calendar,
     });
   };
 
@@ -93,7 +94,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({
             variant={textVariant}
             style={lectureRowItemStyles.column1text}
           >
-            {moment(lecture.startTime, LECTURE_TIME_FORMAT).format(timeFormat)}
+            {moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat)}
           </RegularText>
           <RegularText
             variant={textVariant}
@@ -105,7 +106,7 @@ const LectureRowItem: React.FC<ILectureRowItemProps> = ({
             variant={textVariant}
             style={lectureRowItemStyles.column1text}
           >
-            {moment(lecture.endTime, LECTURE_TIME_FORMAT).format(timeFormat)}
+            {moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat)}
           </RegularText>
         </View>
 

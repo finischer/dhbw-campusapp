@@ -1,6 +1,8 @@
-export type NotificationService = "dualis" | "lectures";
+export enum NotificationServices {
+  "Dualis" = "dualis",
+  "Lectures" = "lectures",
+}
 
 export type NotificationSettings = {
-  dualis: boolean;
-  lectures: boolean;
+  [key in NotificationServices]: boolean;
 };

@@ -95,7 +95,6 @@ const MoreScreen = () => {
             rightIconSource="feather"
             rightIcon="chevron-right"
             onClick={() => goTo("NotificationSettingsScreen")}
-            disabled
           >
             {t("moreScreen:notifications")}
           </RegularRowItem>
@@ -212,6 +211,23 @@ const MoreScreen = () => {
             }}
           />
         </SettingSection>
+
+        {/* <SettingSection
+          title="Speicher"
+          contentGap
+        >
+          <Button
+            variant="contained"
+            onClick={async () => {
+              const cacheKeys = await AsyncStorage.getAllKeys();
+              const allCacheEntries = await AsyncStorage.multiGet(cacheKeys);
+              console.log("Current cache: ", JSON.stringify(allCacheEntries, null, 2));
+              await AsyncStorage.multiRemove(cacheKeys);
+            }}
+          >
+            Cache leeren
+          </Button>
+        </SettingSection> */}
 
         {/* AppInfo Container */}
         <View style={moreScreenStyles.appInfoView}>

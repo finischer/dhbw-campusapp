@@ -24,6 +24,7 @@ const ChangeRestaurantScreen = () => {
     <Modal
       title={modalTitle}
       subTitle="Mannheim"
+      closeButtonVariant="confirm"
     >
       <ScrollView style={changeRestaurantStyles.container}>
         {restaurantList.map((restaurant: [string, string], index: number) => {

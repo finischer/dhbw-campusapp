@@ -10,6 +10,7 @@ import useAsyncStorage from "../useAsyncStorage";
 import { useMetadata } from "../useMetadata";
 import { IRestaurantContext } from "./useRestaurant.types";
 import { RESTAURANTS_MAP } from "../../api/html_scraper/restaurant/constants";
+import { INTERNAL_DATE_FORMAT } from "../../constants/common";
 
 const PREVIEW_DAYS = 5;
 
@@ -24,7 +25,7 @@ const RestaurantProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [restaurantName, setRestaurantName] = useState<AllRestaurantsOptions>("mensa-am-schloss");
 
-  const [choosedDate, setChoosedDate] = useState(moment().format("DD.MM.YYYY"));
+  const [choosedDate, setChoosedDate] = useState(moment().format(INTERNAL_DATE_FORMAT));
 
   const formattedRestaurantName = RESTAURANTS_MAP[restaurantName];
 

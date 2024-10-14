@@ -1,3 +1,4 @@
+import { StyleProp, ViewStyle } from "react-native";
 import {
   FeatherIconName,
   FontAwesomeIconName,
@@ -37,4 +38,5 @@ export type IIconProps = {
   activeOpacity?: number | undefined;
   onClick?: () => void | undefined;
   clickable?: boolean;
+  style?: StyleProp<ViewStyle>;
 } & ConditionalProps;

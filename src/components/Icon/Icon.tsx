@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  Feather,
-  FontAwesome,
-  FontAwesome5,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Feather, FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import TouchableOpacity from "../TouchableOpacity";
 import { useMetadata } from "../../hooks/useMetadata";
 import { IIconProps } from "./icon.types";
+import { StyleSheet, View } from "react-native";
 
 const Icon = ({
   name,
@@ -18,6 +13,7 @@ const Icon = ({
   activeOpacity = 0.7,
   onClick = undefined,
   clickable = true,
+  style = StyleSheet.create({}),
 }: IIconProps) => {
   const { colors } = useMetadata();
 
@@ -26,16 +22,44 @@ const Icon = ({
   const getIcon = () => {
     switch (source) {
       case "fa5":
-        return <FontAwesome5 name={name} size={size} color={iconColor} />;
+        return (
+          <FontAwesome5
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "fa":
-        return <FontAwesome name={name} size={size} color={iconColor} />;
+        return (
+          <FontAwesome
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "feather":
-        return <Feather name={name} size={size} color={iconColor} />;
+        return (
+          <Feather
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "ionicons":
-        return <Ionicons name={name} size={size} color={iconColor} />;
+        return (
+          <Ionicons
+            name={name}
+            size={size}
+            color={iconColor}
+          />
+        );
       case "mci":
         return (
-          <MaterialCommunityIcons name={name} size={size} color={iconColor} />
+          <MaterialCommunityIcons
+            name={name}
+            size={size}
+            color={iconColor}
+          />
         );
     }
   };
@@ -45,7 +69,7 @@ const Icon = ({
       activeOpacity={!clickable ? 1 : activeOpacity}
       onPress={onClick}
     >
-      {getIcon()}
+      <View style={style}>{getIcon()}</View>
     </TouchableOpacity>
   );
 };

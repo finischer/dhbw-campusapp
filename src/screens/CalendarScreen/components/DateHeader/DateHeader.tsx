@@ -8,14 +8,13 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import Animated from "react-native-reanimated";
 import { enteringDelayedAnimation } from "../../../../constants/animations";
-
-const TITLE_DATE_FORMAT = "DD.MM.YYYY";
+import { INTERNAL_DATE_FORMAT } from "../../../../constants/common";
 
 const DateHeader: React.FC<IDateHeaderProps> = ({ title, index }) => {
   const { t } = useTranslation();
   const { colors, dateFormat } = useMetadata();
 
-  const dayName = moment(title, TITLE_DATE_FORMAT).format("dddd").toLowerCase();
+  const dayName = moment(title, INTERNAL_DATE_FORMAT).format("dddd").toLowerCase();
 
   const localDateHeaderStyles = StyleSheet.create({
     container: {
@@ -32,7 +31,7 @@ const DateHeader: React.FC<IDateHeaderProps> = ({ title, index }) => {
         variant="light"
         style={dateHeaderStyles.text}
       >
-        {t(`common:${dayName}`)}, {moment(title, TITLE_DATE_FORMAT).format(dateFormat)}
+        {t(`common:${dayName}`)}, {moment(title, INTERNAL_DATE_FORMAT).format(dateFormat)}
       </RegularText>
     </Animated.View>
   );

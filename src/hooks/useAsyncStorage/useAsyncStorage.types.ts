@@ -11,4 +11,7 @@ export type AsyncStorageEntries =
   | "notifications-settings"
   | "restaurantScreen.alreadySeen"
   | "lectures"
-  | "nextStoreReviewRequestTime";
+  | "nextStoreReviewRequestTime"
+  | "lecture-badge-count"
+  | "lecture-notification-cache"
+  | "restaurant-idx";

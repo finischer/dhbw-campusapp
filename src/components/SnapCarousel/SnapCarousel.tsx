@@ -1,28 +1,73 @@
-import React, { useState } from "react";
-import Animated from "react-native-reanimated";
-import { WINDOW_WIDTH } from "../../constants/device/device";
+import React, { useRef } from "react";
+import { View, Animated, Dimensions, StyleSheet } from "react-native";
+import { useMetadata } from "../../hooks/useMetadata";
+import { SPACING } from "../../constants/layout";
 
-const SnapCarousel = ({ data, renderItem }: any) => {
-  const [scrollX, setScrollX] = useState(0);
+const { width: WINDOW_WIDTH } = Dimensions.get("window");
+
+const SnapCarousel = ({ data, renderItem, defaultIndex = 0 }: any) => {
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const { colors } = useMetadata();
 
   return (
-    <Animated.View>
+    <View>
       <Animated.FlatList
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        decelerationRate="fast"
-        snapToInterval={WINDOW_WIDTH}
-        pagingEnabled
         data={data}
-        renderItem={({ item, index }: { item: any; index: number }) =>
-          renderItem({ item, index, scrollX })
-        }
-        horizontal
+        renderItem={renderItem}
         keyExtractor={(_, index: number) => index.toString()}
-        onScroll={(e) => setScrollX(e.nativeEvent.contentOffset.x)}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+          useNativeDriver: false,
+        })}
+        scrollEventThrottle={16}
+        initialScrollIndex={defaultIndex}
+        getItemLayout={(data, index) => ({
+          length: WINDOW_WIDTH,
+          offset: WINDOW_WIDTH * index,
+          index,
+        })}
       />
-    </Animated.View>
+      <View style={styles.pagination}>
+        {data.map((_: any, index: number) => {
+          const inputRange = [(index - 1) * WINDOW_WIDTH, index * WINDOW_WIDTH, (index + 1) * WINDOW_WIDTH];
+
+          const dotWidth = scrollX.interpolate({
+            inputRange,
+            outputRange: [8, 16, 8],
+            extrapolate: "clamp",
+          });
+
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.3, 1, 0.3],
+            extrapolate: "clamp",
+          });
+
+          return (
+            <Animated.View
+              key={index}
+              style={[styles.dot, { width: dotWidth, opacity, backgroundColor: colors.accent }]}
+            />
+          );
+        })}
+      </View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  pagination: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginVertical: SPACING.m,
+  },
+  dot: {
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: SPACING.s,
+  },
+});
 
 export default SnapCarousel;

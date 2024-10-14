@@ -5,6 +5,7 @@ import moment from "moment";
 import { ICourse, LectureType, OrganizedLectures } from "./lectures.types";
 import { IResponseTypes } from "../types/IResponseTypes";
 import { isValidUrl } from "../../utilities/validationHelpers";
+import { INTERNAL_DATE_FORMAT, INTERNAL_TIME_FORMAT } from "../../constants/common";
 
 export class LecturesController {
   baseUrl: string;
@@ -166,10 +167,10 @@ export class LecturesController {
 
     // lectures with formatted time
     const sortedByDateLectures: LectureType[] = filteredLectures.map((event: any) => {
-      const startDate = moment(event.startDate).format("DD.MM.YYYY");
-      const endDate = moment(event.endDate).format("DD.MM.YYYY");
-      const startTime = moment(event.startTime).format("HH:mm");
-      const endTime = moment(event.endTime).format("HH:mm");
+      const startDate = moment(event.startDate).format(INTERNAL_DATE_FORMAT);
+      const endDate = moment(event.endDate).format(INTERNAL_DATE_FORMAT);
+      const startTime = moment(event.startTime).format(INTERNAL_TIME_FORMAT);
+      const endTime = moment(event.endTime).format(INTERNAL_TIME_FORMAT);
 
       return {
         uid: event.uid,
