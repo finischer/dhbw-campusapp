@@ -1,5 +1,6 @@
 import { Platform, Linking } from "react-native";
 import Constants from "expo-constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -17,4 +18,8 @@ export const openNotificationSettings = () => {
       value: packageName,
     },
   ]);
+};
+
+export const clearAsyncStorage = async () => {
+  await AsyncStorage.clear();
 };
