@@ -1,61 +1,73 @@
 import React, { useRef } from "react";
-import Animated from "react-native-reanimated";
-import { WINDOW_WIDTH } from "../../constants/device/device";
-import { FlatList, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
-import useAsyncStorage from "../../hooks/useAsyncStorage";
+import { View, Animated, Dimensions, StyleSheet } from "react-native";
+import { useMetadata } from "../../hooks/useMetadata";
+import { SPACING } from "../../constants/layout";
+
+const { width: WINDOW_WIDTH } = Dimensions.get("window");
 
 const SnapCarousel = ({ data, renderItem, defaultIndex = 0 }: any) => {
-  const { storeDataInAsyncStorage } = useAsyncStorage();
-  const flatListRef = useRef<FlatList<any>>(null);
-  const scrollOffsetRef = useRef(0);
-
-  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    scrollOffsetRef.current = e.nativeEvent.contentOffset.x;
-  };
-
-  const handleOnScrollEnd = () => {
-    const index = Math.round(scrollOffsetRef.current / WINDOW_WIDTH);
-    storeDataInAsyncStorage("restaurant-idx", index.toString());
-  };
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const { colors } = useMetadata();
 
   return (
-    <Animated.View>
-      {/* <Animated.FlatList
-        ref={flatListRef}
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={true}
-        decelerationRate="fast"
-        snapToInterval={WINDOW_WIDTH}
-        initialScrollIndex={defaultIndex}
-        getItemLayout={(data, index) => ({ length: WINDOW_WIDTH, offset: WINDOW_WIDTH * index, index })}
-        pagingEnabled
-        data={data}
-        renderItem={({ item, index }: { item: any; index: number }) => renderItem({ item, index, scrollX })}
-        horizontal
-        keyExtractor={(_, index: number) => index.toString()}
-        onScroll={handleScroll}
-        onScrollEndDrag={handleOnScrollEnd}
-      /> */}
+    <View>
       <Animated.FlatList
-        ref={flatListRef} // FlatList-Ref zuweisen
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={true}
-        decelerationRate="fast"
-        // snapToInterval={WINDOW_WIDTH}
-        initialScrollIndex={defaultIndex}
-        getItemLayout={(data, index) => ({ length: WINDOW_WIDTH, offset: WINDOW_WIDTH * index, index })}
-        pagingEnabled
         data={data}
-        renderItem={({ item, index }: { item: any; index: number }) =>
-          renderItem({ item, index, scrollX: scrollOffsetRef.current })
-        }
-        horizontal
+        renderItem={renderItem}
         keyExtractor={(_, index: number) => index.toString()}
-        onScroll={handleScroll} // handleScroll aktualisiert nur den Ref
-        onMomentumScrollEnd={handleOnScrollEnd} // handleOnScrollEnd wird beim Ende des Scrollens aufgerufen
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+          useNativeDriver: false,
+        })}
+        scrollEventThrottle={16}
+        initialScrollIndex={defaultIndex}
+        getItemLayout={(data, index) => ({
+          length: WINDOW_WIDTH,
+          offset: WINDOW_WIDTH * index,
+          index,
+        })}
       />
-    </Animated.View>
+      <View style={styles.pagination}>
+        {data.map((_: any, index: number) => {
+          const inputRange = [(index - 1) * WINDOW_WIDTH, index * WINDOW_WIDTH, (index + 1) * WINDOW_WIDTH];
+
+          const dotWidth = scrollX.interpolate({
+            inputRange,
+            outputRange: [8, 16, 8],
+            extrapolate: "clamp",
+          });
+
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.3, 1, 0.3],
+            extrapolate: "clamp",
+          });
+
+          return (
+            <Animated.View
+              key={index}
+              style={[styles.dot, { width: dotWidth, opacity, backgroundColor: colors.accent }]}
+            />
+          );
+        })}
+      </View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  pagination: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginVertical: SPACING.m,
+  },
+  dot: {
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: SPACING.s,
+  },
+});
 
 export default SnapCarousel;
