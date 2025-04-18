@@ -1,12 +1,11 @@
 {
   "name": "dhbw-campusapp",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "main": "node_modules/expo/AppEntry.js",
-  "type": "module",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "preinstall": "npm i npm-license-crawler -g",
     "postinstall": "npm-license-crawler -onlyDirectDependencies -json licenses.json",
@@ -18,9 +17,12 @@
     "preview-build:ios": "eas build --profile preview --platform ios",
     "production-build:ios": "eas build --profile production --platform ios",
     "submit:ios": "eas submit --platform ios --latest",
+    "update:android": "eas update --platform android",
+    "update:ios": "eas update --platform ios",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@bacons/apple-targets": "^0.0.8",
     "@expo-google-fonts/source-sans-pro": "^0.2.2",
     "@expo/vector-icons": "^14.0.0",
     "@os-team/i18next-react-native-language-detector": "^1.0.21",
@@ -33,6 +35,8 @@
     "axios": "^1.2.0",
     "cheerio-without-node-native": "^0.20.2",
     "expo": "~51.0.37",
+    "expo-background-fetch": "~12.0.1",
+    "expo-build-properties": "~0.12.5",
     "expo-dev-client": "~4.0.28",
     "expo-device": "~6.0.2",
     "expo-image": "~1.13.0",
@@ -43,6 +47,7 @@
     "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~1.12.1",
     "expo-store-review": "~7.0.2",
+    "expo-task-manager": "~11.8.2",
     "expo-updates": "~0.25.27",
     "expo-web-browser": "~13.0.3",
     "i18next": "^22.0.6",
@@ -61,10 +66,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
     "react-query": "^3.39.2",
-    "typescript": "~5.3.3",
-    "expo-build-properties": "~0.12.5",
-    "expo-task-manager": "~11.8.2",
-    "expo-background-fetch": "~12.0.1"
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
