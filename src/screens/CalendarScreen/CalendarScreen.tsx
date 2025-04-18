@@ -1,28 +1,32 @@
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
+import {
+  DeviceEventEmitter,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  View,
+} from "react-native";
 import { useQuery } from "react-query";
-import { LectureType, OrganizedLectures } from "../../api/lectures/lectures.types";
+import { OrganizedLectures } from "../../api/lectures/lectures.types";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import Button from "../../components/Button/Button";
 import ErrorView from "../../components/ErrorView";
 import GlobalBody from "../../components/GlobalBody";
+import Icon from "../../components/Icon";
+import ImportCalendarDialog from "../../components/ImportCalendarDialog";
+import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
 import Loader from "../../components/Loader/Loader";
 import RegularText from "../../components/RegularText";
 import RequestTime from "../../components/RequestTime";
 import { SPACING } from "../../constants/layout";
 import useAsyncStorage from "../../hooks/useAsyncStorage/useAsyncStorage";
 import { useLectures } from "../../hooks/useLectures";
+import { useMetadata } from "../../hooks/useMetadata";
 import { RootStackParamList } from "../../infrastructure/navigation/Navigation/navigation.types";
 import { calendarScreenStyles } from "./calendarScreen.styles";
 import Schedule from "./components/Schedule";
 import ScheduleHeader from "./components/ScheduleHeader/ScheduleHeader";
-import ImportCalendarDialog from "../../components/ImportCalendarDialog";
-import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
-import Icon from "../../components/Icon";
-import { useMetadata } from "../../hooks/useMetadata";
-import SmartSettings from "local:smart-settings";
 
 type CalendarScreenRouteProp = RouteProp<RootStackParamList, "CalendarScreen">;
 
@@ -38,7 +42,8 @@ const CalendarScreen = () => {
   const importCalendarRef = useRef<IImportCalendarDialogFunctions | null>(null);
 
   const [searchString, setSearchString] = useState<string>("");
-  const { storeDataInAsyncStorage, getDataFromAsyncStorage } = useAsyncStorage();
+  const { storeDataInAsyncStorage, getDataFromAsyncStorage } =
+    useAsyncStorage();
 
   const loaderText = t("loadingLectures");
 
@@ -49,21 +54,7 @@ const CalendarScreen = () => {
 
     // only if lectures exist -> don't save null or undefined in localStorage
     if (lectures) {
-      const lecturesForNative = lectures.map((entry: OrganizedLectures) => ({
-        id: entry.title,
-        date: entry.title,
-        lectures: entry.data.map((lecture: LectureType) => ({
-          id: lecture.uid,
-          lecture: lecture.lecture,
-          startDate: lecture.startDate,
-          startTime: lecture.startTime,
-          endDate: lecture.endDate,
-          endTime: lecture.endTime,
-          location: lecture.location ?? "",
-        })),
-      }));
       storeDataInAsyncStorage("lectures", lectures); // store the new lectures in localStorage
-      SmartSettings.setLectures("lectures", lecturesForNative, "group.dhbwcampusapp.data");
     }
     return { lectures, localLectures, requestTime };
   };
@@ -92,7 +83,10 @@ const CalendarScreen = () => {
     return importCalendarRef.current?.openDialog();
   };
 
-  const filterLectures = (searchString: string, rawLectures: OrganizedLectures[]) => {
+  const filterLectures = (
+    searchString: string,
+    rawLectures: OrganizedLectures[],
+  ) => {
     if (searchString.length === 0 || !rawLectures) {
       return rawLectures;
     }
@@ -103,7 +97,9 @@ const CalendarScreen = () => {
     for (let i = 0; i < lectures.length; i++) {
       // do not touch original data
       let lecture = Object.assign({}, lectures[i]);
-      lecture.data = lecture.data.filter((date) => date.lecture.toLowerCase().includes(searchString));
+      lecture.data = lecture.data.filter((date) =>
+        date.lecture.toLowerCase().includes(searchString),
+      );
       lectures[i] = lecture;
     }
     return lectures.filter((lecture) => lecture.data.length !== 0);
@@ -147,14 +143,16 @@ const CalendarScreen = () => {
   useFocusEffect(
     useCallback(() => {
       refetchLecturesIfNeeded();
-    }, [refetchLecturesIfNeeded])
+    }, [refetchLecturesIfNeeded]),
   );
 
   if (!icalUrl) {
     return (
       <GlobalBody centered>
         <ImportCalendarDialog ref={importCalendarRef} />
-        <RegularText style={{ textAlign: "center" }}>{t("onFirstUseSelectCourseText")}</RegularText>
+        <RegularText style={{ textAlign: "center" }}>
+          {t("onFirstUseSelectCourseText")}
+        </RegularText>
         <CalendarImportButton />
       </GlobalBody>
     );
@@ -193,7 +191,10 @@ const CalendarScreen = () => {
         onScroll={handleOnScroll}
         scrollEventThrottle={16}
         localLectures={data.localLectures}
-        lectures={filterLectures(searchString, data?.lectures as OrganizedLectures[])}
+        lectures={filterLectures(
+          searchString,
+          data?.lectures as OrganizedLectures[],
+        )}
         ListHeaderComponent={
           <ScheduleHeader
             searchString={searchString}

@@ -19,16 +19,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"],
-        "ITSAppUsesNonExemptEncryption": false
+        "UIBackgroundModes": ["fetch", "remote-notification"]
       },
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
       "buildNumber": "14",
-      "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349",
-      "entitlements": {
-        "com.apple.security.application-groups": ["group.dhbwcampusapp.data"]
-      }
+      "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349"
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
@@ -41,29 +37,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1",
-        "build": {
-          "experimental": {
-            "ios": {
-              "appExtensions": [
-                {
-                  "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp.widgets",
-                  "targetName": "widgets",
-                  "entitlements": {
-                    "com.apple.security.application-groups": [
-                      "group.dhbwcampusapp.data"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
+        "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
         }
       }
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "plugins": [
       [
         "expo-updates",
@@ -82,14 +60,7 @@
           }
         }
       ],
-      "expo-secure-store",
-      "expo-build-properties",
-      [
-        "@bacons/apple-targets",
-        {
-          "appleTeamId": "DA2TY6CRFB"
-        }
-      ]
+      "expo-secure-store"
     ]
   }
 }
