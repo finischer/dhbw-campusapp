@@ -41,7 +41,9 @@
       }
     }
   },
-  "runtimeVersion": "1.0.0",
+  "runtimeVersion": {
+    "policy": "sdkVersion"
+  },
   "plugins": [
     [
       "expo-updates",
