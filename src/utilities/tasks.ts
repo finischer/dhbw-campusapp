@@ -1,18 +1,24 @@
-import { LecturesController } from "./../api/lectures/lecturesController";
-import * as TaskManager from "expo-task-manager";
-import * as BackgroundFetch from "expo-background-fetch";
-import { NotificationServices } from "../screens/NotificationSettingsScreen/notificationSettingsScreen.types";
-import { LectureType, OrganizedLectures } from "../api/lectures/lectures.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { diffSchedules } from "./diffLists";
-import { NotificationMessage, sendPushNotification } from "./push-notifications";
-import { AsyncStorageEntries } from "../hooks/useAsyncStorage/useAsyncStorage.types";
-import { t } from "i18next";
-import { sleep } from "./helpers";
-import moment from "moment";
-import { INTERNAL_DATE_FORMAT, INTERNAL_TIME_FORMAT } from "../constants/common";
-import { ActionTriggers } from "../infrastructure/navigation/Navigation/navigation.types";
+import * as BackgroundFetch from "expo-background-fetch";
 import { getBadgeCountAsync, setBadgeCountAsync } from "expo-notifications";
+import * as TaskManager from "expo-task-manager";
+import { t } from "i18next";
+import moment from "moment";
+import { LectureType, OrganizedLectures } from "../api/lectures/lectures.types";
+import {
+  INTERNAL_DATE_FORMAT,
+  INTERNAL_TIME_FORMAT,
+} from "../constants/common";
+import { AsyncStorageEntries } from "../hooks/useAsyncStorage/useAsyncStorage.types";
+import { ActionTriggers } from "../infrastructure/navigation/Navigation/navigation.types";
+import { NotificationServices } from "../screens/NotificationSettingsScreen/notificationSettingsScreen.types";
+import { LecturesController } from "./../api/lectures/lecturesController";
+import { diffSchedules } from "./diffLists";
+import { sleep } from "./helpers";
+import {
+  NotificationMessage,
+  sendPushNotification,
+} from "./push-notifications";
 
 // Lectures
 TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
@@ -32,12 +38,17 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
 
   const storageKey: AsyncStorageEntries = "lectures";
   const scheduleLocalString = await AsyncStorage.getItem(storageKey);
-  const scheduleLocal = scheduleLocalString ? (JSON.parse(scheduleLocalString) as OrganizedLectures[]) : null;
+  const scheduleLocal = scheduleLocalString
+    ? (JSON.parse(scheduleLocalString) as OrganizedLectures[])
+    : null;
   const scheduleRemote = res.data as OrganizedLectures[];
 
   if (!scheduleLocal) return BackgroundFetch.BackgroundFetchResult.NoData;
 
-  const { added, updated, removed } = diffSchedules(scheduleLocal, scheduleRemote);
+  const { added, updated, removed } = diffSchedules(
+    scheduleLocal,
+    scheduleRemote,
+  );
 
   // const badgeCountKey: AsyncStorageEntries = "lecture-badge-count";
   // const lectureBadgeCount = (await AsyncStorage.getItem(badgeCountKey)) ?? "0";
@@ -50,7 +61,9 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
 
   added.forEach((entry) => {
     const { lecture, startDate: startDateRaw, startTime, endTime } = entry;
-    const startDate = moment(startDateRaw, INTERNAL_DATE_FORMAT).format(dateFormat);
+    const startDate = moment(startDateRaw, INTERNAL_DATE_FORMAT).format(
+      dateFormat,
+    );
 
     const newMessage: NotificationMessage = {
       title: t("calendarScreen:lectureAddedNotificationTitle", {
@@ -60,8 +73,12 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
       }),
       body: t("calendarScreen:lectureAddedNotificationBody", {
         lectureName: lecture,
-        lectureStartTime: moment(startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-        lectureEndTime: moment(endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        lectureStartTime: moment(startTime, INTERNAL_TIME_FORMAT).format(
+          timeFormat,
+        ),
+        lectureEndTime: moment(endTime, INTERNAL_TIME_FORMAT).format(
+          timeFormat,
+        ),
         interpolation: { escapeValue: false },
       }),
     };
@@ -70,15 +87,26 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
   });
 
   removed.forEach((lecture) => {
-    const startDate = moment(lecture.startDate, INTERNAL_DATE_FORMAT).format(dateFormat);
+    const startDate = moment(lecture.startDate, INTERNAL_DATE_FORMAT).format(
+      dateFormat,
+    );
+
+    if (startDate < moment().format(dateFormat)) {
+      return;
+    }
 
     const newMessage: NotificationMessage = {
       title: t("calendarScreen:lectureRemovedNotificationTitle"),
       body: t("calendarScreen:lectureRemovedNotificationBody", {
         lectureName: lecture.lecture,
         lectureStartDate: startDate,
-        lectureStartTime: moment(lecture.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-        lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        lectureStartTime: moment(
+          lecture.startTime,
+          INTERNAL_TIME_FORMAT,
+        ).format(timeFormat),
+        lectureEndTime: moment(lecture.endTime, INTERNAL_TIME_FORMAT).format(
+          timeFormat,
+        ),
         interpolation: { escapeValue: false },
       }),
     };
@@ -86,15 +114,22 @@ TaskManager.defineTask(NotificationServices.Lectures, async (data) => {
   });
 
   updated.forEach(({ oldEvent, newEvent, changes }) => {
-    const startDate = moment(newEvent.startDate, INTERNAL_DATE_FORMAT).format(dateFormat);
+    const startDate = moment(newEvent.startDate, INTERNAL_DATE_FORMAT).format(
+      dateFormat,
+    );
 
     const newMessage: NotificationMessage = {
       title: t("calendarScreen:lectureUpdatedNotificationTitle"),
       body: t("calendarScreen:lectureUpdatedNotificationBody", {
         lectureName: newEvent.lecture,
         lectureStartDate: startDate,
-        lectureStartTime: moment(newEvent.startTime, INTERNAL_TIME_FORMAT).format(timeFormat),
-        lectureEndTime: moment(newEvent.endTime, INTERNAL_TIME_FORMAT).format(timeFormat),
+        lectureStartTime: moment(
+          newEvent.startTime,
+          INTERNAL_TIME_FORMAT,
+        ).format(timeFormat),
+        lectureEndTime: moment(newEvent.endTime, INTERNAL_TIME_FORMAT).format(
+          timeFormat,
+        ),
         interpolation: { escapeValue: false },
       }),
       data: {

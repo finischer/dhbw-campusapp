@@ -3,7 +3,7 @@
     "name": "DHBW CampusApp",
     "slug": "dhbw-campusapp",
     "owner": "niklasfischer0",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -19,12 +19,16 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "ITSAppUsesNonExemptEncryption": false
       },
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
       "buildNumber": "14",
-      "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349"
+      "appStoreUrl": "https://apps.apple.com/app/apple-store/id6446231349",
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.dhbwcampusapp.data"]
+      }
     },
     "android": {
       "package": "com.niklasfischer0.dhbwcampusapp",
@@ -37,7 +41,24 @@
     },
     "extra": {
       "eas": {
-        "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
+        "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1",
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp.widgets",
+                  "targetName": "widgets",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.dhbwcampusapp.data"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
       }
     },
     "runtimeVersion": {
@@ -62,7 +83,13 @@
         }
       ],
       "expo-secure-store",
-      "expo-build-properties"
+      "expo-build-properties",
+      [
+        "@bacons/apple-targets",
+        {
+          "appleTeamId": "DA2TY6CRFB"
+        }
+      ]
     ]
   }
 }

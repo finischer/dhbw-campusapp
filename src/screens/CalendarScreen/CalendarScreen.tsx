@@ -3,7 +3,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DeviceEventEmitter, NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { useQuery } from "react-query";
-import { OrganizedLectures } from "../../api/lectures/lectures.types";
+import { LectureType, OrganizedLectures } from "../../api/lectures/lectures.types";
 import { IResponseTypes } from "../../api/types/IResponseTypes";
 import Button from "../../components/Button/Button";
 import ErrorView from "../../components/ErrorView";
@@ -22,6 +22,7 @@ import ImportCalendarDialog from "../../components/ImportCalendarDialog";
 import { IImportCalendarDialogFunctions } from "../../components/ImportCalendarDialog/importCalendarDialog.types";
 import Icon from "../../components/Icon";
 import { useMetadata } from "../../hooks/useMetadata";
+import SmartSettings from "local:smart-settings";
 
 type CalendarScreenRouteProp = RouteProp<RootStackParamList, "CalendarScreen">;
 
@@ -48,7 +49,21 @@ const CalendarScreen = () => {
 
     // only if lectures exist -> don't save null or undefined in localStorage
     if (lectures) {
+      const lecturesForNative = lectures.map((entry: OrganizedLectures) => ({
+        id: entry.title,
+        date: entry.title,
+        lectures: entry.data.map((lecture: LectureType) => ({
+          id: lecture.uid,
+          lecture: lecture.lecture,
+          startDate: lecture.startDate,
+          startTime: lecture.startTime,
+          endDate: lecture.endDate,
+          endTime: lecture.endTime,
+          location: lecture.location ?? "",
+        })),
+      }));
       storeDataInAsyncStorage("lectures", lectures); // store the new lectures in localStorage
+      SmartSettings.setLectures("lectures", lecturesForNative, "group.dhbwcampusapp.data");
     }
     return { lectures, localLectures, requestTime };
   };
