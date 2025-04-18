@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "paths": {
+      "local:*": ["./modules/*"]
+    }
   },
   "extends": "expo/tsconfig.base"
 }

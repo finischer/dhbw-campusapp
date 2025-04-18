@@ -3,7 +3,7 @@
     "name": "DHBW CampusApp",
     "slug": "dhbw-campusapp",
     "owner": "niklasfischer0",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -39,30 +39,29 @@
       "eas": {
         "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
       }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
-    "plugins": [
-      [
-        "expo-updates",
-        {
-          "username": "niklasfischer0"
+    }
+  },
+  "runtimeVersion": {
+    "policy": "sdkVersion"
+  },
+  "plugins": [
+    [
+      "expo-updates",
+      {
+        "username": "niklasfischer0"
+      }
+    ],
+    [
+      "expo-build-properties",
+      {
+        "android": {
+          "compileSdkVersion": 34,
+          "targetSdkVersion": 34,
+          "minSdkVersion": 34,
+          "buildToolsVersion": "34.0.0"
         }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
-            "minSdkVersion": 34,
-            "buildToolsVersion": "34.0.0"
-          }
-        }
-      ],
-      "expo-secure-store",
-      "expo-build-properties"
-    ]
-  }
+      }
+    ],
+    "expo-secure-store"
+  ]
 }
