@@ -33,7 +33,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "blockedPermissions": ["android.permission.ACTIVITY_RECOGNITION"]
     },
     "extra": {
       "eas": {
