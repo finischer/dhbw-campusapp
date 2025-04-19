@@ -16,10 +16,15 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification"
+        ]
       },
       "supportsTablet": true,
       "bundleIdentifier": "com.niklasfischer0.dhbwcampusapp",
@@ -34,13 +39,18 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "blockedPermissions": ["android.permission.ACTIVITY_RECOGNITION"]
+      "blockedPermissions": [
+        "android.permission.ACTIVITY_RECOGNITION"
+      ]
     },
     "extra": {
       "eas": {
         "projectId": "18bae96e-3df9-4c1f-b8ce-f47cfd1405b1"
       }
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   },
   "runtimeVersion": {
     "policy": "sdkVersion"
