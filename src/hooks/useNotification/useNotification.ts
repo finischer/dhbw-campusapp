@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react";
 import * as Notifications from "expo-notifications";
+import { useEffect, useRef, useState } from "react";
+import {
+  navigate,
+  navigateToNestedScreen,
+} from "../../infrastructure/navigation/Navigation/RootNavigation";
 import { registerForPushNotificationsAsync as _registerForPushNotificationsAsync } from "../../utilities/push-notifications";
-import { navigate, navigateToNestedScreen } from "../../infrastructure/navigation/Navigation/RootNavigation";
 
 interface UseNotificationsReturnType {
   registerForPushNotificationsAsync: () => Promise<string | null>;
@@ -12,12 +15,17 @@ interface UseNotificationsReturnType {
 }
 
 export const useNotifications = (): UseNotificationsReturnType => {
-  const notificationListener = useRef<Notifications.Subscription | null>(null);
-  const responseListener = useRef<Notifications.Subscription | null>(null);
-  const [permissions, setPermissions] = useState<Notifications.NotificationPermissionsStatus | null>(null);
+  const notificationListener = useRef<Notifications.EventSubscription | null>(
+    null,
+  );
+  const responseListener = useRef<Notifications.EventSubscription | null>(null);
+  const [permissions, setPermissions] =
+    useState<Notifications.NotificationPermissionsStatus | null>(null);
 
   // Funktion zur Registrierung für Push-Benachrichtigungen
-  const registerForPushNotificationsAsync = async (): Promise<string | null> => {
+  const registerForPushNotificationsAsync = async (): Promise<
+    string | null
+  > => {
     return _registerForPushNotificationsAsync();
   };
 
@@ -26,22 +34,25 @@ export const useNotifications = (): UseNotificationsReturnType => {
   };
 
   const initializeNotificationListeners = () => {
-    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-      resetBadgeCount();
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        resetBadgeCount();
 
-      const { screen, params } = response.notification.request.content.data;
+        const { screen, params } = response.notification.request.content.data;
 
-      if (screen) {
-        navigateToNestedScreen(screen, params);
-      } else {
-        navigate("dualis");
-      }
-    });
+        if (screen) {
+          navigateToNestedScreen(screen, params);
+        } else {
+          navigate("dualis");
+        }
+      });
   };
 
   const removeNotificationListeners = () => {
     if (notificationListener.current) {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(
+        notificationListener.current,
+      );
     }
     if (responseListener.current) {
       Notifications.removeNotificationSubscription(responseListener.current);
